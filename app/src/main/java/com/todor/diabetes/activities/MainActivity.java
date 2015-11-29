@@ -1,6 +1,7 @@
 package com.todor.diabetes.activities;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.todor.diabetes.R;
@@ -35,6 +37,13 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddProductActivity.class));
             }
         });
 
@@ -106,5 +115,11 @@ public class MainActivity extends AppCompatActivity
         if (Utils.isFirstLaunch(this)) {
             //TODO
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Utils.hideSoftKeyboard(this);
+        return super.onTouchEvent(event);
     }
 }

@@ -17,8 +17,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PRODUCT_TABLE = "create table " + DbScheme.TABLE_PRODUCTS + " (" + DbScheme.PRODUCT_NAME +
-                " text primary key, " + DbScheme.PRODUCT_VALUE + " integer)";
+        String CREATE_PRODUCT_TABLE = "create table " + DbScheme.TABLE_PRODUCTS + " (" +
+                DbScheme.PRODUCT_ID + " integer primary key autoincrement, " +
+                DbScheme.PRODUCT_NAME + " text, " +
+                DbScheme.PRODUCT_CARBOHYDRATES + " float, " +
+                DbScheme.PRODUCT_GLYCEMIC_INDEX + " integer, " +
+                DbScheme.PRODUCT_GROUP + " text)";
         db.execSQL(CREATE_PRODUCT_TABLE);
     }
 
