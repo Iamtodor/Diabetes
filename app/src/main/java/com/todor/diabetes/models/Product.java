@@ -1,4 +1,4 @@
-package com.todor.diabetes.model;
+package com.todor.diabetes.models;
 
 public class Product {
 

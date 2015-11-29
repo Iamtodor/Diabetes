@@ -6,13 +6,19 @@ import android.content.SharedPreferences.Editor;
 
 public class Utils {
 
-    public static final String MyPREFERENCES = "com.todor.diabetes";
+    public static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences(Constants.MY_PREFERENCES, Context.MODE_PRIVATE);
+    }
 
-    public static SharedPreferences mySharedPreferences(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+    public static void setFirstLaunch(Context context) {
+        SharedPreferences preferences = getSharedPreferences(context);
         Editor editor = preferences.edit();
-        editor.putBoolean("isFirstLaunch", true).apply();
-        return preferences;
+        editor.putBoolean(Constants.IS_FIRST_LAUNCH_KEY, true).commit();
+    }
+
+    public static boolean isFirstLaunch(Context context) {
+        SharedPreferences preferences = getSharedPreferences(context);
+        return preferences.getBoolean(Constants.IS_FIRST_LAUNCH_KEY, true);
     }
 
 }
