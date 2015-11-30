@@ -24,18 +24,18 @@ public class GeneralProductDbManager {
     public void insertProduct(Product product) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DbScheme.PRODUCT_NAME, product.getProductName());
-        contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.getProductCarbohydrates());
-        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.getProductGlycemicIndex());
-        contentValues.put(DbScheme.PRODUCT_GROUP, product.getProductGroup());
-        db.insert(DbScheme.TABLE_PRODUCTS, null, contentValues);
+        contentValues.put(DbScheme.PRODUCT_NAME, product.name);
+        contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.carbohydrates);
+        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.glycemicIndex);
+        contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
+        db.insert(DbScheme.PRODUCT_TABLE, null, contentValues);
         Log.d(TAG, "Product was inserted");
         DbHelperSingleton.closeDb();
     }
 
     public Product getProduct(String productName) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        Cursor cursor = db.query(DbScheme.TABLE_PRODUCTS, new String[]{},
+        Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
                 DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
                 null, null, null);
         Product product = null;
@@ -53,37 +53,37 @@ public class GeneralProductDbManager {
     public void updateProduct(Product product) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DbScheme.PRODUCT_NAME, product.getProductName());
-        contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.getProductCarbohydrates());
-        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.getProductGlycemicIndex());
-        contentValues.put(DbScheme.PRODUCT_GROUP, product.getProductGroup());
-        db.update(DbScheme.TABLE_PRODUCTS, contentValues, DbScheme.PRODUCT_NAME + "=?", new String[]{product.getProductName()});
+        contentValues.put(DbScheme.PRODUCT_NAME, product.name);
+        contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.carbohydrates);
+        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.glycemicIndex);
+        contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
+        db.update(DbScheme.PRODUCT_TABLE, contentValues, DbScheme.PRODUCT_NAME + "=?", new String[]{product.name});
         Log.d(TAG, "Product was updated");
         DbHelperSingleton.closeDb();
     }
 
     public void deleteProduct(String productName) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        db.delete(DbScheme.TABLE_PRODUCTS, DbScheme.PRODUCT_NAME + "=?", new String[]{productName});
+        db.delete(DbScheme.PRODUCT_TABLE, DbScheme.PRODUCT_NAME + "=?", new String[]{productName});
         Log.d(TAG, "Product was deleted");
         DbHelperSingleton.closeDb();
     }
 
     public boolean checkIfProductExists(String productName) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        Cursor cursor = db.query(DbScheme.TABLE_PRODUCTS, new String[]{},
+        Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
                 DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
                 null, null, null);
         Log.d(TAG, "Product was checked");
-        cursor.close();
         boolean isExists = cursor.getCount() > 0;
+        cursor.close();
         return isExists;
     }
 
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        Cursor cursor = db.query(DbScheme.TABLE_PRODUCTS, null, null, null, null, null, null);
+        Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 productList.add(

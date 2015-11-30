@@ -1,8 +1,9 @@
-package com.todor.diabetes.ui.fragments_ui;
+package com.todor.diabetes.ui.product_details;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.adapters.RecyclerViewAdapter;
 import com.todor.diabetes.db.general.GeneralProductDbManager;
 import com.todor.diabetes.models.Product;
+import com.todor.diabetes.ui.adapters.RecyclerViewAdapter;
 
 import java.util.List;
 
-public class ProductFragment extends Fragment {
+public class ProductDetailsFragment extends Fragment {
 
     private GeneralProductDbManager dbManager;
 
@@ -33,6 +34,8 @@ public class ProductFragment extends Fragment {
         RecyclerViewAdapter viewAdapter = new RecyclerViewAdapter(productList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Product details");
 
         recyclerView.setAdapter(viewAdapter);
         recyclerView.setLayoutManager(layoutManager);

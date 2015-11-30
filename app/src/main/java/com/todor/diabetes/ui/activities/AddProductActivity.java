@@ -1,5 +1,7 @@
-package com.todor.diabetes.activities;
+package com.todor.diabetes.ui.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,27 +15,30 @@ import com.todor.diabetes.db.general.GeneralProductDbManager;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.utils.Utils;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class AddProductActivity extends AppCompatActivity {
 
-    private EditText productNameEditText;
-    private EditText productCarbohydratesEditText;
-    private EditText productGlycemicIndexEditText;
-    private EditText productGroupEditText;
-    private Button addButton;
+    @Bind(R.id.product_name)
+    EditText productNameEditText;
+    @Bind(R.id.product_carbohydrates)
+    EditText productCarbohydratesEditText;
+    @Bind(R.id.product_glycemic_index)
+    EditText productGlycemicIndexEditText;
+    @Bind(R.id.product_group)
+    EditText productGroupEditText;
+    @Bind(R.id.add_button)
+    Button addButton;
     private GeneralProductDbManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_product_activity);
+        ButterKnife.bind(this);
 
         dbManager = new GeneralProductDbManager(this);
-
-        productNameEditText = (EditText) findViewById(R.id.product_name);
-        productCarbohydratesEditText = (EditText) findViewById(R.id.product_carbohydrates);
-        productGlycemicIndexEditText = (EditText) findViewById(R.id.product_glycemic_index);
-        productGroupEditText = (EditText) findViewById(R.id.product_group);
-        addButton = (Button) findViewById(R.id.add_button);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +57,16 @@ public class AddProductActivity extends AppCompatActivity {
                         Product product = new Product(productName, intProductCarbohydrates,
                                 floatProductGlycemicIndex, productGroup);
                         dbManager.insertProduct(product);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddProductActivity.this);
+                        builder.setMessage(productName + " was successfully added into your list!");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                        builder.setCancelable(false);
+                        builder.show();
                     } else {
                         Snackbar.make(v, "This product is already in your list", Snackbar.LENGTH_SHORT).show();
                     }

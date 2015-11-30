@@ -1,4 +1,4 @@
-package com.todor.diabetes.activities;
+package com.todor.diabetes.ui.activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -17,8 +17,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.ui.fragments_ui.ProductFragment;
-import com.todor.diabetes.ui.fragments_ui.TableFragment;
+import com.todor.diabetes.ui.product_details.ProductDetailsFragment;
+import com.todor.diabetes.ui.product_list.ProductListFragment;
 import com.todor.diabetes.utils.Utils;
 
 public class MainActivity extends AppCompatActivity
@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.product) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.flContent, new ProductFragment()).commit();
+                    .replace(R.id.flContent, new ProductDetailsFragment()).commit();
         } else if (id == R.id.table) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.flContent, new TableFragment()).commit();
+                    .replace(R.id.flContent, new ProductListFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

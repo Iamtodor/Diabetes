@@ -1,4 +1,4 @@
-package com.todor.diabetes.adapters;
+package com.todor.diabetes.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,10 +28,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.productName.setText(product.getProductName());
-        holder.productCarbonates.setText(String.valueOf(product.getProductCarbohydrates()));
-        holder.productGlycemicIndex.setText(product.getProductGlycemicIndex());
-        holder.productGroup.setText(product.getProductGroup());
+        holder.productName.setText(product.name);
+        holder.productCarbonates.setText(String.valueOf(product.carbohydrates));
+        holder.productGlycemicIndex.setText(product.glycemicIndex);
+        holder.productGroup.setText(product.group);
     }
 
     @Override
