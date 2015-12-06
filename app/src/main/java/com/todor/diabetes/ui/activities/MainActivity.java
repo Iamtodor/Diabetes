@@ -1,8 +1,8 @@
 package com.todor.diabetes.ui.activities;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -61,8 +60,14 @@ public class MainActivity extends AppCompatActivity
 
         if(Utils.isFirstLaunch(this)) {
             FillDataBase.writeDataIntoDataBase(this);
-            Log.d("TAG", "in section");
             Utils.setFirstLaunch(this);
+        }
+
+        if(savedInstanceState == null) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.flContent, new ProductListFragment());
+            transaction.commit();
+            navigationView.setCheckedItem(R.id.productList);
         }
     }
 
@@ -104,10 +109,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
-        if (id == R.id.product) {
+        if (id == R.id.productDetails) {
             fragmentManager.beginTransaction()
                     .replace(R.id.flContent, new ProductDetailsFragment()).commit();
-        } else if (id == R.id.table) {
+        } else if (id == R.id.productList) {
             fragmentManager.beginTransaction()
                     .replace(R.id.flContent, new ProductListFragment()).commit();
         }

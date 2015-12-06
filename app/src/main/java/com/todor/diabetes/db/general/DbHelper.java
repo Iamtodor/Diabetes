@@ -21,7 +21,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 DbScheme.PRODUCT_ID + " integer primary key autoincrement, " +
                 DbScheme.PRODUCT_NAME + " text, " +
                 DbScheme.PRODUCT_CARBOHYDRATES + " float, " +
-                DbScheme.PRODUCT_GLYCEMIC_INDEX + " integer, " +
                 DbScheme.PRODUCT_GROUP + " text)";
         db.execSQL(CREATE_PRODUCT_TABLE);
     }
