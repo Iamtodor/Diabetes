@@ -30,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Product product = productList.get(position);
         holder.productName.setText(product.name);
         holder.productCarbonates.setText(String.valueOf(product.carbohydrates));
-        holder.productGlycemicIndex.setText(product.glycemicIndex);
+//        holder.productGlycemicIndex.setText(product.glycemicIndex);
         holder.productGroup.setText(product.group);
     }
 
@@ -43,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         private TextView productName;
         private TextView productCarbonates;
-        private TextView productGlycemicIndex;
+//        private TextView productGlycemicIndex;
         private TextView productGroup;
 
         public ViewHolder(View itemView) {
@@ -51,7 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             productName = (TextView) itemView.findViewById(R.id.product_name);
             productCarbonates = (TextView) itemView.findViewById(R.id.product_carbohydrates);
-            productGlycemicIndex = (TextView) itemView.findViewById(R.id.product_glycemic_index);
+//            productGlycemicIndex = (TextView) itemView.findViewById(R.id.product_glycemic_index);
             productGroup = (TextView) itemView.findViewById(R.id.product_group);
         }
     }

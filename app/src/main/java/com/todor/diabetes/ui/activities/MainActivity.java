@@ -2,6 +2,7 @@ package com.todor.diabetes.ui.activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.todor.diabetes.FillDataBase;
 import com.todor.diabetes.R;
 import com.todor.diabetes.ui.product_details.ProductDetailsFragment;
 import com.todor.diabetes.ui.product_list.ProductListFragment;
@@ -55,6 +57,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(Utils.isFirstLaunch(this)) {
+            FillDataBase.writeDataIntoDataBase(this);
+            SharedPreferences preferences = Utils.getSharedPreferences(this);
+        }
     }
 
     @Override

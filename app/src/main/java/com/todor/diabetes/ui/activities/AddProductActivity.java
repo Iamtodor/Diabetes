@@ -52,10 +52,10 @@ public class AddProductActivity extends AppCompatActivity {
                 if (!productName.isEmpty() && !productCarbohydrates.isEmpty() && !productGlycemicIndex.isEmpty()
                         && !productGroup.isEmpty()) {
                     if (!dbManager.checkIfProductExists(productName)) {
-                        float intProductCarbohydrates = Float.parseFloat(productCarbohydrates);
-                        int floatProductGlycemicIndex = Integer.parseInt(productGlycemicIndex);
-                        Product product = new Product(productName, intProductCarbohydrates,
-                                floatProductGlycemicIndex, productGroup);
+                        float floatProductCarbohydrates = Float.parseFloat(productCarbohydrates);
+                        int intProductGlycemicIndex = Integer.parseInt(productGlycemicIndex);
+                        Product product = new Product(productName, floatProductCarbohydrates,
+                                productGroup);
                         dbManager.insertProduct(product);
                         AlertDialog.Builder builder = new AlertDialog.Builder(AddProductActivity.this);
                         builder.setMessage(productName + " was successfully added into your list!");

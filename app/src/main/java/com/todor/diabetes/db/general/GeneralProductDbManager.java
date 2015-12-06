@@ -26,7 +26,7 @@ public class GeneralProductDbManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbScheme.PRODUCT_NAME, product.name);
         contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.carbohydrates);
-        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.glycemicIndex);
+//        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.glycemicIndex);
         contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
         db.insert(DbScheme.PRODUCT_TABLE, null, contentValues);
         Log.d(TAG, "Product was inserted");
@@ -42,7 +42,7 @@ public class GeneralProductDbManager {
         if (cursor.moveToFirst()) {
             product = new Product(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_NAME)),
                     cursor.getFloat(cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES)),
-                    cursor.getInt(cursor.getColumnIndex(DbScheme.PRODUCT_GLYCEMIC_INDEX)),
+//                    cursor.getInt(cursor.getColumnIndex(DbScheme.PRODUCT_GLYCEMIC_INDEX)),
                     cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)));
             DbHelperSingleton.closeDb();
         }
@@ -55,7 +55,7 @@ public class GeneralProductDbManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbScheme.PRODUCT_NAME, product.name);
         contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.carbohydrates);
-        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.glycemicIndex);
+//        contentValues.put(DbScheme.PRODUCT_GLYCEMIC_INDEX, product.glycemicIndex);
         contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
         db.update(DbScheme.PRODUCT_TABLE, contentValues, DbScheme.PRODUCT_NAME + "=?", new String[]{product.name});
         Log.d(TAG, "Product was updated");
@@ -89,7 +89,7 @@ public class GeneralProductDbManager {
                 productList.add(
                         new Product(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_NAME)),
                                 cursor.getFloat(cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES)),
-                                cursor.getInt(cursor.getColumnIndex(DbScheme.PRODUCT_GLYCEMIC_INDEX)),
+//                                cursor.getInt(cursor.getColumnIndex(DbScheme.PRODUCT_GLYCEMIC_INDEX)),
                                 cursor.getColumnName(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)))
                 );
             } while (cursor.moveToNext());
