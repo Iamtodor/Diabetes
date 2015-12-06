@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 public class Utils {
@@ -15,11 +16,12 @@ public class Utils {
     public static void setFirstLaunch(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
         Editor editor = preferences.edit();
-        editor.putBoolean(Constants.IS_FIRST_LAUNCH_KEY, true).commit();
+        editor.putBoolean(Constants.IS_FIRST_LAUNCH_KEY, false).commit();
     }
 
     public static boolean isFirstLaunch(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
+        Log.d("TAG: ", "first launch");
         return preferences.getBoolean(Constants.IS_FIRST_LAUNCH_KEY, true);
     }
 

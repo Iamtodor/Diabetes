@@ -1,6 +1,7 @@
 package com.todor.diabetes;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.todor.diabetes.db.general.GeneralProductDbManager;
 import com.todor.diabetes.models.Product;
@@ -18,6 +19,7 @@ public class FillDataBase {
                     products[i][2]);
             dbManager.insertProduct(product);
         }
+        Log.d("TAG: ", "writing data");
     }
 
 }

@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity
 
         if(Utils.isFirstLaunch(this)) {
             FillDataBase.writeDataIntoDataBase(this);
-            SharedPreferences preferences = Utils.getSharedPreferences(this);
+            Log.d("TAG", "in section");
+            Utils.setFirstLaunch(this);
         }
     }
 
@@ -116,17 +118,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (Utils.isFirstLaunch(this)) {
-            //TODO
-        }
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         Utils.hideSoftKeyboard(this);
         return super.onTouchEvent(event);
     }
 }
+
