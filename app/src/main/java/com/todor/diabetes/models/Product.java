@@ -6,8 +6,7 @@ public class Product {
     public float carbohydrates;
     public String group;
 
-    public Product(String productName, float productCarbohydrates,
-                   String productGroup) {
+    public Product(String productName, float productCarbohydrates, String productGroup) {
         this.name = productName;
         this.carbohydrates = productCarbohydrates;
         this.group = productGroup;
@@ -15,7 +14,10 @@ public class Product {
 
     @Override
     public String toString() {
-        return name + " " + group +
-                " " + carbohydrates;
+        return "Product{" +
+                "carbohydrates=" + carbohydrates +
+                ", name='" + name + '\'' +
+                ", group='" + group + '\'' +
+                '}';
     }
 }

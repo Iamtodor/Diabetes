@@ -12,30 +12,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.general.GeneralProductDbManager;
+import com.todor.diabetes.db.general.ProductFunctionality;
 import com.todor.diabetes.models.Product;
-import com.todor.diabetes.ui.adapters.RecyclerViewAdapter;
+import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.ui.CursorAdapter;
 
 import java.util.List;
 
-public class ProductListFragment extends Fragment {
+public class ProductListFragment extends BaseFragment {
 
-    private GeneralProductDbManager dbManager;
+    private ProductFunctionality dbManager;
+    private String fragmentName = "Product list";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.product_layout, container, false);
-        dbManager = new GeneralProductDbManager(getActivity());
+        dbManager = new ProductFunctionality(getActivity());
         List<Product> productList = dbManager.getAllProducts();
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-        RecyclerViewAdapter viewAdapter = new RecyclerViewAdapter(productList);
+        CursorAdapter viewAdapter = new CursorAdapter(productList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Product list");
 
         recyclerView.setAdapter(viewAdapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -45,4 +45,13 @@ public class ProductListFragment extends Fragment {
 
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return fragmentName;
+    }
 }

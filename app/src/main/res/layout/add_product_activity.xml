@@ -52,22 +52,6 @@
         android:textColorHint="@color/colorPrimaryDark">
 
         <EditText
-            android:id="@+id/product_glycemic_index"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/product_glycemic_index"
-            android:inputType="number"
-            android:textSize="20sp" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textColorHint="@color/colorPrimaryDark">
-
-        <EditText
             android:id="@+id/product_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
