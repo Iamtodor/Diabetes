@@ -1,4 +1,4 @@
-package com.todor.diabetes.db.general;
+package com.todor.diabetes.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.general.ProductFunctionality;
+import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.utils.Utils;
 

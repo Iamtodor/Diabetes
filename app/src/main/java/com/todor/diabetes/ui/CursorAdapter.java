@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CursorAdapter extends RecyclerView.Adapter<CursorAdapter.ViewHolder> {
@@ -17,6 +18,10 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorAdapter.ViewHolder
 
     public CursorAdapter(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public void setAdapter(ArrayList<Product> products) {
+        productList = products;
     }
 
     @Override

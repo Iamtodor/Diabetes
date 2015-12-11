@@ -1,4 +1,4 @@
-package com.todor.diabetes.db.general;
+package com.todor.diabetes.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.todor.diabetes.db.DbScheme;
 import com.todor.diabetes.models.Product;
 
 import java.util.ArrayList;

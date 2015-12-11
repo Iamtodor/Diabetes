@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.ProductsArray;
-import com.todor.diabetes.db.general.ProductFunctionality;
+import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 
 public class Utils {
@@ -37,9 +37,9 @@ public class Utils {
         String[][] products = ProductsArray.getProductArray();
         for (int i = 0; i < products.length; i++) {
             Product product = new Product(
-                    products[i][0],
-                    Float.parseFloat(products[i][1]),
-                    products[i][2]);
+                    products[i][0], /* name */
+                    Float.parseFloat(products[i][1]), /* carbohydrates */
+                    products[i][2]); /* group */
             new ProductFunctionality(context).insertProduct(product);
         }
     }
