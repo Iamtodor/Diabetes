@@ -1,4 +1,4 @@
-package com.todor.diabetes.ui;
+package com.todor.diabetes.ui.product_list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

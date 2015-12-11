@@ -1,9 +1,7 @@
 package com.todor.diabetes.ui.product_details;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +10,6 @@ import com.todor.diabetes.R;
 import com.todor.diabetes.ui.BaseFragment;
 
 public class ProductDetailsFragment extends BaseFragment {
-
-    private String fragmentTitle = "Product details";
 
     @Nullable
     @Override
@@ -31,6 +27,6 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @Override
     public String getFragmentTitle() {
-        return fragmentTitle;
+        return getResources().getString(R.string.product_details_name);
     }
 }

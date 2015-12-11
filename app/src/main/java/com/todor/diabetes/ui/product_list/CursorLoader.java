@@ -1,4 +1,4 @@
-package com.todor.diabetes.ui;
+package com.todor.diabetes.ui.product_list;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
@@ -28,13 +28,34 @@ public class CursorLoader extends AsyncTaskLoader<ArrayList<Product>> {
     protected void onStartLoading() {
         if(products != null) {
             deliverResult(products);
-        } else {
+        }
+        if(takeContentChanged() || products == null) {
             forceLoad();
         }
     }
 
     @Override
     public void deliverResult(ArrayList<Product> data) {
-        super.deliverResult(data);
+        if(isReset()) {
+            products = null;
+            return;
+        }
+
+        products = data;
+        if(isStarted()) {
+            super.deliverResult(products);
+        }
+    }
+
+    @Override
+    protected void onReset() {
+        super.onReset();
+        products = null;
+    }
+
+    @Override
+    protected boolean onCancelLoad() {
+        products = null;
+        return super.onCancelLoad();
     }
 }

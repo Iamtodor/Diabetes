@@ -15,23 +15,24 @@ import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
-import com.todor.diabetes.ui.CursorAdapter;
-import com.todor.diabetes.ui.CursorLoader;
 
 import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
+    @Bind(R.id.recyclerView) RecyclerView recyclerView;
     private ProductFunctionality dbManager;
-    private String fragmentName = "Product list";
-    private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.product_layout, container, false);
+        ButterKnife.bind(this, v);
         dbManager = new ProductFunctionality(getActivity());
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
@@ -43,7 +44,6 @@ public class ProductListFragment extends BaseFragment implements
         recyclerView.setItemAnimator(itemAnimator);
 
         return v;
-
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public String getFragmentTitle() {
-        return fragmentName;
+        return getResources().getString(R.string.product_list_name);
     }
 
     @Override

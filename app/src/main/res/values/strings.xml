@@ -12,4 +12,6 @@
     <string name="add_button">Add</string>
     <string name="product_glycemic_index">Product glycemic index</string>
     <string name="product_group">Product group</string>
+    <string name="product_details_name">Product details</string>
+    <string name="product_list_name">Product list</string>
 </resources>
