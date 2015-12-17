@@ -8,12 +8,12 @@ import com.todor.diabetes.models.Product;
 
 import java.util.ArrayList;
 
-public class CursorLoader extends AsyncTaskLoader<ArrayList<Product>> {
+public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
 
-    private ArrayList<Product> products;
+    private ArrayList<Product>   products;
     private ProductFunctionality productFunctionality;
 
-    public CursorLoader(Context context) {
+    public ProductLoader(Context context) {
         super(context);
         productFunctionality = new ProductFunctionality(context);
     }
@@ -26,23 +26,23 @@ public class CursorLoader extends AsyncTaskLoader<ArrayList<Product>> {
 
     @Override
     protected void onStartLoading() {
-        if(products != null) {
+        if (products != null) {
             deliverResult(products);
         }
-        if(takeContentChanged() || products == null) {
+        if (takeContentChanged() || products == null) {
             forceLoad();
         }
     }
 
     @Override
     public void deliverResult(ArrayList<Product> data) {
-        if(isReset()) {
+        if (isReset()) {
             products = null;
             return;
         }
 
         products = data;
-        if(isStarted()) {
+        if (isStarted()) {
             super.deliverResult(products);
         }
     }

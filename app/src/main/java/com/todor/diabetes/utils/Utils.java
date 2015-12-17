@@ -20,7 +20,7 @@ public class Utils {
     public static void setLaunchToFalse(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
         Editor editor = preferences.edit();
-        editor.putBoolean(Constants.IS_FIRST_LAUNCH_KEY, false).commit();
+        editor.putBoolean(Constants.IS_FIRST_LAUNCH_KEY, false).apply();
     }
 
     public static boolean isFirstLaunch(Context context) {

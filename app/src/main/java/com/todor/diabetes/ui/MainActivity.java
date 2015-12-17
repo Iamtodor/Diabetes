@@ -16,9 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.ui.product_details.ProductDetailsFragment;
 import com.todor.diabetes.ui.product_list.ProductListFragment;
 import com.todor.diabetes.utils.Utils;
 
@@ -57,12 +57,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(Utils.isFirstLaunch(this)) {
+        if (Utils.isFirstLaunch(this)) {
             Utils.writeDataIntoDataBase(this);
             Utils.setLaunchToFalse(this);
         }
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.flContent, new ProductListFragment());
             transaction.commit();
@@ -108,15 +108,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
-        if (id == R.id.productDetails) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.flContent, new ProductDetailsFragment())
-                    .commit();
-        } else if (id == R.id.productList) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.flContent, new ProductListFragment())
-                    .commit();
+        switch (id) {
+            case R.id.productList:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, new ProductListFragment())
+                        .commit();
+                break;
+            case R.id.currentEating:
+                Toast.makeText(MainActivity.this, "Current eating", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.profile:
+                Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

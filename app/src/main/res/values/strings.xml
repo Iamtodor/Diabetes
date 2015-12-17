@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Diabetes</string>
-    <string name="title_activity_main">Diabetes app</string>
+
+    <string name="title_diabets">Diabetes app</string>
+    <string name="title_product_details">Product details</string>
+    <string name="title_products">Product list</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -12,6 +15,6 @@
     <string name="add_button">Add</string>
     <string name="product_glycemic_index">Product glycemic index</string>
     <string name="product_group">Product group</string>
-    <string name="product_details_name">Product details</string>
-    <string name="product_list_name">Product list</string>
+
+
 </resources>

@@ -1,5 +1,6 @@
 package com.todor.diabetes.ui.product_list;
 
+import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
@@ -11,10 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
+import com.todor.diabetes.listeners.OnItemClickListener;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.ui.product_details.ProductDetailsFragment;
 
 import java.util.ArrayList;
 
@@ -24,7 +29,8 @@ import butterknife.ButterKnife;
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
     private ProductFunctionality dbManager;
 
     @Nullable
@@ -36,8 +42,8 @@ public class ProductListFragment extends BaseFragment implements
         dbManager = new ProductFunctionality(getActivity());
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-        LinearLayoutManager       layoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView.ItemAnimator itemAnimator  = new DefaultItemAnimator();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
 
         getActivity().getLoaderManager().initLoader(0, null, this);
         recyclerView.setLayoutManager(layoutManager);
@@ -47,27 +53,40 @@ public class ProductListFragment extends BaseFragment implements
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public String getFragmentTitle() {
-        return getResources().getString(R.string.product_list_name);
+        return getResources().getString(R.string.title_products);
     }
 
     @Override
     public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity());
+        return new ProductLoader(getActivity());
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        recyclerView.setAdapter(new CursorAdapter(data));
+        recyclerView.setAdapter(new ProductAdapter(data, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Product product) {
+                FragmentManager manager = getFragmentManager();
+                ProductDetailsFragment detailsFragment = new ProductDetailsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.PRODUCT_KEY, product);
+                detailsFragment.setArguments(bundle);
+                manager.beginTransaction()
+                        .replace(R.id.flContent, detailsFragment)
+                        .commit();
+            }
+        }));
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<Product>> loader) {
         recyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        DbHelperSingleton.closeDb();
     }
 }

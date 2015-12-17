@@ -7,17 +7,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.todor.diabetes.R;
+import com.todor.diabetes.listeners.OnItemClickListener;
 import com.todor.diabetes.models.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CursorAdapter extends RecyclerView.Adapter<CursorAdapter.ViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    private List<Product> productList;
+    private List<Product>       productList;
+    private OnItemClickListener listener;
 
-    public CursorAdapter(List<Product> productList) {
+    public ProductAdapter(List<Product> productList, OnItemClickListener listener) {
         this.productList = productList;
+        this.listener = listener;
     }
 
     public void setAdapter(ArrayList<Product> products) {
@@ -36,6 +39,8 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorAdapter.ViewHolder
         holder.productName.setText(product.name);
         holder.productCarbonates.setText(String.valueOf(product.carbohydrates));
         holder.productGroup.setText(product.group);
+        holder.bind(product, listener);
+
     }
 
     @Override
@@ -55,6 +60,15 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorAdapter.ViewHolder
             productName = (TextView) itemView.findViewById(R.id.product_name);
             productCarbonates = (TextView) itemView.findViewById(R.id.product_carbohydrates);
             productGroup = (TextView) itemView.findViewById(R.id.product_group);
+        }
+
+        private void bind(final Product product, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(product);
+                }
+            });
         }
     }
 }
