@@ -2,6 +2,7 @@ package com.todor.diabetes.ui.product_list;
 
 import android.app.FragmentManager;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.listeners.OnItemClickListener;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.ui.ProductDetailsActivity;
 import com.todor.diabetes.ui.product_details.ProductDetailsFragment;
 
 import java.util.ArrayList;
@@ -67,14 +69,19 @@ public class ProductListFragment extends BaseFragment implements
         recyclerView.setAdapter(new ProductAdapter(data, new OnItemClickListener() {
             @Override
             public void onItemClick(Product product) {
-                FragmentManager manager = getFragmentManager();
-                ProductDetailsFragment detailsFragment = new ProductDetailsFragment();
+//                FragmentManager manager = getFragmentManager();
+//                ProductDetailsFragment detailsFragment = new ProductDetailsFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(Constants.PRODUCT_KEY, product);
+//                detailsFragment.setArguments(bundle);
+//                manager.beginTransaction()
+//                        .replace(R.id.flContent, detailsFragment)
+//                        .addToBackStack(null)
+//                        .commit();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.PRODUCT_KEY, product);
-                detailsFragment.setArguments(bundle);
-                manager.beginTransaction()
-                        .replace(R.id.flContent, detailsFragment)
-                        .commit();
+                bundle.putParcelable(Constants.PRODUCT_KEY, product);
+                startActivity(new Intent(getActivity(), ProductDetailsActivity.class)
+                        .putExtras(bundle));
             }
         }));
     }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.todor.diabetes.models.Product;
+import com.todor.diabetes.utils.CursorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,7 @@ public class ProductFunctionality {
                         cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)));
             }
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            CursorUtils.closeCursor(cursor);
         }
         return product;
     }
@@ -72,9 +71,7 @@ public class ProductFunctionality {
                     null, null, null);
             return cursor.getCount() > 0;
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            CursorUtils.closeCursor(cursor);
         }
     }
 
@@ -84,21 +81,19 @@ public class ProductFunctionality {
         Cursor cursor = null;
         try {
             cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null);
-            int nameColumn = cursor.getColumnIndex(DbScheme.PRODUCT_NAME);
-            int carbohydratesColumn = cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES);
-            int groupColumn = cursor.getColumnIndex(DbScheme.PRODUCT_GROUP);
+            int nameColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_NAME);
+            int carbohydratesColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES);
+            int groupColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_GROUP);
 
             while (cursor.moveToNext()) {
                 productList.add(
-                        new Product(cursor.getString(nameColumn),
-                                cursor.getFloat(carbohydratesColumn),
-                                cursor.getString(groupColumn))
+                        new Product(cursor.getString(nameColumnIndex),
+                                cursor.getFloat(carbohydratesColumnIndex),
+                                cursor.getString(groupColumnIndex))
                 );
             }
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            CursorUtils.closeCursor(cursor);
         }
         return productList;
     }

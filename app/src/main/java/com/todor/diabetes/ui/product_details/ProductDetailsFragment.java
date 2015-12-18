@@ -14,7 +14,7 @@ import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.ui.MainActivity;
 
-public class ProductDetailsFragment extends BaseFragment implements FragmentManager.OnBackStackChangedListener {
+public class ProductDetailsFragment extends BaseFragment {
 
     @Nullable
     @Override
@@ -23,7 +23,6 @@ public class ProductDetailsFragment extends BaseFragment implements FragmentMana
         View v = inflater.inflate(R.layout.product_layout, container, false);
 
         android.support.v7.app.ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
-        getFragmentManager().addOnBackStackChangedListener(this);
         Product product = (Product) getArguments().getSerializable(Constants.PRODUCT_KEY);
 
         return v;
@@ -38,17 +37,5 @@ public class ProductDetailsFragment extends BaseFragment implements FragmentMana
     public void onStop() {
         super.onStop();
         DbHelperSingleton.closeDb();
-    }
-
-    public void shouldDisplayHomeUp() {
-        //Enable Up button only  if there are entries in the back stack
-        boolean canback = getFragmentManager().getBackStackEntryCount() > 0;
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
-    }
-
-
-    @Override
-    public void onBackStackChanged() {
-        shouldDisplayHomeUp();
     }
 }
