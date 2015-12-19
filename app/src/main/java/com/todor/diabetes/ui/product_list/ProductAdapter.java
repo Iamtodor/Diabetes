@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.listeners.OnItemClickListener;
 import com.todor.diabetes.models.Product;
 
 import java.util.ArrayList;
@@ -15,10 +14,10 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    private List<Product>       productList;
-    private OnItemClickListener listener;
+    private List<Product>                  productList;
+    private OnProductListItemClickListener listener;
 
-    public ProductAdapter(List<Product> productList, OnItemClickListener listener) {
+    public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
         this.productList = productList;
         this.listener = listener;
     }
@@ -62,11 +61,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productGroup = (TextView) itemView.findViewById(R.id.product_group);
         }
 
-        private void bind(final Product product, final OnItemClickListener listener) {
+        private void bind(final Product product, final OnProductListItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(product);
+                    listener.onProductClick(product);
                 }
             });
         }

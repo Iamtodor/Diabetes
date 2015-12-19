@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.todor.diabetes.models.Product;
-import com.todor.diabetes.utils.CursorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +30,15 @@ public class ProductFunctionality {
 
     public Product getProduct(String productName) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        Cursor cursor = null;
         Product product = null;
-        try {
-            cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
-                    DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
-                    null, null, null);
+        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
+                DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
+                null, null, null)) {
             if (cursor.moveToFirst()) {
                 product = new Product(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_NAME)),
                         cursor.getFloat(cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES)),
                         cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)));
             }
-        } finally {
-            CursorUtils.closeCursor(cursor);
         }
         return product;
     }
@@ -64,23 +59,17 @@ public class ProductFunctionality {
 
     public boolean checkIfProductExists(String productName) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        Cursor cursor = null;
-        try {
-            cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
-                    DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
-                    null, null, null);
+        try(Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
+                DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
+                null, null, null)) {
             return cursor.getCount() > 0;
-        } finally {
-            CursorUtils.closeCursor(cursor);
         }
     }
 
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        Cursor cursor = null;
-        try {
-            cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null);
+        try(Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null)) {
             int nameColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_NAME);
             int carbohydratesColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES);
             int groupColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_GROUP);
@@ -92,8 +81,6 @@ public class ProductFunctionality {
                                 cursor.getString(groupColumnIndex))
                 );
             }
-        } finally {
-            CursorUtils.closeCursor(cursor);
         }
         return productList;
     }

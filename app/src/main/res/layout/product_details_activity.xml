@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="2,3XE"
-            android:textColor="@color/colorBlack"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
@@ -71,14 +71,14 @@
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="One"/>
+                android:text="Гр."/>
 
             <RadioButton
                 android:id="@+id/button22"
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Two"/>
+                android:text="ХЕ"/>
         </info.hoang8f.android.segmented.SegmentedGroup>
 
     </RelativeLayout>
@@ -94,9 +94,8 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button"
-            android:textColor="@color/colorWhite"
-            android:text="I'll eat!"
-            />
+            android:textColor="@android:color/white"
+            android:text="I'll eat!" />
 
         <Button
             android:id="@+id/favorite"
@@ -104,9 +103,8 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button"
-            android:textColor="@color/colorWhite"
-            android:text="Favorite product"
-            />
+            android:textColor="@android:color/white"
+            android:text="Favorite product" />
 
     </LinearLayout>
 

@@ -1,10 +1,8 @@
-package com.todor.diabetes.ui;
+package com.todor.diabetes.ui.product_details;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +13,6 @@ import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.Product;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**

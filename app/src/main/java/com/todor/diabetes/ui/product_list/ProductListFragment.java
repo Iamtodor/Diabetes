@@ -1,6 +1,5 @@
 package com.todor.diabetes.ui.product_list;
 
-import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -17,11 +16,9 @@ import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
-import com.todor.diabetes.listeners.OnItemClickListener;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
-import com.todor.diabetes.ui.ProductDetailsActivity;
-import com.todor.diabetes.ui.product_details.ProductDetailsFragment;
+import com.todor.diabetes.ui.product_details.ProductDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -31,8 +28,7 @@ import butterknife.ButterKnife;
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
-    @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @Bind(R.id.recyclerView) RecyclerView recyclerView;
     private ProductFunctionality dbManager;
 
     @Nullable
@@ -66,18 +62,9 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        recyclerView.setAdapter(new ProductAdapter(data, new OnItemClickListener() {
+        recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener(){
             @Override
-            public void onItemClick(Product product) {
-//                FragmentManager manager = getFragmentManager();
-//                ProductDetailsFragment detailsFragment = new ProductDetailsFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(Constants.PRODUCT_KEY, product);
-//                detailsFragment.setArguments(bundle);
-//                manager.beginTransaction()
-//                        .replace(R.id.flContent, detailsFragment)
-//                        .addToBackStack(null)
-//                        .commit();
+            public void onProductClick(Product product) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.PRODUCT_KEY, product);
                 startActivity(new Intent(getActivity(), ProductDetailsActivity.class)

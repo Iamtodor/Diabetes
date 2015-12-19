@@ -8,6 +8,8 @@ public class DbHelperSingleton {
     private static DbHelper dbHelper;
     private static SQLiteDatabase db;
 
+    private DbHelperSingleton() {}
+
     public static SQLiteDatabase getDb(Context context) {
         if (dbHelper == null) {
             dbHelper = new DbHelper(context);
