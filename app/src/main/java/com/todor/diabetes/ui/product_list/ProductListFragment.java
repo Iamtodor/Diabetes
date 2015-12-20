@@ -35,7 +35,7 @@ public class ProductListFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.product_layout, container, false);
+        View v = inflater.inflate(R.layout.product_list_layout, container, false);
         ButterKnife.bind(this, v);
         dbManager = new ProductFunctionality(getActivity());
 
@@ -65,10 +65,11 @@ public class ProductListFragment extends BaseFragment implements
         recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener(){
             @Override
             public void onProductClick(Product product) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants.PRODUCT_KEY, product);
-                startActivity(new Intent(getActivity(), ProductDetailsActivity.class)
-                        .putExtras(bundle));
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelable(Constants.PRODUCT_KEY, product);
+                Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
+                intent.putExtra(Constants.PRODUCT_KEY, product);
+                startActivity(intent);
             }
         }));
     }

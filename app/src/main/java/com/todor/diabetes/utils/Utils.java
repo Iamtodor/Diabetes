@@ -23,6 +23,18 @@ public class Utils {
         editor.putBoolean(Constants.IS_FIRST_LAUNCH_KEY, false).apply();
     }
 
+    public static void setGlycemicIndex(Context context, float glycemicIndex) {
+        SharedPreferences preferences = getSharedPreferences(context);
+        Editor editor = preferences.edit();
+        editor.putFloat(Constants.GLYCEMICAL_INDEX_KEY, glycemicIndex);
+        editor.apply();
+    }
+
+    public static float getGlycemicIndex(Context context) {
+        SharedPreferences preferences = getSharedPreferences(context);
+        return preferences.getFloat(Constants.GLYCEMICAL_INDEX_KEY, 12);
+    }
+
     public static boolean isFirstLaunch(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
         return preferences.getBoolean(Constants.IS_FIRST_LAUNCH_KEY, true);

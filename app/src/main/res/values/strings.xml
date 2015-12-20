@@ -15,6 +15,11 @@
     <string name="add_button">Add</string>
     <string name="product_glycemic_index">Product glycemic index</string>
     <string name="product_group">Product group</string>
+    <string name="favorite_product">Любимый продукт</string>
+    <string name="will_eat">Я съем это!</string>
+    <string name="gram">Гр.</string>
+    <string name="bread_unit">ХЕ</string>
+    <string name="product_gram">Количество продукта в граммах</string>
 
 
 </resources>

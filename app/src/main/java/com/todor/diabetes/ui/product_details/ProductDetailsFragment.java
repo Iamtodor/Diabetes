@@ -1,28 +1,81 @@
 package com.todor.diabetes.ui.product_details;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
-import com.todor.diabetes.ui.MainActivity;
+import com.todor.diabetes.utils.Utils;
+
+import butterknife.ButterKnife;
+import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class ProductDetailsFragment extends BaseFragment {
 
-    @Nullable
+    private EditText       productGram;
+    private TextView       numberBreadCount;
+    private RadioButton    gramButton;
+    private RadioButton    breadUnitButton;
+    private SegmentedGroup segmentedGroup;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.product_details_fragment, container, false);
+        ButterKnife.bind(this, v);
 
-        View v = inflater.inflate(R.layout.product_layout, container, false);
+        Product product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
+        productGram = (EditText) v.findViewById(R.id.product_gram);
+        numberBreadCount = (TextView) v.findViewById(R.id.number_bread_count);
+        gramButton = (RadioButton) v.findViewById(R.id.gram_button);
+        breadUnitButton = (RadioButton) v.findViewById(R.id.bread_unit_button);
+        segmentedGroup = (SegmentedGroup) v.findViewById(R.id.segmented);
 
-        android.support.v7.app.ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
-        Product product = (Product) getArguments().getSerializable(Constants.PRODUCT_KEY);
+        productGram.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String value = productGram.getText().toString();
+                int valueInt = Integer.parseInt(value);
+                if (breadUnitButton.isSelected()) {
+                    numberBreadCount.setText(valueInt / Utils.getGlycemicIndex(getActivity()) + " ХЕ");
+                } else if (gramButton.isSelected()) {
+                    numberBreadCount.setText(value + " грамм");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        breadUnitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                breadUnitButton.setSelected(true);
+            }
+        });
+
+        gramButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gramButton.setSelected(true);
+            }
+        });
 
         return v;
     }

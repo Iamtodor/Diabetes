@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.ui.product_list.ProductListFragment;
 import com.todor.diabetes.utils.Utils;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity
         if (Utils.isFirstLaunch(this)) {
             Utils.writeDataIntoDataBase(this);
             Utils.setLaunchToFalse(this);
+            Utils.setGlycemicIndex(this, Constants.DEFAULT_GLYCEMICAL_INDEX_VALUE);
         }
 
         if (savedInstanceState == null) {
