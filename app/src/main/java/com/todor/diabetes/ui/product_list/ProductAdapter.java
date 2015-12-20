@@ -37,7 +37,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Product product = productList.get(position);
         holder.productName.setText(product.name);
         holder.productCarbonates.setText(String.valueOf(product.carbohydrates));
-        holder.productGroup.setText(product.group);
         holder.bind(product, listener);
 
     }
@@ -51,14 +50,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         private TextView productName;
         private TextView productCarbonates;
-        private TextView productGroup;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             productName = (TextView) itemView.findViewById(R.id.product_name);
             productCarbonates = (TextView) itemView.findViewById(R.id.product_carbohydrates);
-            productGroup = (TextView) itemView.findViewById(R.id.product_group);
         }
 
         private void bind(final Product product, final OnProductListItemClickListener listener) {

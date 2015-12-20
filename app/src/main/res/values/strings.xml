@@ -3,7 +3,9 @@
 
     <string name="title_diabets">Diabetes app</string>
     <string name="title_product_details">Product details</string>
-    <string name="title_products">Product list</string>
+    <string name="title_products">Список продуктов</string>
+    <string name="title_product_table">Стол продуктов</string>
+    <string name="title_profile">Профиль</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -20,6 +22,10 @@
     <string name="gram">Гр.</string>
     <string name="bread_unit">ХЕ</string>
     <string name="product_gram">Количество продукта в граммах</string>
+    <string name="product_GL">Количество ХЕ в продукте</string>
+    <string name="settings">Настройки</string>
+    <string name="products">Продукты</string>
+    <string name="table">Стол</string>
 
 
 </resources>

@@ -1,6 +1,5 @@
 package com.todor.diabetes.ui.product_details;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,32 +12,31 @@ import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.Product;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by todor on 17.12.15
  */
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private ImageView imageView;
+    @Bind(R.id.edit)
+    ImageView editProductImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_details_activity);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        imageView = (ImageView) findViewById(R.id.edit);
 
         Product product = getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
         getSupportActionBar().setTitle(product.name);
 
-        FragmentManager manager = getFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.flContent, new ProductDetailsFragment())
-                .commit();
-
-        imageView.setOnClickListener(new View.OnClickListener() {
+        editProductImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ProductDetailsActivity.this, "Edit current product", Toast.LENGTH_SHORT).show();

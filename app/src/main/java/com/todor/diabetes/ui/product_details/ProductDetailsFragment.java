@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
@@ -17,16 +18,24 @@ import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.utils.Utils;
 
+import java.text.DecimalFormat;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class ProductDetailsFragment extends BaseFragment {
 
-    private EditText       productGram;
-    private TextView       numberBreadCount;
-    private RadioButton    gramButton;
-    private RadioButton    breadUnitButton;
-    private SegmentedGroup segmentedGroup;
+    @Bind(R.id.edt_product_value_for_calculation)
+    EditText       edtProductValueForCalculation;
+    @Bind(R.id.tv_product_result_value)
+    TextView       productResultValue;
+    @Bind(R.id.btn_gram)
+    RadioButton    btnGram;
+    @Bind(R.id.btn_bread_unit)
+    RadioButton    btnBreadUnit;
+    @Bind(R.id.segmented_gramm_xe)
+    SegmentedGroup segmentedGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,13 +43,10 @@ public class ProductDetailsFragment extends BaseFragment {
         ButterKnife.bind(this, v);
 
         Product product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
-        productGram = (EditText) v.findViewById(R.id.product_gram);
-        numberBreadCount = (TextView) v.findViewById(R.id.number_bread_count);
-        gramButton = (RadioButton) v.findViewById(R.id.gram_button);
-        breadUnitButton = (RadioButton) v.findViewById(R.id.bread_unit_button);
-        segmentedGroup = (SegmentedGroup) v.findViewById(R.id.segmented);
+        btnBreadUnit.setSelected(true);
+        edtProductValueForCalculation.setHint(getResources().getString(R.string.product_gram));
 
-        productGram.addTextChangedListener(new TextWatcher() {
+        edtProductValueForCalculation.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -48,32 +54,46 @@ public class ProductDetailsFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String value = productGram.getText().toString();
-                int valueInt = Integer.parseInt(value);
-                if (breadUnitButton.isSelected()) {
-                    numberBreadCount.setText(valueInt / Utils.getGlycemicIndex(getActivity()) + " ХЕ");
-                } else if (gramButton.isSelected()) {
-                    numberBreadCount.setText(value + " грамм");
-                }
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                String value = edtProductValueForCalculation.getText().toString();
+                int valueInt = 0;
+                DecimalFormat df = new DecimalFormat("#.##");
+                try {
+                    valueInt = Integer.parseInt(value);
+                } catch (NumberFormatException e) {
+//                    Toast.makeText(getActivity(), "Введите цифровое значение", Toast.LENGTH_SHORT).show();
+                }
+                if (btnGram.isSelected()) {
+                    float result = valueInt * Utils.getGlycemicIndex(getActivity());
+                    productResultValue.setText(String.valueOf(df.format(result)));
+                } else if (btnBreadUnit.isSelected()) {
+                    float result = valueInt / Utils.getGlycemicIndex(getActivity());
+                    productResultValue.setText(String.valueOf(df.format(result)));
+                }
             }
         });
 
-        breadUnitButton.setOnClickListener(new View.OnClickListener() {
+        btnBreadUnit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                breadUnitButton.setSelected(true);
+                btnBreadUnit.setSelected(true);
+                btnGram.setSelected(false);
+                Toast.makeText(getActivity(), "Выбраны хлебные единицы", Toast.LENGTH_SHORT).show();
+                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_gram));
             }
         });
 
-        gramButton.setOnClickListener(new View.OnClickListener() {
+        btnGram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gramButton.setSelected(true);
+                btnGram.setSelected(true);
+                btnBreadUnit.setSelected(false);
+                Toast.makeText(getActivity(), "Выбраны граммы", Toast.LENGTH_SHORT).show();
+                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_GL));
             }
         });
 

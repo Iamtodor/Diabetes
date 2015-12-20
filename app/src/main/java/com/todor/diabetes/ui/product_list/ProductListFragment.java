@@ -28,7 +28,8 @@ import butterknife.ButterKnife;
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.recyclerView)
+            RecyclerView         recyclerView;
     private ProductFunctionality dbManager;
 
     @Nullable
@@ -62,11 +63,9 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener(){
+        recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener() {
             @Override
             public void onProductClick(Product product) {
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable(Constants.PRODUCT_KEY, product);
                 Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
                 intent.putExtra(Constants.PRODUCT_KEY, product);
                 startActivity(intent);
