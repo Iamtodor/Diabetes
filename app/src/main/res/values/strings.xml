@@ -19,13 +19,14 @@
     <string name="product_group">Product group</string>
     <string name="favorite_product">Любимый продукт</string>
     <string name="will_eat">Я съем это!</string>
-    <string name="gram">Гр.</string>
+    <string name="gram">грамм</string>
     <string name="bread_unit">ХЕ</string>
     <string name="product_gram">Количество продукта в граммах</string>
     <string name="product_GL">Количество ХЕ в продукте</string>
     <string name="settings">Настройки</string>
     <string name="products">Продукты</string>
     <string name="table">Стол</string>
+    <string name="input_value">Введите значение</string>
 
 
 </resources>

@@ -43,8 +43,6 @@ public class ProductDetailsFragment extends BaseFragment {
         ButterKnife.bind(this, v);
 
         Product product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
-        btnBreadUnit.setSelected(true);
-        edtProductValueForCalculation.setHint(getResources().getString(R.string.product_gram));
 
         edtProductValueForCalculation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -65,14 +63,16 @@ public class ProductDetailsFragment extends BaseFragment {
                 try {
                     valueInt = Integer.parseInt(value);
                 } catch (NumberFormatException e) {
-//                    Toast.makeText(getActivity(), "Введите цифровое значение", Toast.LENGTH_SHORT).show();
+
                 }
                 if (btnGram.isSelected()) {
                     float result = valueInt * Utils.getGlycemicIndex(getActivity());
-                    productResultValue.setText(String.valueOf(df.format(result)));
+                    productResultValue.setText(String.valueOf(df.format(result)) + " " +
+                                    getResources().getString(R.string.gram));
                 } else if (btnBreadUnit.isSelected()) {
                     float result = valueInt / Utils.getGlycemicIndex(getActivity());
-                    productResultValue.setText(String.valueOf(df.format(result)));
+                    productResultValue.setText(String.valueOf(df.format(result)) + " " +
+                                    getResources().getString(R.string.bread_unit));
                 }
             }
         });
@@ -82,8 +82,6 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnBreadUnit.setSelected(true);
                 btnGram.setSelected(false);
-                Toast.makeText(getActivity(), "Выбраны хлебные единицы", Toast.LENGTH_SHORT).show();
-                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_gram));
             }
         });
 
@@ -92,8 +90,6 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnGram.setSelected(true);
                 btnBreadUnit.setSelected(false);
-                Toast.makeText(getActivity(), "Выбраны граммы", Toast.LENGTH_SHORT).show();
-                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_GL));
             }
         });
 
