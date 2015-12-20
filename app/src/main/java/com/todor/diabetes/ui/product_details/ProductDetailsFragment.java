@@ -34,11 +34,11 @@ public class ProductDetailsFragment extends BaseFragment {
         ButterKnife.bind(this, v);
 
         Product product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
-        productGram = (EditText) v.findViewById(R.id.product_gram);
-        numberBreadCount = (TextView) v.findViewById(R.id.number_bread_count);
-        gramButton = (RadioButton) v.findViewById(R.id.gram_button);
-        breadUnitButton = (RadioButton) v.findViewById(R.id.bread_unit_button);
-        segmentedGroup = (SegmentedGroup) v.findViewById(R.id.segmented);
+        productGram = (EditText) v.findViewById(R.id.edt_product_value_for_calculation);
+        numberBreadCount = (TextView) v.findViewById(R.id.tv_product_result_value);
+        gramButton = (RadioButton) v.findViewById(R.id.btn_gram);
+        breadUnitButton = (RadioButton) v.findViewById(R.id.btn_bread_unit);
+        segmentedGroup = (SegmentedGroup) v.findViewById(R.id.segmented_gramm_xe);
 
         productGram.addTextChangedListener(new TextWatcher() {
             @Override

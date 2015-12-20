@@ -1,102 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-    <!--<NumberPicker-->
-    <!--android:id="@+id/amongProduct"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginTop="64dp"-->
-    <!--android:orientation="horizontal"/>-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="120dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_product_result_value"
         android:layout_gravity="center"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="64dp">
+        android:layout_marginBottom="32dp">
 
         <EditText
-            android:id="@+id/product_gram"
+            android:id="@+id/edt_product_value_for_calculation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="@string/product_gram"/>
+            android:hint="@string/edt_product_value_for_calculation"
+            android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_product_result_value"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="12dp"
+        android:layout_toStartOf="@+id/segmented_gramm_xe"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="34465467535465462462462,3 XE"/>
 
-        <TextView
-            android:id="@+id/number_bread_count"
+    <info.hoang8f.android.segmented.SegmentedGroup
+        android:id="@+id/segmented_gramm_xe"
+        xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="12dp"
+        android:orientation="horizontal"
+        segmentedgroup:sc_border_width="2dp"
+        segmentedgroup:sc_corner_radius="10dp">
+
+        <RadioButton
+            android:id="@+id/btn_gram"
+            style="@style/RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="2,3XE"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:text="@string/gram"/>
 
-        <info.hoang8f.android.segmented.SegmentedGroup
-            android:id="@+id/segmented"
-            xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        <RadioButton
+            android:id="@+id/btn_bread_unit"
+            style="@style/RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            segmentedgroup:sc_border_width="2dp"
-            segmentedgroup:sc_corner_radius="10dp">
+            android:text="@string/bread_unit"/>
 
-            <RadioButton
-                android:id="@+id/gram_button"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gram"/>
+    </info.hoang8f.android.segmented.SegmentedGroup>
 
-            <RadioButton
-                android:id="@+id/bread_unit_button"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bread_unit"/>
-        </info.hoang8f.android.segmented.SegmentedGroup>
-
-    </RelativeLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_eatNow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_below="@+id/tv_product_result_value"
+        android:layout_marginTop="32dp"
+        android:text="@string/will_eat"/>
 
-        <Button
-            android:id="@+id/eatNow"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button"
-            android:text="@string/will_eat"
-            android:textColor="@android:color/white"/>
+    <Button
+        android:id="@+id/btn_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_eatNow"
+        android:layout_marginTop="8dp"
+        android:text="@string/favorite_product"/>
 
-        <Button
-            android:id="@+id/favorite"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/button"
-            android:text="@string/favorite_product"
-            android:textColor="@android:color/white"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
