@@ -6,10 +6,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
@@ -36,10 +36,14 @@ public class ProductDetailsFragment extends BaseFragment {
     RadioButton    btnBreadUnit;
     @Bind(R.id.segmented_gramm_xe)
     SegmentedGroup segmentedGroup;
+    @Bind(R.id.btn_minus)
+    Button btnMinus;
+    @Bind(R.id.btn_plus)
+    Button btnPlus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.product_details_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_product_details, container, false);
         ButterKnife.bind(this, v);
 
         Product product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
@@ -82,6 +86,7 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnBreadUnit.setSelected(true);
                 btnGram.setSelected(false);
+                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_gram));
             }
         });
 
@@ -90,6 +95,21 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnGram.setSelected(true);
                 btnBreadUnit.setSelected(false);
+                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_GL));
+            }
+        });
+
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO reduce value
+            }
+        });
+
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO increase value
             }
         });
 

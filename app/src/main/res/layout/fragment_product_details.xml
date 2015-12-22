@@ -8,6 +8,27 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="80dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/minus"
+            android:id="@+id/btn_minus"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/plus"
+            android:id="@+id/btn_plus"
+            android:layout_toEndOf="@+id/btn_minus"
+            android:layout_marginStart="60dp"/>
+
+    </RelativeLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

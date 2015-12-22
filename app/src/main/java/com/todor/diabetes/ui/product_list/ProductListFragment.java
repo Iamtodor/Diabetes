@@ -29,14 +29,14 @@ public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
     @Bind(R.id.recyclerView)
-            RecyclerView         recyclerView;
+    RecyclerView recyclerView;
     private ProductFunctionality dbManager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.product_list_layout, container, false);
+        View v = inflater.inflate(R.layout.fragment_product_list, container, false);
         ButterKnife.bind(this, v);
         dbManager = new ProductFunctionality(getActivity());
 
