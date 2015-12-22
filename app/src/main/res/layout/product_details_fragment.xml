@@ -8,20 +8,19 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp">
 
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tv_product_result_value"
         android:layout_gravity="center"
-        android:layout_marginBottom="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp">
+        android:layout_marginBottom="32dp">
 
         <EditText
             android:id="@+id/edt_product_value_for_calculation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/input_value"
+            android:hint="@string/edt_product_value_for_calculation"
             android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -71,22 +70,18 @@
 
     <Button
         android:id="@+id/btn_eatNow"
-        style="@style/myButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_product_result_value"
-        android:layout_margin="32dp"
+        android:layout_marginTop="32dp"
         android:text="@string/will_eat"/>
 
     <Button
         android:id="@+id/btn_favorite"
-        style="@style/myButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_eatNow"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
         android:text="@string/favorite_product"/>
 
 </RelativeLayout>
