@@ -5,46 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="120dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp">
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingTop="80dp">
+        android:layout_above="@+id/tv_product_result_value">
 
         <Button
             android:id="@+id/btn_minus"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/btn_minus_plus_size"
+            android:layout_height="@dimen/btn_minus_plus_size"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/minus_symbol"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/minus"/>
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/btn_minus"
+            android:layout_toStartOf="@+id/btn_plus">
+
+            <EditText
+                android:id="@+id/edt_product_value_for_calculation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_edt_product_value_for_calculation"
+                android:inputType="number"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btn_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_toEndOf="@+id/btn_minus"
-            android:text="@string/plus"/>
+            android:layout_width="@dimen/btn_minus_plus_size"
+            android:layout_height="@dimen/btn_minus_plus_size"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:text="@string/plus_symbol"/>
 
     </RelativeLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_product_result_value"
-        android:layout_gravity="center"
-        android:layout_marginBottom="32dp">
-
-        <EditText
-            android:id="@+id/edt_product_value_for_calculation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_edt_product_value_for_calculation"
-            android:inputType="number"/>
-
-    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/tv_product_result_value"
