@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ProductFunctionality {
 
-    private static final String TAG = ProductFunctionality.class.getSimpleName();
     private Context context;
 
     public ProductFunctionality(Context context) {
@@ -59,7 +58,7 @@ public class ProductFunctionality {
 
     public boolean checkIfProductExists(String productName) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        try(Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
+        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
                 DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
                 null, null, null)) {
             return cursor.getCount() > 0;
@@ -69,7 +68,7 @@ public class ProductFunctionality {
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        try(Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null)) {
+        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null)) {
             int nameColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_NAME);
             int carbohydratesColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES);
             int groupColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_GROUP);

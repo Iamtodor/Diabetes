@@ -21,17 +21,18 @@
     <string name="will_eat">Я съем это!</string>
     <string name="gram">грамм</string>
     <string name="bread_unit">ХЕ</string>
-    <string name="edt_product_value_for_calculation">Введите значение</string>
+    <string name="hint_edt_product_value_for_calculation">Введите значение</string>
 
 
-    <string name="product_gram">Количество продукта в граммах</string>
-    <string name="product_GL">Количество ХЕ в продукте</string>
+    <string name="hint_product_gram">Количество продукта в граммах</string>
+    <string name="hint_product_GL">Количество ХЕ в продукте</string>
     <string name="settings">Настройки</string>
     <string name="products">Продукты</string>
     <string name="table">Стол</string>
     <string name="input_value">Введите значение</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
+    <string name="search">Поиск</string>
 
 
 </resources>

@@ -15,18 +15,18 @@
         android:paddingTop="80dp">
 
         <Button
+            android:id="@+id/btn_minus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/minus"
-            android:id="@+id/btn_minus"/>
+            android:text="@string/minus"/>
 
         <Button
+            android:id="@+id/btn_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/plus"
-            android:id="@+id/btn_plus"
+            android:layout_marginStart="60dp"
             android:layout_toEndOf="@+id/btn_minus"
-            android:layout_marginStart="60dp"/>
+            android:text="@string/plus"/>
 
     </RelativeLayout>
 
@@ -41,7 +41,7 @@
             android:id="@+id/edt_product_value_for_calculation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edt_product_value_for_calculation"
+            android:hint="@string/hint_edt_product_value_for_calculation"
             android:inputType="number"/>
 
     </android.support.design.widget.TextInputLayout>

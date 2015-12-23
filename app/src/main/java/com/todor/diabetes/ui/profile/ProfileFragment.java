@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 import com.todor.diabetes.R;
 import com.todor.diabetes.ui.BaseFragment;
 
-/**
- * Created by todor on 20.12.15
- */
 public class ProfileFragment extends BaseFragment {
 
     @Nullable

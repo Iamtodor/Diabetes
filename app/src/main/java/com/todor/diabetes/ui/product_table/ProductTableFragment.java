@@ -8,10 +8,7 @@ import android.view.ViewGroup;
 import com.todor.diabetes.R;
 import com.todor.diabetes.ui.BaseFragment;
 
-/**
- * Created by todor on 20.12.15
- */
-public class ProductTableFragment extends BaseFragment{
+public class ProductTableFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

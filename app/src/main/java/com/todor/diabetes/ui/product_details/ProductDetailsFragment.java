@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.utils.Utils;
@@ -37,9 +36,9 @@ public class ProductDetailsFragment extends BaseFragment {
     @Bind(R.id.segmented_gramm_xe)
     SegmentedGroup segmentedGroup;
     @Bind(R.id.btn_minus)
-    Button btnMinus;
+    Button         btnMinus;
     @Bind(R.id.btn_plus)
-    Button btnPlus;
+    Button         btnPlus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,11 +71,11 @@ public class ProductDetailsFragment extends BaseFragment {
                 if (btnGram.isSelected()) {
                     float result = valueInt * Utils.getGlycemicIndex(getActivity());
                     productResultValue.setText(String.valueOf(df.format(result)) + " " +
-                                    getResources().getString(R.string.gram));
+                            getResources().getString(R.string.gram));
                 } else if (btnBreadUnit.isSelected()) {
                     float result = valueInt / Utils.getGlycemicIndex(getActivity());
                     productResultValue.setText(String.valueOf(df.format(result)) + " " +
-                                    getResources().getString(R.string.bread_unit));
+                            getResources().getString(R.string.bread_unit));
                 }
             }
         });
@@ -86,7 +85,7 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnBreadUnit.setSelected(true);
                 btnGram.setSelected(false);
-                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_gram));
+                edtProductValueForCalculation.setHint(getResources().getString(R.string.hint_product_gram));
             }
         });
 
@@ -95,7 +94,7 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnGram.setSelected(true);
                 btnBreadUnit.setSelected(false);
-                edtProductValueForCalculation.setHint(getResources().getString(R.string.product_GL));
+                edtProductValueForCalculation.setHint(getResources().getString(R.string.hint_product_GL));
             }
         });
 
@@ -121,9 +120,4 @@ public class ProductDetailsFragment extends BaseFragment {
         return getResources().getString(R.string.title_product_details);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        DbHelperSingleton.closeDb();
-    }
 }

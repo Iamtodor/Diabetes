@@ -24,17 +24,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_margin="10dp"
-                android:src="@drawable/edit_icon" />
+                android:src="@drawable/edit_icon"/>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/main_fragment"
-        android:name="com.todor.diabetes.ui.product_details.ProductDetailsFragment" />
+        android:name="com.todor.diabetes.ui.product_details.ProductDetailsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

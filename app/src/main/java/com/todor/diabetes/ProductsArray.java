@@ -2,22 +2,22 @@ package com.todor.diabetes;
 
 public class ProductsArray {
 
-    public static final String BACKER_PRODUCTS = "Хлебобулочные изделия";
-    public static final String CANNED_FISH = "Рыбные консервы";
-    public static final String ALCOHOL_DRINKS = "Алкогольные напитки";
-    public static final String FRESH_FISH = "Рыба свежая, охлажденная, мороженная";
-    public static final String FISH_PRODUCTS = "Рыбные продукты готовые";
-    public static final String FRUITS_VEGETABLES = "Фрукты и овощи, ягоды свежие";
-    public static final String COOKED_PRODUCTS = "Готовые блюда";
-    public static final String FRESH_MEAT = "Мясо свежее";
-    public static final String MEAT_PRODUCTS = "Мясопродукты готовые";
-    public static final String MILK_PRODUCTS = "Молочные продукты";
-    public static final String MUSHROOMS = "Грибы";
-    public static final String NUTS = "ОРЕХИ";
-    public static final String COOKED_VEGETABLES = "Овощи готовые";
+    public static final String BACKER_PRODUCTS     = "Хлебобулочные изделия";
+    public static final String CANNED_FISH         = "Рыбные консервы";
+    public static final String ALCOHOL_DRINKS      = "Алкогольные напитки";
+    public static final String FRESH_FISH          = "Рыба свежая, охлажденная, мороженная";
+    public static final String FISH_PRODUCTS       = "Рыбные продукты готовые";
+    public static final String FRUITS_VEGETABLES   = "Фрукты и овощи, ягоды свежие";
+    public static final String COOKED_PRODUCTS     = "Готовые блюда";
+    public static final String FRESH_MEAT          = "Мясо свежее";
+    public static final String MEAT_PRODUCTS       = "Мясопродукты готовые";
+    public static final String MILK_PRODUCTS       = "Молочные продукты";
+    public static final String MUSHROOMS           = "Грибы";
+    public static final String NUTS                = "ОРЕХИ";
+    public static final String COOKED_VEGETABLES   = "Овощи готовые";
     public static final String CEREALS_FLOUR_PASTA = "Крупы и зернобобовые, мука, макароны";
-    public static final String SAUCE = "Соусы";
-    public static final String DRIED_FRUITS = "Сухофрукты";
+    public static final String SAUCE               = "Соусы";
+    public static final String DRIED_FRUITS        = "Сухофрукты";
 
     public static String[][] getProductArray() {
         String[][] productsArray = new String[][]{

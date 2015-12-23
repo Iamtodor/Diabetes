@@ -3,17 +3,21 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:id="@+id/first_fragment"
-            android:title="First fragment" />
+        <item
+            android:id="@+id/first_fragment"
+            android:title="First fragment"/>
 
-        <item android:id="@+id/second_fragment"
-            android:title="Second fragment" />
+        <item
+            android:id="@+id/second_fragment"
+            android:title="Second fragment"/>
 
-        <item android:id="@+id/third_fragment"
-            android:title="Third fragment" />
+        <item
+            android:id="@+id/third_fragment"
+            android:title="Third fragment"/>
 
-        <item android:id="@+id/fourth_fragment"
-            android:title="Fourth fragment" />
+        <item
+            android:id="@+id/fourth_fragment"
+            android:title="Fourth fragment"/>
 
     </group>
 

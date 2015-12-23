@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.utils.Utils;
@@ -20,10 +21,14 @@ import butterknife.ButterKnife;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    @Bind(R.id.product_name) EditText productNameEditText;
-    @Bind(R.id.product_carbohydrates) EditText productCarbohydratesEditText;
-    @Bind(R.id.product_group) EditText productGroupEditText;
-    @Bind(R.id.add_button) Button   addButton;
+    @Bind(R.id.product_name)
+            EditText             productNameEditText;
+    @Bind(R.id.product_carbohydrates)
+            EditText             productCarbohydratesEditText;
+    @Bind(R.id.product_group)
+            EditText             productGroupEditText;
+    @Bind(R.id.add_button)
+            Button               addButton;
     private ProductFunctionality dbManager;
 
     @Override
@@ -72,5 +77,11 @@ public class AddProductActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         Utils.hideSoftKeyboard(this);
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DbHelperSingleton.closeDb();
     }
 }

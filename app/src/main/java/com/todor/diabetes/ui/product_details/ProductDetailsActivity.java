@@ -10,14 +10,12 @@ import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.models.Product;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by todor on 17.12.15
- */
 public class ProductDetailsActivity extends AppCompatActivity {
 
     @Bind(R.id.edit)
@@ -44,6 +42,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DbHelperSingleton.closeDb();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

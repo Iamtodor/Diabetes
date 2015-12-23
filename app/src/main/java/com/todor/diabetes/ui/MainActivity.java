@@ -23,6 +23,7 @@ import android.view.View;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.ui.product_list.ProductListFragment;
 import com.todor.diabetes.ui.product_table.ProductTableFragment;
 import com.todor.diabetes.ui.profile.ProfileFragment;
@@ -137,6 +138,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onTouchEvent(MotionEvent event) {
         Utils.hideSoftKeyboard(this);
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DbHelperSingleton.closeDb();
     }
 }
 

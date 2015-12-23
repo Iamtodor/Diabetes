@@ -5,15 +5,15 @@
         <item
             android:id="@+id/productList"
             android:icon="@drawable/product"
-            android:title="@string/products" />
+            android:title="@string/products"/>
         <item
             android:id="@+id/currentEating"
             android:icon="@drawable/table"
-            android:title="@string/table" />
+            android:title="@string/table"/>
         <item
             android:id="@+id/profile"
             android:icon="@drawable/table"
-            android:title="@string/title_profile" />
+            android:title="@string/title_profile"/>
     </group>
 
 </menu>
