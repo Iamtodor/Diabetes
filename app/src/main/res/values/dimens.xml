@@ -10,6 +10,7 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="lv_itemHeight">46dp</dimen>
+    <dimen name="btn_minus_plus_size">48dp</dimen>
 
 
 </resources>

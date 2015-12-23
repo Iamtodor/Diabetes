@@ -30,8 +30,8 @@
     <string name="products">Продукты</string>
     <string name="table">Стол</string>
     <string name="input_value">Введите значение</string>
-    <string name="minus">-</string>
-    <string name="plus">+</string>
+    <string name="minus_symbol">-</string>
+    <string name="plus_symbol">+</string>
 
 
 </resources>
