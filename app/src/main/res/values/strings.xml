@@ -33,5 +33,6 @@
 
     <string name="minus_symbol">-</string>
     <string name="plus_symbol">+</string>
+    <string name="search">Поиск</string>
 
 </resources>

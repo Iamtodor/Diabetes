@@ -11,7 +11,8 @@ public class Product implements Parcelable {
             return new Product(
                     in.readString(),
                     in.readFloat(),
-                    in.readString()
+                    in.readString(),
+                    Boolean.parseBoolean(in.readString())
             );
         }
 
@@ -20,20 +21,23 @@ public class Product implements Parcelable {
             return new Product[size];
         }
     };
-    public String name;
-    public float  carbohydrates;
-    public String group;
+    public String  name;
+    public float   carbohydrates;
+    public String  group;
+    public boolean isFavorite;
 
-    public Product(String productName, float productCarbohydrates, String productGroup) {
+    public Product(String productName, float productCarbohydrates, String productGroup, boolean isFavorite) {
         this.name = productName;
         this.carbohydrates = productCarbohydrates;
         this.group = productGroup;
+        this.isFavorite = isFavorite;
     }
 
     protected Product(Parcel in) {
         name = in.readString();
         carbohydrates = in.readFloat();
         group = in.readString();
+        isFavorite = Boolean.parseBoolean(in.readString());
     }
 
     @Override
@@ -42,6 +46,7 @@ public class Product implements Parcelable {
                 "carbohydrates=" + carbohydrates +
                 ", name='" + name + '\'' +
                 ", group='" + group + '\'' +
+                ", isFavorite=" + isFavorite +
                 '}';
     }
 
@@ -50,6 +55,7 @@ public class Product implements Parcelable {
         dest.writeString(name);
         dest.writeFloat(carbohydrates);
         dest.writeString(group);
+        dest.writeString(String.valueOf(isFavorite));
     }
 
 

@@ -1,6 +1,7 @@
 package com.todor.diabetes.ui.product_details;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -39,6 +40,8 @@ public class ProductDetailsFragment extends BaseFragment {
     Button         btnMinus;
     @Bind(R.id.btn_plus)
     Button         btnPlus;
+    @Bind(R.id.edt_wrapper)
+    TextInputLayout edt_product_value_wrapper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 btnBreadUnit.setSelected(true);
                 btnGram.setSelected(false);
                 edtProductValueForCalculation.setHint(getResources().getString(R.string.hint_product_gram));
+                edt_product_value_wrapper.setHint(getResources().getString(R.string.hint_product_gram));
             }
         });
 
@@ -95,6 +99,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 btnGram.setSelected(true);
                 btnBreadUnit.setSelected(false);
                 edtProductValueForCalculation.setHint(getResources().getString(R.string.hint_product_GL));
+                edt_product_value_wrapper.setHint(getResources().getString(R.string.hint_product_GL));
             }
         });
 
