@@ -18,8 +18,7 @@ import butterknife.ButterKnife;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    @Bind(R.id.edit)
-    ImageView editProductImageView;
+    @Bind(R.id.edit) ImageView editProductImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

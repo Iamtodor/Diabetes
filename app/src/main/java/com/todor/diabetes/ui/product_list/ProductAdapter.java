@@ -22,10 +22,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.listener = listener;
     }
 
-    public void setAdapter(ArrayList<Product> products) {
-        productList = products;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_product, parent, false);

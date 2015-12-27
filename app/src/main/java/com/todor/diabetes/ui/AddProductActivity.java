@@ -21,15 +21,11 @@ import butterknife.ButterKnife;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    @Bind(R.id.product_name)
-            EditText             productNameEditText;
-    @Bind(R.id.product_carbohydrates)
-            EditText             productCarbohydratesEditText;
-    @Bind(R.id.product_group)
-            EditText             productGroupEditText;
-    @Bind(R.id.add_button)
-            Button               addButton;
-    private ProductFunctionality dbManager;
+    @Bind(R.id.product_name)          EditText             productNameEditText;
+    @Bind(R.id.product_carbohydrates) EditText             productCarbohydratesEditText;
+    @Bind(R.id.product_group)         EditText             productGroupEditText;
+    @Bind(R.id.add_button)            Button               addButton;
+    private                           ProductFunctionality dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +47,7 @@ public class AddProductActivity extends AppCompatActivity {
                     if (!dbManager.checkIfProductExists(productName)) {
                         float floatProductCarbohydrates = Float.parseFloat(productCarbohydrates);
                         Product product = new Product(productName, floatProductCarbohydrates,
-                                productGroup);
+                                productGroup, false);
                         dbManager.insertProduct(product);
                         AlertDialog.Builder builder = new AlertDialog.Builder(AddProductActivity.this);
                         builder.setMessage(productName + " was successfully added into your list!");

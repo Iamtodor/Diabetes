@@ -24,6 +24,7 @@ public class ProductFunctionality {
         contentValues.put(DbScheme.PRODUCT_NAME, product.name);
         contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.carbohydrates);
         contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
+        contentValues.put(DbScheme.PRODUCT_IS_FAVORITE, product.isFavorite);
         db.insert(DbScheme.PRODUCT_TABLE, null, contentValues);
     }
 
@@ -36,7 +37,8 @@ public class ProductFunctionality {
             if (cursor.moveToFirst()) {
                 product = new Product(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_NAME)),
                         cursor.getFloat(cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES)),
-                        cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)));
+                        cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)),
+                        Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_IS_FAVORITE))));
             }
         }
         return product;
@@ -48,6 +50,7 @@ public class ProductFunctionality {
         contentValues.put(DbScheme.PRODUCT_NAME, product.name);
         contentValues.put(DbScheme.PRODUCT_CARBOHYDRATES, product.carbohydrates);
         contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
+        contentValues.put(DbScheme.PRODUCT_IS_FAVORITE, product.isFavorite);
         db.update(DbScheme.PRODUCT_TABLE, contentValues, DbScheme.PRODUCT_NAME + "=?", new String[]{product.name});
     }
 
@@ -72,12 +75,14 @@ public class ProductFunctionality {
             int nameColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_NAME);
             int carbohydratesColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES);
             int groupColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_GROUP);
+            int favoriteColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_IS_FAVORITE);
 
             while (cursor.moveToNext()) {
                 productList.add(
                         new Product(cursor.getString(nameColumnIndex),
                                 cursor.getFloat(carbohydratesColumnIndex),
-                                cursor.getString(groupColumnIndex))
+                                cursor.getString(groupColumnIndex),
+                                Boolean.parseBoolean(cursor.getString(favoriteColumnIndex)))
                 );
             }
         }

@@ -41,7 +41,7 @@ public class Utils {
     }
 
     public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
@@ -51,7 +51,8 @@ public class Utils {
             Product product = new Product(
                     products[i][0], /* name */
                     Float.parseFloat(products[i][1]), /* carbohydrates */
-                    products[i][2]); /* group */
+                    products[i][2], /* group */
+                    false);  /* favorite */
             new ProductFunctionality(context).insertProduct(product);
         }
     }

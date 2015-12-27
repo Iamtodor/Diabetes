@@ -28,9 +28,8 @@ import butterknife.ButterKnife;
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>> {
 
-    @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
-    private ProductFunctionality dbManager;
+    @Bind(R.id.recyclerView) RecyclerView         recyclerView;
+    private                  ProductFunctionality dbManager;
 
     @Nullable
     @Override
