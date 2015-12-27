@@ -71,11 +71,11 @@ public class ProductDetailsFragment extends BaseFragment {
 
                 }
                 if (btnGram.isSelected()) {
-                    float result = valueInt * Utils.getGlycemicIndex(getActivity());
+                    float result = valueInt * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates/100);
                     productResultValue.setText(String.valueOf(df.format(result)) + " " +
                             getResources().getString(R.string.gram));
                 } else if (btnBreadUnit.isSelected()) {
-                    float result = valueInt / Utils.getGlycemicIndex(getActivity());
+                    float result = valueInt * (product.carbohydrates/100)/ Utils.getGlycemicIndex(getActivity());
                     productResultValue.setText(String.valueOf(df.format(result)) + " " +
                             getResources().getString(R.string.bread_unit));
                 }
@@ -87,7 +87,6 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnBreadUnit.setSelected(true);
                 btnGram.setSelected(false);
-                edtProductValueForCalculation.setHint(getResources().getString(R.string.hint_product_gram));
                 edt_product_value_wrapper.setHint(getResources().getString(R.string.hint_product_gram));
             }
         });
@@ -97,7 +96,6 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnGram.setSelected(true);
                 btnBreadUnit.setSelected(false);
-                edtProductValueForCalculation.setHint(getResources().getString(R.string.hint_product_GL));
                 edt_product_value_wrapper.setHint(getResources().getString(R.string.hint_product_GL));
             }
         });
