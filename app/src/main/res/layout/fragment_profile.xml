@@ -11,6 +11,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="60dp"
         android:padding="10dp"
+        android:id="@+id/btn_settings"
         android:text="@string/settings"/>
 
 </LinearLayout>

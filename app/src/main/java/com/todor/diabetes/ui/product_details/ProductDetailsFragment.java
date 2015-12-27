@@ -68,7 +68,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 try {
                     valueInt = Integer.parseInt(value);
                 } catch (NumberFormatException e) {
-
+                    Toast.makeText(getActivity(), "Введите корректное значение", Toast.LENGTH_SHORT).show();
                 }
                 if (btnGram.isSelected()) {
                     float result = valueInt * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates/100);
