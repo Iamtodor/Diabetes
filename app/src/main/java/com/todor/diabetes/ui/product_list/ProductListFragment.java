@@ -9,12 +9,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
@@ -37,6 +38,7 @@ public class ProductListFragment extends BaseFragment implements
 
         View v = inflater.inflate(R.layout.fragment_product_list, container, false);
         ButterKnife.bind(this, v);
+        setHasOptionsMenu(true);
         dbManager = new ProductFunctionality(getActivity());
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
@@ -78,8 +80,8 @@ public class ProductListFragment extends BaseFragment implements
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        DbHelperSingleton.closeDb();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.findItem(R.id.action_search).setVisible(true);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

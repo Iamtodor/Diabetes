@@ -80,6 +80,7 @@ public class ProductDetailsFragment extends BaseFragment {
                             getResources().getString(R.string.bread_unit));
                 }
             }
+
         });
 
         btnBreadUnit.setOnClickListener(new View.OnClickListener() {

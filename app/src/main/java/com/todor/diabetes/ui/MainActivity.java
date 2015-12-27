@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         menuInflater.inflate(R.menu.search, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-
+        searchItem.setVisible(false);
         SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
         SearchView searchView = null;
