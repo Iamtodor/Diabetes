@@ -1,6 +1,8 @@
 package com.todor.diabetes.ui.product_list;
 
 import android.app.LoaderManager;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
@@ -83,5 +86,9 @@ public class ProductListFragment extends BaseFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.action_search).setVisible(true);
         super.onCreateOptionsMenu(menu, inflater);
+
+        SearchManager manager = (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(manager.getSearchableInfo(getContext().getC));
     }
 }

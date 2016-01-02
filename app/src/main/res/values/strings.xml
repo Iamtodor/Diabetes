@@ -36,5 +36,7 @@
     <string name="plus_symbol">+</string>
     <string name="search">Поиск</string>
     <string name="update_glycemic_index">Обновить</string>
+    <string name="search_hint">Введите название продукта</string>
+    <string name="app_label">Product name</string>
 
 </resources>
