@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
@@ -29,17 +28,17 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class ProductDetailsFragment extends BaseFragment {
 
-    @Bind(R.id.edt_product_value_for_calculation) EditText        edtProductValueForCalculation;
-    @Bind(R.id.tv_product_result_value)           TextView        productResultValue;
-    @Bind(R.id.btn_gram)                          RadioButton     btnGram;
-    @Bind(R.id.btn_bread_unit)                    RadioButton     btnBreadUnit;
-    @Bind(R.id.segmented_gramm_xe)                SegmentedGroup  segmentedGroup;
-    @Bind(R.id.btn_minus)                         Button          btnMinus;
-    @Bind(R.id.btn_plus)                          Button          btnPlus;
-    @Bind(R.id.edt_wrapper)                       TextInputLayout edt_product_value_wrapper;
-    @Bind(R.id.btn_eatNow)                        Button          btnEatNow;
-    @Bind(R.id.btn_favorite)                      Button          btnFavorite;
-    private                           ProductFunctionality dbManager;
+    @Bind(R.id.edt_product_value_for_calculation) EditText edtProductValueForCalculation;
+    @Bind(R.id.tv_product_result_value) TextView productResultValue;
+    @Bind(R.id.btn_gram) RadioButton btnGram;
+    @Bind(R.id.btn_bread_unit) RadioButton btnBreadUnit;
+    @Bind(R.id.segmented_gramm_xe) SegmentedGroup segmentedGroup;
+    @Bind(R.id.btn_minus) Button btnMinus;
+    @Bind(R.id.btn_plus) Button btnPlus;
+    @Bind(R.id.edt_wrapper) TextInputLayout edt_product_value_wrapper;
+    @Bind(R.id.btn_eatNow) Button btnEatNow;
+    @Bind(R.id.btn_favorite) Button btnFavorite;
+    private ProductFunctionality dbManager;
 
 
     @Override
@@ -62,25 +61,24 @@ public class ProductDetailsFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String value = edtProductValueForCalculation.getText().toString();
+                String value = s.toString();
                 int valueInt = 0;
                 DecimalFormat df = new DecimalFormat("#.##");
                 try {
                     valueInt = Integer.parseInt(value);
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getActivity(), "Введите корректное значение", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.edit_correct_value, Toast.LENGTH_SHORT).show();
                 }
                 if (btnGram.isSelected()) {
-                    float result = valueInt * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates/100);
+                    float result = valueInt * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
                     productResultValue.setText(String.valueOf(df.format(result)) + " " +
-                            getResources().getString(R.string.gram));
+                            R.string.gram);
                 } else if (btnBreadUnit.isSelected()) {
-                    float result = valueInt * (product.carbohydrates/100)/ Utils.getGlycemicIndex(getActivity());
+                    float result = valueInt * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
                     productResultValue.setText(String.valueOf(df.format(result)) + " " +
-                            getResources().getString(R.string.bread_unit));
+                            R.string.bread_unit);
                 }
             }
-
         });
 
         btnBreadUnit.setOnClickListener(new View.OnClickListener() {
@@ -127,10 +125,10 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 if (!product.isFavorite) {
                     product.isFavorite = true;
-                    Toast.makeText(getActivity(), "Продукт был добавлен в список", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
                 } else {
                     product.isFavorite = false;
-                    Toast.makeText(getActivity(), "Продукт был удален из списка", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.deleted_from_favorite, Toast.LENGTH_SHORT).show();
                 }
                 dbManager.updateProduct(product);
             }

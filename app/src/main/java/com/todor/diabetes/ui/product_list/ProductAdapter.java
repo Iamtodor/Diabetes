@@ -9,12 +9,11 @@ import android.widget.TextView;
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    private List<Product>                  productList;
+    private List<Product> productList;
     private OnProductListItemClickListener listener;
 
     public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
@@ -34,12 +33,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productName.setText(product.name);
         holder.productCarbonates.setText(String.valueOf(product.carbohydrates));
         holder.bind(product, listener);
-
     }
 
     @Override
     public int getItemCount() {
         return productList.size();
+    }
+
+    public Product removeItem(int position) {
+        final Product product = productList.remove(position);
+        notifyItemRemoved(position);
+        return product;
+    }
+
+    public void addItem(int position, Product product) {
+        productList.add(position, product);
+        notifyItemInserted(position);
+    }
+
+    public void animateTo() {
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

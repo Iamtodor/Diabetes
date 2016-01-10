@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    @Bind(R.id.product_name)          EditText             productNameEditText;
-    @Bind(R.id.product_carbohydrates) EditText             productCarbohydratesEditText;
-    @Bind(R.id.product_group)         EditText             productGroupEditText;
-    @Bind(R.id.add_button)            Button               addButton;
-    private                           ProductFunctionality dbManager;
+    @Bind(R.id.product_name) EditText productNameEditText;
+    @Bind(R.id.product_carbohydrates) EditText productCarbohydratesEditText;
+    @Bind(R.id.product_group) EditText productGroupEditText;
+    @Bind(R.id.add_button) Button addButton;
+    private ProductFunctionality dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class AddProductActivity extends AppCompatActivity {
                                 productGroup, false);
                         dbManager.insertProduct(product);
                         AlertDialog.Builder builder = new AlertDialog.Builder(AddProductActivity.this);
-                        builder.setMessage(productName + " was successfully added into your list!");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        builder.setMessage(productName + getString(R.string.added_to_list));
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
@@ -60,10 +60,10 @@ public class AddProductActivity extends AppCompatActivity {
                         builder.setCancelable(false);
                         builder.show();
                     } else {
-                        Snackbar.make(v, "This product is already in your list", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(v, R.string.product_exists, Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
-                    Snackbar.make(v, "Please fill in all of the fields", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, R.string.fill_all_fields, Snackbar.LENGTH_SHORT).show();
                 }
             }
         });

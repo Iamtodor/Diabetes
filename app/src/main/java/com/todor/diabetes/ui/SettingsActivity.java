@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 public class SettingsActivity extends AppCompatActivity {
 
     @Bind(R.id.edt_glycemic_index) EditText edtGlycemicIndex;
-    @Bind(R.id.btn_update)         Button   btnUpdateGlycemicIndex;
+    @Bind(R.id.btn_update) Button btnUpdateGlycemicIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +32,10 @@ public class SettingsActivity extends AppCompatActivity {
                 try {
                     valueFloat = Float.parseFloat(value);
                 } catch (NumberFormatException e) {
-                    Toast.makeText(SettingsActivity.this, "Введите корректное значение", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, R.string.edit_correct_value, Toast.LENGTH_SHORT).show();
                 }
                 Utils.setGlycemicIndex(SettingsActivity.this, valueFloat);
-                Toast.makeText(SettingsActivity.this, "Индекс был успешно обновлен", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this, R.string.index_was_updated, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

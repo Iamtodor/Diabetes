@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DbHelperSingleton {
 
-    private static DbHelper       dbHelper;
+    private static DbHelper dbHelper;
     private static SQLiteDatabase db;
 
     private DbHelperSingleton() {

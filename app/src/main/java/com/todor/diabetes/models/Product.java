@@ -21,9 +21,9 @@ public class Product implements Parcelable {
             return new Product[size];
         }
     };
-    public String  name;
-    public float   carbohydrates;
-    public String  group;
+    public String name;
+    public float carbohydrates;
+    public String group;
     public boolean isFavorite;
 
     public Product(String productName, float productCarbohydrates, String productGroup, boolean isFavorite) {

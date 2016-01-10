@@ -38,5 +38,13 @@
     <string name="update_glycemic_index">Обновить</string>
     <string name="search_hint">Введите название продукта</string>
     <string name="app_label">Product name</string>
+    <string name="edit_correct_value">Введите корректное значение</string>
+    <string name="added_to_favorite">Продукт был добавлен в список</string>
+    <string name="deleted_from_favorite">Продукт был удален из списка</string>
+    <string name="added_to_list">" was successfully added into your list!"</string>
+    <string name="ok">Ok</string>
+    <string name="product_exists">This product is already in your list</string>
+    <string name="fill_all_fields">Please fill in all of the fields</string>
+    <string name="index_was_updated">Индекс был успешно обновлен</string>
 
 </resources>
