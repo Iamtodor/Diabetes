@@ -19,8 +19,13 @@
     <string name="product_group">Группа продукта</string>
     <string name="favorite_product">Любимый продукт</string>
     <string name="will_eat">Я съем это!</string>
+
+    <string name="value_gram">%.2f грамм</string>
+    <string name="value_bread_unit">%.2f ХЕ</string>
+
     <string name="gram">грамм</string>
     <string name="bread_unit">ХЕ</string>
+
     <string name="hint_edt_product_value_for_calculation">Введите значение</string>
     <string name="hint_edt_glycemical_index">Гликемический индекс</string>
 
