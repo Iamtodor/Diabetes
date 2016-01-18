@@ -50,34 +50,29 @@ public class ProductDetailsFragment extends BaseFragment {
 
         edtProductValueForCalculation.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String value = s.toString();
                 int valueInt = 0;
-                DecimalFormat df = new DecimalFormat("#.##");
                 try {
                     valueInt = Integer.parseInt(value);
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), R.string.edit_correct_value, Toast.LENGTH_SHORT).show();
                 }
+
                 if (btnGram.isSelected()) {
                     float result = valueInt * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
-                    productResultValue.setText(String.valueOf(df.format(result)) + " " +
-                            R.string.gram);
+                    productResultValue.setText(String.format(getString(R.string.value_gram), result));
                 } else if (btnBreadUnit.isSelected()) {
                     float result = valueInt * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
-                    productResultValue.setText(String.valueOf(df.format(result)) + " " +
-                            R.string.bread_unit);
+                    productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
                 }
+
             }
         });
 

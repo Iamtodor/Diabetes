@@ -80,6 +80,7 @@
         segmentedgroup:sc_corner_radius="10dp">
 
         <RadioButton
+            android:checked="true"
             android:id="@+id/btn_gram"
             style="@style/RadioButton"
             android:layout_width="wrap_content"
