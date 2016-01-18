@@ -47,13 +47,13 @@ public class Utils {
 
     public static void writeDataIntoDataBase(Context context) {
         String[][] products = ProductsArray.getProductArray();
-        for (int i = 0; i < products.length; i++) {
-            Product product = new Product(
-                    products[i][0], /* name */
-                    Float.parseFloat(products[i][1]), /* carbohydrates */
-                    products[i][2], /* group */
-                    false);  /* favorite */
-            new ProductFunctionality(context).insertProduct(product);
+        for (String[] product : products) {
+            Product currentProduct = new Product(
+                    product[0], /* name */
+                    Float.parseFloat(product[1]), /* carbohydrates */
+                    product[2], /* group */
+                    false); /* favorite" */
+            new ProductFunctionality(context).insertProduct(currentProduct);
         }
     }
 

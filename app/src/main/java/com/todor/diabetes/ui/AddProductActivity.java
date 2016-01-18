@@ -21,10 +21,15 @@ import butterknife.ButterKnife;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    @Bind(R.id.product_name) EditText productNameEditText;
-    @Bind(R.id.product_carbohydrates) EditText productCarbohydratesEditText;
-    @Bind(R.id.product_group) EditText productGroupEditText;
-    @Bind(R.id.add_button) Button addButton;
+    @Bind(R.id.product_name)
+    EditText productNameEditText;
+    @Bind(R.id.product_carbohydrates)
+    EditText productCarbohydratesEditText;
+    @Bind(R.id.product_group)
+    EditText productGroupEditText;
+    @Bind(R.id.add_button)
+    Button addButton;
+
     private ProductFunctionality dbManager;
 
     @Override
