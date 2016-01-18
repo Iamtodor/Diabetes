@@ -20,8 +20,6 @@ import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.utils.Utils;
 
-import java.text.DecimalFormat;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import info.hoang8f.android.segmented.SegmentedGroup;
@@ -40,7 +38,6 @@ public class ProductDetailsFragment extends BaseFragment {
     @Bind(R.id.btn_favorite) Button btnFavorite;
     private ProductFunctionality dbManager;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product_details, container, false);
@@ -50,10 +47,12 @@ public class ProductDetailsFragment extends BaseFragment {
 
         edtProductValueForCalculation.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -81,7 +80,15 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnBreadUnit.setSelected(true);
                 btnGram.setSelected(false);
-                edt_product_value_wrapper.setHint(getResources().getString(R.string.hint_product_gram));
+                int value = 0;
+                try {
+                    value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                float result = value * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
+                productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
+                edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
             }
         });
 
@@ -90,7 +97,15 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 btnGram.setSelected(true);
                 btnBreadUnit.setSelected(false);
-                edt_product_value_wrapper.setHint(getResources().getString(R.string.hint_product_GL));
+                int value = 0;
+                try {
+                    value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                float result = value * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
+                productResultValue.setText(String.format(getString(R.string.value_gram), result));
+                edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
             }
         });
 
