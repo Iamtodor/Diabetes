@@ -112,14 +112,16 @@ public class ProductDetailsFragment extends BaseFragment {
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO reduce value
+                int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+                edtProductValueForCalculation.setText(String.valueOf(value - 1));
             }
         });
 
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO increase value
+                int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+                edtProductValueForCalculation.setText(String.valueOf(value + 1));
             }
         });
 
