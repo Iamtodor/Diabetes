@@ -42,6 +42,7 @@ public class ProductDetailsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product_details, container, false);
         ButterKnife.bind(this, v);
+        dbManager = new ProductFunctionality(getActivity());
 
         final Product product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
 
@@ -112,16 +113,24 @@ public class ProductDetailsFragment extends BaseFragment {
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
-                edtProductValueForCalculation.setText(String.valueOf(value - 1));
+                try {
+                    int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+                    edtProductValueForCalculation.setText(String.valueOf(value - 1));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getActivity(), getString(R.string.edit_correct_value), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
-                edtProductValueForCalculation.setText(String.valueOf(value + 1));
+                try {
+                    int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+                    edtProductValueForCalculation.setText(String.valueOf(value + 1));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getActivity(), getString(R.string.edit_correct_value), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
