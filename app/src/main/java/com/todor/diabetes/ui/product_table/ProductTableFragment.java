@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.ui.BaseFragment;
 
 public class ProductTableFragment extends BaseFragment {
@@ -21,4 +22,5 @@ public class ProductTableFragment extends BaseFragment {
     public String getFragmentTitle() {
         return getResources().getString(R.string.title_product_table);
     }
+
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
@@ -162,5 +163,4 @@ public class ProductDetailsFragment extends BaseFragment {
     public String getFragmentTitle() {
         return getResources().getString(R.string.title_product_details);
     }
-
 }

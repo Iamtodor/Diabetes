@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,8 +21,10 @@ import android.view.ViewGroup;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
+import com.todor.diabetes.ui.AddProductActivity;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.ui.product_details.ProductDetailsActivity;
 
@@ -38,11 +42,20 @@ public class ProductListFragment extends BaseFragment implements
     private ProductFunctionality dbManager;
     private List<Product> productList = null;
     private ProductAdapter productAdapter = null;
+    private FloatingActionButton fab;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product_list, container, false);
+        fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddProductActivity.class));
+            }
+        });
+
         ButterKnife.bind(this, v);
         setHasOptionsMenu(true);
         dbManager = new ProductFunctionality(getActivity());
