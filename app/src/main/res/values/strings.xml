@@ -51,5 +51,6 @@
     <string name="product_exists">This product is already in your list</string>
     <string name="fill_all_fields">Please fill in all of the fields</string>
     <string name="index_was_updated">Индекс был успешно обновлен</string>
+    <string name="edit_positive_value">Введите положительное число</string>
 
 </resources>
