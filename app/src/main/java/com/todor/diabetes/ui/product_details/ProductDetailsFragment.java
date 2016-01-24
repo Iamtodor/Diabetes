@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.BaseFragment;
@@ -23,6 +22,8 @@ import com.todor.diabetes.utils.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class ProductDetailsFragment extends BaseFragment {
@@ -31,21 +32,22 @@ public class ProductDetailsFragment extends BaseFragment {
     @Bind(R.id.tv_product_result_value) TextView productResultValue;
     @Bind(R.id.btn_gram) RadioButton btnGram;
     @Bind(R.id.btn_bread_unit) RadioButton btnBreadUnit;
-    @Bind(R.id.segmented_gramm_xe) SegmentedGroup segmentedGroup;
     @Bind(R.id.btn_minus) Button btnMinus;
     @Bind(R.id.btn_plus) Button btnPlus;
     @Bind(R.id.edt_wrapper) TextInputLayout edt_product_value_wrapper;
     @Bind(R.id.btn_eatNow) Button btnEatNow;
     @Bind(R.id.btn_favorite) Button btnFavorite;
+    @Bind(R.id.segmented_gramm_xe) SegmentedGroup segmentedGrammXe;
+
     private ProductFunctionality dbManager;
+    private Product product;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product_details, container, false);
         ButterKnife.bind(this, v);
         dbManager = new ProductFunctionality(getActivity());
-
-        final Product product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
+        product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
 
         edtProductValueForCalculation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -66,97 +68,80 @@ public class ProductDetailsFragment extends BaseFragment {
                     Toast.makeText(getActivity(), R.string.edit_correct_value, Toast.LENGTH_SHORT).show();
                 }
 
-                if (btnGram.isSelected()) {
+                if (btnGram.isChecked()) {
                     float result = valueInt * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
                     productResultValue.setText(String.format(getString(R.string.value_gram), result));
-                } else if (btnBreadUnit.isSelected()) {
+                } else if (btnBreadUnit.isChecked()) {
                     float result = valueInt * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
                     productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
                 }
-
-            }
-        });
-
-        btnBreadUnit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnBreadUnit.setSelected(true);
-                btnGram.setSelected(false);
-                int value = 0;
-                try {
-                    value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                float result = value * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
-                productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
-                edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
-            }
-        });
-
-        btnGram.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnGram.setSelected(true);
-                btnBreadUnit.setSelected(false);
-                int value = 0;
-                try {
-                    value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                float result = value * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
-                productResultValue.setText(String.format(getString(R.string.value_gram), result));
-                edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
-            }
-        });
-
-        btnMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
-                    edtProductValueForCalculation.setText(String.valueOf(value - 1));
-                } catch (NumberFormatException e) {
-                    Toast.makeText(getActivity(), getString(R.string.edit_correct_value), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
-                    edtProductValueForCalculation.setText(String.valueOf(value + 1));
-                } catch (NumberFormatException e) {
-                    Toast.makeText(getActivity(), getString(R.string.edit_correct_value), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnEatNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!product.isFavorite) {
-                    product.isFavorite = true;
-                    Toast.makeText(getActivity(), R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
-                } else {
-                    product.isFavorite = false;
-                    Toast.makeText(getActivity(), R.string.deleted_from_favorite, Toast.LENGTH_SHORT).show();
-                }
-                dbManager.updateProduct(product);
             }
         });
 
         return v;
+    }
+
+    @OnCheckedChanged(R.id.btn_bread_unit)
+    public void btnBreadUnitClick() {
+        int value = 0;
+        try {
+            value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        float result = value * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
+        productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
+        edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
+    }
+
+    @OnCheckedChanged(R.id.btn_gram)
+    public void btnGramClick() {
+        int value = 0;
+        try {
+            value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        float result = value * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
+        productResultValue.setText(String.format(getString(R.string.value_gram), result));
+        edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
+    }
+
+    @OnClick(R.id.btn_plus)
+    public void btnPlusClick() {
+        try {
+            int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+            edtProductValueForCalculation.setText(String.valueOf(value + 1));
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), getString(R.string.edit_correct_value), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_minus)
+    public void btnMinusClick() {
+        try {
+            int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
+            edtProductValueForCalculation.setText(String.valueOf(value - 1));
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), getString(R.string.edit_correct_value), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_favorite)
+    public void btnFavoriteClick() {
+        if (!product.isFavorite) {
+            product.isFavorite = true;
+            Toast.makeText(getActivity(), R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
+        } else {
+            product.isFavorite = false;
+            Toast.makeText(getActivity(), R.string.deleted_from_favorite, Toast.LENGTH_SHORT).show();
+        }
+        dbManager.updateProduct(product);
+    }
+
+    @OnClick(R.id.btn_eatNow)
+    public void btnEatNowClick() {
+
     }
 
     @Override

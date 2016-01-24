@@ -22,8 +22,8 @@
             android:text="@string/minus_symbol"/>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
             android:id="@+id/edt_wrapper"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
@@ -75,16 +75,17 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="12dp"
+        android:checkedButton="@+id/btn_gram"
         android:orientation="horizontal"
         segmentedgroup:sc_border_width="2dp"
         segmentedgroup:sc_corner_radius="10dp">
 
         <RadioButton
-            android:checked="true"
             android:id="@+id/btn_gram"
             style="@style/RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/gram"/>
 
         <RadioButton

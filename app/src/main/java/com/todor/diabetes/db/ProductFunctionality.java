@@ -26,6 +26,7 @@ public class ProductFunctionality {
         contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
         contentValues.put(DbScheme.PRODUCT_IS_FAVORITE, product.isFavorite);
         db.insert(DbScheme.PRODUCT_TABLE, null, contentValues);
+        DbHelperSingleton.closeDb();
     }
 
     public Product getProduct(String productName) {
@@ -41,6 +42,7 @@ public class ProductFunctionality {
                         Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_IS_FAVORITE))));
             }
         }
+        DbHelperSingleton.closeDb();
         return product;
     }
 
@@ -52,11 +54,13 @@ public class ProductFunctionality {
         contentValues.put(DbScheme.PRODUCT_GROUP, product.group);
         contentValues.put(DbScheme.PRODUCT_IS_FAVORITE, product.isFavorite);
         db.update(DbScheme.PRODUCT_TABLE, contentValues, DbScheme.PRODUCT_NAME + "=?", new String[]{product.name});
+        DbHelperSingleton.closeDb();
     }
 
     public void deleteProduct(String productName) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
         db.delete(DbScheme.PRODUCT_TABLE, DbScheme.PRODUCT_NAME + "=?", new String[]{productName});
+        DbHelperSingleton.closeDb();
     }
 
     public boolean checkIfProductExists(String productName) {
@@ -65,6 +69,8 @@ public class ProductFunctionality {
                 DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
                 null, null, null)) {
             return cursor.getCount() > 0;
+        } finally {
+            DbHelperSingleton.closeDb();
         }
     }
 
@@ -86,6 +92,7 @@ public class ProductFunctionality {
                 );
             }
         }
+        DbHelperSingleton.closeDb();
         return productList;
     }
 }
