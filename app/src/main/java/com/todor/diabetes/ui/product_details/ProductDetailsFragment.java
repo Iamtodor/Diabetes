@@ -122,7 +122,7 @@ public class ProductDetailsFragment extends BaseFragment {
         try {
             int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
             int result = value - 1;
-            if(value - 1 < 0) {
+            if (value - 1 < 0) {
                 Toast.makeText(getActivity(), getString(R.string.edit_positive_value), Toast.LENGTH_SHORT).show();
                 return;
             }
