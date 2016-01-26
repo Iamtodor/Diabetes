@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -84,7 +85,9 @@ public class ProductListFragment extends BaseFragment implements
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
         productList = data;
-        recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener() {
+        ProductHeader productHeader = new ProductHeader();
+        productHeader.header = "It's header";
+        recyclerView.setAdapter(new ProductAdapter(productHeader, data, new OnProductListItemClickListener() {
             @Override
             public void onProductClick(Product product) {
                 Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
