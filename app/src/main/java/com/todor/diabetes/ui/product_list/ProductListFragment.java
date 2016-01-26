@@ -86,8 +86,7 @@ public class ProductListFragment extends BaseFragment implements
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
         productList = data;
         ProductHeader productHeader = new ProductHeader();
-        productHeader.header = "It's header";
-        recyclerView.setAdapter(new ProductAdapter(productHeader, data, new OnProductListItemClickListener() {
+        recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener() {
             @Override
             public void onProductClick(Product product) {
                 Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);

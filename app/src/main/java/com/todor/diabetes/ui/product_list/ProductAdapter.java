@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.todor.diabetes.R;
@@ -13,53 +14,47 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_ITEM = 1;
     private List<Product> productList;
     private OnProductListItemClickListener listener;
-    private ProductHeader productHeader;
 
-    public ProductAdapter(ProductHeader productHeader, List<Product> productList, OnProductListItemClickListener listener) {
-        this.productHeader = productHeader;
+    public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
         this.productList = productList;
         this.listener = listener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_HEADER) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_product_header, parent, false);
-            return new ViewHolderProductHeader(v);
-        } else if (viewType == TYPE_ITEM){
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_product_item, parent, false);
-            return new ViewHolderProductItem(v);
-        }
-        throw new RuntimeException("There is no suitable type");
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_product_item, parent, false);
+        return new ViewHolderProductItem(v);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolderProductHeader) {
-            ViewHolderProductHeader viewHolderProductHeader = (ViewHolderProductHeader) holder;
-            viewHolderProductHeader.productHeader.setText(productHeader.header);
-        } else if (holder instanceof ViewHolderProductItem) {
-            ViewHolderProductItem viewHolderProductItem = (ViewHolderProductItem) holder;
-            Product product = productList.get(position - 1);
-            viewHolderProductItem.productName.setText(product.name);
-            viewHolderProductItem.productCarbonates.setText(String.valueOf(product.carbohydrates));
-            viewHolderProductItem.bind(product, listener);
+        ViewHolderProductItem viewHolderProductItem = (ViewHolderProductItem) holder;
+        if (position == 0) {
+            Product product = productList.get(position);
+            viewHolderProductItem.itemLayout.setVisibility(View.GONE);
+            viewHolderProductItem.productGroupHeader.setText(product.group);
+            viewHolderProductItem.productGroupHeader.setVisibility(View.VISIBLE);
+        } else {
+            if (viewHolderProductItem.productGroupHeader.getVisibility() == View.VISIBLE) {
+                viewHolderProductItem.productGroupHeader.setVisibility(View.GONE);
+            }
+            if (viewHolderProductItem.itemLayout.getVisibility() == View.GONE) {
+                viewHolderProductItem.itemLayout.setVisibility(View.VISIBLE);
+            }
+            Product currentProduct = productList.get(position - 1);
+            Product nextProduct = productList.get(position);
+            if (!currentProduct.group.equals(nextProduct.group)) {
+                viewHolderProductItem.itemLayout.setVisibility(View.GONE);
+                viewHolderProductItem.productGroupHeader.setText(nextProduct.group);
+                viewHolderProductItem.productGroupHeader.setVisibility(View.VISIBLE);
+            } else {
+                viewHolderProductItem.productName.setText(currentProduct.name);
+                viewHolderProductItem.productCarbonates.setText(String.valueOf(currentProduct.carbohydrates));
+                viewHolderProductItem.bind(currentProduct, listener);
+            }
         }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (isPositionHeader(position))
-            return TYPE_HEADER;
-        return TYPE_ITEM;
-    }
-
-    private boolean isPositionHeader(int position) {
-        return position == 0;
     }
 
     @Override
@@ -69,13 +64,17 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
+        private TextView productGroupHeader;
         private TextView productName;
         private TextView productCarbonates;
+        private LinearLayout itemLayout;
 
         public ViewHolderProductItem(View itemView) {
             super(itemView);
             productName = (TextView) itemView.findViewById(R.id.product_name);
             productCarbonates = (TextView) itemView.findViewById(R.id.product_carbohydrates);
+            productGroupHeader = (TextView) itemView.findViewById(R.id.product_group);
+            itemLayout = (LinearLayout) itemView.findViewById(R.id.item_layout);
         }
 
         private void bind(final Product product, final OnProductListItemClickListener listener) {
@@ -85,16 +84,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     listener.onProductClick(product);
                 }
             });
-        }
-    }
-
-    class ViewHolderProductHeader extends RecyclerView.ViewHolder {
-
-        private TextView productHeader;
-
-        public ViewHolderProductHeader(View itemView) {
-            super(itemView);
-            productHeader = (TextView) itemView.findViewById(R.id.product_header);
         }
     }
 }
