@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.ui.BaseFragment;
 
+import butterknife.Bind;
+
 public class ProductTableFragment extends BaseFragment {
+
+    @Bind(R.id.tv_table) EditText tvTable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -2,6 +2,8 @@ package com.todor.diabetes.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,11 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_title_settings);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         btnUpdateGlycemicIndex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,5 +46,15 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.onBackPressed();
+                return (true);
+        }
+        return false;
     }
 }

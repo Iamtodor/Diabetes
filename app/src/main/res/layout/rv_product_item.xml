@@ -10,9 +10,11 @@
         android:id="@+id/product_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center_horizontal"
         android:padding="16dp"
         android:textColor="@color/colorBlack"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:visibility="gone"
         tools:text="12345"/>
 

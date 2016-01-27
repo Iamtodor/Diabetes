@@ -52,5 +52,7 @@
     <string name="fill_all_fields">Please fill in all of the fields</string>
     <string name="index_was_updated">Индекс был успешно обновлен</string>
     <string name="edit_positive_value">Введите положительное число</string>
+    <string name="table_text_view">Стол продуктов</string>
+    <string name="toolbar_title_settings">Настройки</string>
 
 </resources>
