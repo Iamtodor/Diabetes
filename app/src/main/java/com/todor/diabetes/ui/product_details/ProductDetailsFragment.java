@@ -81,8 +81,7 @@ public class ProductDetailsFragment extends BaseFragment {
         return v;
     }
 
-    @OnCheckedChanged(R.id.btn_bread_unit)
-    public void btnBreadUnitClick() {
+    private void clickChangeBreadUnit() {
         int value = 0;
         try {
             value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
@@ -94,8 +93,7 @@ public class ProductDetailsFragment extends BaseFragment {
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
     }
 
-    @OnCheckedChanged(R.id.btn_gram)
-    public void btnGramClick() {
+    public void clickChangeBtnGram() {
         int value = 0;
         try {
             value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
@@ -105,6 +103,26 @@ public class ProductDetailsFragment extends BaseFragment {
         float result = value * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
         productResultValue.setText(String.format(getString(R.string.value_gram), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
+    }
+
+    @OnClick(R.id.btn_bread_unit)
+    public void btnBreadUnitClick() {
+        clickChangeBreadUnit();
+    }
+
+    @OnCheckedChanged(R.id.btn_bread_unit)
+    public void btnBreadUnitChanged() {
+        clickChangeBreadUnit();
+    }
+
+    @OnClick(R.id.btn_gram)
+    public void btnGramClick() {
+        clickChangeBtnGram();
+    }
+
+    @OnCheckedChanged(R.id.btn_gram)
+    public void btnGramChanged() {
+        clickChangeBtnGram();
     }
 
     @OnClick(R.id.btn_plus)
@@ -121,7 +139,6 @@ public class ProductDetailsFragment extends BaseFragment {
     public void btnMinusClick() {
         try {
             int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
-            int result = value - 1;
             if (value - 1 < 0) {
                 Toast.makeText(getActivity(), getString(R.string.edit_positive_value), Toast.LENGTH_SHORT).show();
                 return;
