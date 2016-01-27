@@ -85,7 +85,6 @@ public class ProductListFragment extends BaseFragment implements
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
         productList = data;
-        ProductHeader productHeader = new ProductHeader();
         recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener() {
             @Override
             public void onProductClick(Product product) {
