@@ -1,6 +1,8 @@
 package com.todor.diabetes.ui.product_list;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 
 import java.util.List;
@@ -33,8 +36,8 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ViewHolderProductItem viewHolderProductItem = (ViewHolderProductItem) holder;
         if (position == 0) {
             Product product = productList.get(position);
-            viewHolderProductItem.itemLayout.setVisibility(View.GONE);
             viewHolderProductItem.productGroupHeader.setText(product.group);
+            viewHolderProductItem.itemLayout.setVisibility(View.GONE);
             viewHolderProductItem.productGroupHeader.setVisibility(View.VISIBLE);
         } else {
             if (viewHolderProductItem.productGroupHeader.getVisibility() == View.VISIBLE) {
@@ -43,12 +46,18 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (viewHolderProductItem.itemLayout.getVisibility() == View.GONE) {
                 viewHolderProductItem.itemLayout.setVisibility(View.VISIBLE);
             }
-            Product currentProduct = productList.get(position - 1);
-            Product nextProduct = productList.get(position);
-            if (!currentProduct.group.equals(nextProduct.group)) {
-                viewHolderProductItem.itemLayout.setVisibility(View.GONE);
-                viewHolderProductItem.productGroupHeader.setText(nextProduct.group);
-                viewHolderProductItem.productGroupHeader.setVisibility(View.VISIBLE);
+            Product currentProduct = productList.get(position);
+            if(position + 1 != productList.size()) {
+                Product nextProduct = productList.get(position + 1);
+                if (!currentProduct.group.equals(nextProduct.group)) {
+                    viewHolderProductItem.productGroupHeader.setText(nextProduct.group);
+                    viewHolderProductItem.itemLayout.setVisibility(View.GONE);
+                    viewHolderProductItem.productGroupHeader.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolderProductItem.productName.setText(currentProduct.name);
+                    viewHolderProductItem.productCarbonates.setText(String.valueOf(currentProduct.carbohydrates));
+                    viewHolderProductItem.bind(currentProduct, listener);
+                }
             } else {
                 viewHolderProductItem.productName.setText(currentProduct.name);
                 viewHolderProductItem.productCarbonates.setText(String.valueOf(currentProduct.carbohydrates));

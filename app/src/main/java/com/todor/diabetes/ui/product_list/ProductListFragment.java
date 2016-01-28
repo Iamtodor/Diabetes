@@ -64,6 +64,7 @@ public class ProductListFragment extends BaseFragment implements
 
         getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new ItemDecorator(getActivity(), R.drawable.divider));
         recyclerView.setItemAnimator(itemAnimator);
 
         return v;
