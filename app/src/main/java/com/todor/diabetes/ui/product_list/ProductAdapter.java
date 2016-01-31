@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Product>                  productList;
+    private List<Product> productList;
     private OnProductListItemClickListener listener;
 
     public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
@@ -65,10 +65,10 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_productGroupHeader) TextView     productGroupHeader;
-        @Bind(R.id.item_layout)           LinearLayout itemLayout;
-        @Bind(R.id.product_name)          TextView     productName;
-        @Bind(R.id.product_carbohydrates) TextView     productCarbonates;
+        @Bind(R.id.tv_productGroupHeader) TextView productGroupHeader;
+        @Bind(R.id.item_layout) LinearLayout itemLayout;
+        @Bind(R.id.product_name) TextView productName;
+        @Bind(R.id.product_carbohydrates) TextView productCarbonates;
 
         public ViewHolderProductItem(View view) {
             super(view);

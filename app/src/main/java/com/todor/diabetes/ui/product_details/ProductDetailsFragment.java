@@ -48,6 +48,8 @@ public class ProductDetailsFragment extends BaseFragment {
         ButterKnife.bind(this, v);
         dbManager = new ProductFunctionality(getActivity());
         product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
+        edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
+        productResultValue.setText(String.format(getString(R.string.value_gram), 0.0));
 
         edtProductValueForCalculation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -131,7 +133,7 @@ public class ProductDetailsFragment extends BaseFragment {
             int value = Integer.parseInt(edtProductValueForCalculation.getText().toString());
             edtProductValueForCalculation.setText(String.valueOf(value + 1));
         } catch (NumberFormatException e) {
-            Toast.makeText(getActivity(), getString(R.string.edit_correct_value), Toast.LENGTH_SHORT).show();
+            edtProductValueForCalculation.setText(String.valueOf(1));
         }
     }
 
