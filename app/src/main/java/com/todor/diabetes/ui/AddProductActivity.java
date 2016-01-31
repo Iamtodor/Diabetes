@@ -25,7 +25,7 @@ public class AddProductActivity extends AppCompatActivity {
     EditText productNameEditText;
     @Bind(R.id.product_carbohydrates)
     EditText productCarbohydratesEditText;
-    @Bind(R.id.product_group)
+    @Bind(R.id.tv_productGroupHeader)
     EditText productGroupEditText;
     @Bind(R.id.add_button)
     Button addButton;
