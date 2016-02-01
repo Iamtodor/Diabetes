@@ -23,14 +23,14 @@
 
         <activity android:name=".ui.AddProductActivity"/>
         <activity android:name=".ui.product_details.ProductDetailsActivity"/>
-        <activity android:name=".ui.SettingsActivity"/>
+        <activity android:name=".ui.profile.Settings"/>
         <activity android:name=".ui.SearchableActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
         </activity>
 
 

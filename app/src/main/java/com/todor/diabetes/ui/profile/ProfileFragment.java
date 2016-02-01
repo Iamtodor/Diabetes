@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import com.todor.diabetes.R;
 import com.todor.diabetes.ui.BaseFragment;
-import com.todor.diabetes.ui.SettingsActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +27,7 @@ public class ProfileFragment extends BaseFragment {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Settings.class));
             }
         });
 
