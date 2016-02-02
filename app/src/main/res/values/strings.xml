@@ -53,8 +53,17 @@
     <string name="edit_positive_value">Введите положительное число</string>
     <string name="table_text_view">Стол продуктов</string>
     <string name="toolbar_title_settings">Настройки</string>
-    <string name="preference_bread_unit_rate">bread_unit_rate</string>
-    <string name="preference_bread_unit_default_value">12</string>
+
+    <string name="preference_bread_unit_key">bread_unit_key</string>
+    <string name="preference_bread_unit_default_value">4</string>
     <string name="preference_bread_unit_title">Норма ХЕ</string>
+
+    <string name="preference_carbohydrates_default_value">12</string>
+    <string name="preference_carbohydrates_key">carbohydrates_key</string>
+
+    <string name="preference_carbohydrates_title">Углеводов в ХЕ, гр</string>
+    <string name="preference_insulin_factor_default_value">2</string>
+    <string name="preference_insulin_factor_key">insulin_factor_key</string>
+    <string name="preference_insulin_factor_title">Коэффициент инсулина</string>
 
 </resources>
