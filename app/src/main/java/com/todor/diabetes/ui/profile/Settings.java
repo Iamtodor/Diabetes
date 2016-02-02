@@ -34,7 +34,7 @@ public class Settings extends PreferenceActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getFragmentManager()
                 .beginTransaction()
-                .replace(android.R.id.content, new MyPreferenceFragment())
+                .replace(R.id.flContent, new MyPreferenceFragment())
                 .commit();
     }
 
