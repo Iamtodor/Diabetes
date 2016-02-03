@@ -31,6 +31,7 @@ public class ProductDetailsFragment extends BaseFragment {
     @Bind(R.id.btn_gram)                          RadioButton     btnGram;
     @Bind(R.id.btn_bread_unit)                    RadioButton     btnBreadUnit;
     @Bind(R.id.edt_wrapper)                       TextInputLayout edt_product_value_wrapper;
+    @Bind(R.id.tv_result_explanation)             TextView        tvResultExplanation;
 
     private ProductFunctionality dbManager;
     private Product              product;
@@ -59,9 +60,11 @@ public class ProductDetailsFragment extends BaseFragment {
                 if (btnGram.isChecked()) {
                     float result = getGrammFromBreadUnits(value);
                     productResultValue.setText(String.format(getString(R.string.value_gram), result));
+                    tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
                 } else if (btnBreadUnit.isChecked()) {
                     float result = getBreadUnitsFromGramm(value);
                     productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
+                    tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " ХЕ");
                 }
             }
         });
@@ -82,6 +85,7 @@ public class ProductDetailsFragment extends BaseFragment {
         float result = getBreadUnitsFromGramm(value);
         productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
+        tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " XE");
     }
 
     public void clickChangeBtnGram() {
@@ -89,6 +93,7 @@ public class ProductDetailsFragment extends BaseFragment {
         float result = getGrammFromBreadUnits(value);
         productResultValue.setText(String.format(getString(R.string.value_gram), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
+        tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
     }
 
     public int getEdtProductValueForCalculation() {

@@ -8,7 +8,18 @@
     android:paddingEnd="16dp"
     android:paddingStart="16dp">
 
+    <TextView
+        android:id="@+id/tv_result_explanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/calculation_layout"
+        android:gravity="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        tools:text="12 грамм это 1 ХЕ"/>
+
     <RelativeLayout
+        android:id="@+id/calculation_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tv_product_result_value">
@@ -37,8 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="0"
-                android:maxLength="4"/>
+                android:maxLength="4"
+                android:text="0"/>
 
         </android.support.design.widget.TextInputLayout>
 
