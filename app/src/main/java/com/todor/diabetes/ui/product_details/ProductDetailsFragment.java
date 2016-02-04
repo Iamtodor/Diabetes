@@ -56,7 +56,7 @@ public class ProductDetailsFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int value = getEdtProductValueForCalculation();
+                int value = parseStringToInt(s.toString());
                 if (btnGram.isChecked()) {
                     float result = getGrammFromBreadUnits(value);
                     productResultValue.setText(String.format(getString(R.string.value_gram), result));
@@ -81,7 +81,7 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     private void clickChangeBreadUnit() {
-        int value = getEdtProductValueForCalculation();
+        int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
         float result = getBreadUnitsFromGramm(value);
         productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
@@ -89,16 +89,16 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     public void clickChangeBtnGram() {
-        int value = getEdtProductValueForCalculation();
+        int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
         float result = getGrammFromBreadUnits(value);
         productResultValue.setText(String.format(getString(R.string.value_gram), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
         tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
     }
-
-    public int getEdtProductValueForCalculation() {
+    
+    public int parseStringToInt(String value) {
         try {
-            return Integer.parseInt(edtProductValueForCalculation.getText().toString());
+            return Integer.parseInt(value);
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -126,12 +126,13 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.btn_plus)
     public void btnPlusClick() {
-        edtProductValueForCalculation.setText(String.valueOf(getEdtProductValueForCalculation() + 1));
+        edtProductValueForCalculation.setText(String.valueOf(
+                parseStringToInt(edtProductValueForCalculation.getText().toString()) + 1));
     }
 
     @OnClick(R.id.btn_minus)
     public void btnMinusClick() {
-        int value = getEdtProductValueForCalculation();
+        int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
         if (value - 1 < 0) {
             Toast.makeText(getActivity(), getString(R.string.edit_positive_value), Toast.LENGTH_SHORT).show();
             return;

@@ -4,17 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.ProductsArray;
+import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 
 public class Utils {
 
     public static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(Constants.MY_PREFERENCES, Context.MODE_PRIVATE);
+//        return context.getSharedPreferences(Constants.MY_PREFERENCES, Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static void setLaunchToFalse(Context context) {
@@ -26,13 +29,13 @@ public class Utils {
     public static void setGlycemicIndex(Context context, float glycemicIndex) {
         SharedPreferences preferences = getSharedPreferences(context);
         Editor editor = preferences.edit();
-        editor.putFloat(Constants.GLYCEMICAL_INDEX_KEY, glycemicIndex);
+        editor.putFloat(context.getResources().getString(R.string.preference_bread_unit_key), glycemicIndex);
         editor.apply();
     }
 
     public static float getGlycemicIndex(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
-        return preferences.getFloat(Constants.GLYCEMICAL_INDEX_KEY, 12);
+        return preferences.getFloat(context.getResources().getString(R.string.preference_bread_unit_key), 12);
     }
 
     public static boolean isFirstLaunch(Context context) {

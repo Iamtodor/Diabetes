@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         if (Utils.isFirstLaunch(this)) {
             Utils.writeDataIntoDataBase(this);
             Utils.setLaunchToFalse(this);
-            Utils.setGlycemicIndex(this, Constants.DEFAULT_GLYCEMICAL_INDEX_VALUE);
+//            Utils.setGlycemicIndex(this, Constants.DEFAULT_GLYCEMICAL_INDEX_VALUE);
         }
 
         if (savedInstanceState == null) {

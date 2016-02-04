@@ -23,7 +23,6 @@
 
         <activity android:name=".ui.AddProductActivity"/>
         <activity android:name=".ui.product_details.ProductDetailsActivity"/>
-        <activity android:name=".ui.profile.Settings"/>
         <activity android:name=".ui.SearchableActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
