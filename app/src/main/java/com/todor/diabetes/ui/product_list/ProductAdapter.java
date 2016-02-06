@@ -23,7 +23,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private OnProductListItemClickListener listener;
 
     public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
-        this.productList = productList;
+        this.productList = new ArrayList<>(productList);
         this.listener = listener;
     }
 
