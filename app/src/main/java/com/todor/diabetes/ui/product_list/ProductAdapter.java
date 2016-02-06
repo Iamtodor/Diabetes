@@ -1,6 +1,7 @@
 package com.todor.diabetes.ui.product_list;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -17,7 +19,7 @@ import butterknife.ButterKnife;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Product> productList;
+    private List<Product>                  productList;
     private OnProductListItemClickListener listener;
 
     public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
@@ -63,12 +65,63 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return productList.size();
     }
 
+    public void animateTo(List<Product> models) {
+        applyAndAnimateRemovals(models);
+        applyAndAnimateAdditions(models);
+        applyAndAnimateMovedItems(models);
+    }
+
+    private void applyAndAnimateRemovals(List<Product> newModels) {
+        for (int i = productList.size() - 1; i >= 0; i--) {
+            final Product model = productList.get(i);
+            if (!newModels.contains(model)) {
+                removeItem(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(List<Product> newModels) {
+        for (int i = 0, count = newModels.size(); i < count; i++) {
+            final Product model = newModels.get(i);
+            if (!productList.contains(model)) {
+                addItem(i, model);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(List<Product> newModels) {
+        for (int toPosition = newModels.size() - 1; toPosition >= 0; toPosition--) {
+            final Product model = newModels.get(toPosition);
+            final int fromPosition = productList.indexOf(model);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                moveItem(fromPosition, toPosition);
+            }
+        }
+    }
+
+    public Product removeItem(int position) {
+        final Product model = productList.remove(position);
+        notifyItemRemoved(position);
+        return model;
+    }
+
+    public void addItem(int position, Product model) {
+        productList.add(position, model);
+        notifyItemInserted(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        final Product model = productList.remove(fromPosition);
+        productList.add(toPosition, model);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
     class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_productGroupHeader) TextView productGroupHeader;
-        @Bind(R.id.item_layout) LinearLayout itemLayout;
-        @Bind(R.id.product_name) TextView productName;
-        @Bind(R.id.product_carbohydrates) TextView productCarbonates;
+        @Bind(R.id.tv_productGroupHeader) TextView     productGroupHeader;
+        @Bind(R.id.item_layout)           LinearLayout itemLayout;
+        @Bind(R.id.product_name)          TextView     productName;
+        @Bind(R.id.product_carbohydrates) TextView     productCarbonates;
 
         public ViewHolderProductItem(View view) {
             super(view);
