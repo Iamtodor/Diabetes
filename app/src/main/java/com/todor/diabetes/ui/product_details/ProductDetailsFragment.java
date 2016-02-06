@@ -37,6 +37,11 @@ public class ProductDetailsFragment extends BaseFragment {
     private Product              product;
 
     @Override
+    public String getFragmentTitle() {
+        return getResources().getString(R.string.title_product_details);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product_details, container, false);
         ButterKnife.bind(this, v);
@@ -58,11 +63,11 @@ public class ProductDetailsFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 int value = parseStringToInt(s.toString());
                 if (btnGram.isChecked()) {
-                    float result = getGrammFromBreadUnits(value);
+                    float result = getGramFromBreadUnits(value);
                     productResultValue.setText(String.format(getString(R.string.value_gram), result));
                     tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
                 } else if (btnBreadUnit.isChecked()) {
-                    float result = getBreadUnitsFromGramm(value);
+                    float result = getBreadUnitsFromGram(value);
                     productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
                     tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " ХЕ");
                 }
@@ -72,17 +77,25 @@ public class ProductDetailsFragment extends BaseFragment {
         return v;
     }
 
-    public float getGrammFromBreadUnits(int value) {
+    public float getGramFromBreadUnits(int value) {
         return value * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
     }
 
-    public float getBreadUnitsFromGramm(int value) {
+    public float getBreadUnitsFromGram(int value) {
         return value * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
+    }
+
+    public int parseStringToInt(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     private void clickChangeBreadUnit() {
         int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
-        float result = getBreadUnitsFromGramm(value);
+        float result = getBreadUnitsFromGram(value);
         productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
         tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " XE");
@@ -90,18 +103,10 @@ public class ProductDetailsFragment extends BaseFragment {
 
     public void clickChangeBtnGram() {
         int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
-        float result = getGrammFromBreadUnits(value);
+        float result = getGramFromBreadUnits(value);
         productResultValue.setText(String.format(getString(R.string.value_gram), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
         tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
-    }
-    
-    public int parseStringToInt(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return 0;
-        }
     }
 
     @OnClick(R.id.btn_bread_unit)
@@ -158,10 +163,5 @@ public class ProductDetailsFragment extends BaseFragment {
     @OnClick(R.id.btn_eatNow)
     public void btnEatNowClick() {
         // TODO 'Move current product to table fragment'
-    }
-
-    @Override
-    public String getFragmentTitle() {
-        return getResources().getString(R.string.title_product_details);
     }
 }
