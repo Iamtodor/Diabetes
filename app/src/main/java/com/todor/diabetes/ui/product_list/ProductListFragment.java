@@ -1,6 +1,8 @@
 package com.todor.diabetes.ui.product_list;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +11,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,11 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.AddProductActivity;
 import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.ui.product_details.ProductDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ProductListFragment extends BaseFragment implements
-//        LoaderManager.LoaderCallbacks<ArrayList<Product>>,
+        LoaderManager.LoaderCallbacks<ArrayList<Product>>,
         SearchView.OnQueryTextListener {
 
     @Bind(R.id.recyclerView) RecyclerView         recyclerView;
@@ -58,31 +61,16 @@ public class ProductListFragment extends BaseFragment implements
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
 
-//        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
+        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
 
-        recyclerView.addItemDecoration(new ItemDecorator(getActivity(), R.drawable.divider));
+//        recyclerView.addItemDecoration(new ItemDecorator(getActivity(), R.drawable.divider));
         recyclerView.setItemAnimator(itemAnimator);
-
-        return v;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        productList = dbManager.getAllProducts();
-
-        productAdapter = new ProductAdapter(productList, new OnProductListItemClickListener() {
-            @Override
-            public void onProductClick(Product product) {
-
-            }
-        });
-
         recyclerView.setAdapter(productAdapter);
+        return v;
     }
 
     @Override
@@ -90,29 +78,30 @@ public class ProductListFragment extends BaseFragment implements
         return getResources().getString(R.string.title_products);
     }
 
-//    @Override
-//    public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
-//        return new ProductLoader(getActivity());
-//    }
-//
-//    @Override
-//    public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-//        productList = data;
-//
-//        recyclerView.setAdapter(new ProductAdapter(data, new OnProductListItemClickListener() {
-//            @Override
-//            public void onProductClick(Product product) {
-//                Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
-//                intent.putExtra(Constants.PRODUCT_KEY, product);
-//                startActivity(intent);
-//            }
-//        }));
-//    }
-//
-//    @Override
-//    public void onLoaderReset(Loader<ArrayList<Product>> loader) {
-//        recyclerView.setAdapter(null);
-//    }
+    @Override
+    public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
+        return new ProductLoader(getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
+        productList = data;
+        productAdapter = new ProductAdapter(data, new OnProductListItemClickListener() {
+            @Override
+            public void onProductClick(Product product) {
+                Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
+                intent.putExtra(Constants.PRODUCT_KEY, product);
+                startActivity(intent);
+            }
+        });
+
+        recyclerView.setAdapter(productAdapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Product>> loader) {
+        recyclerView.setAdapter(null);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -146,7 +135,6 @@ public class ProductListFragment extends BaseFragment implements
                 filteredModelList.add(model);
             }
         }
-        Log.d("ProductListFragment", String.valueOf(productList));
         return filteredModelList;
     }
 }

@@ -1,7 +1,6 @@
 package com.todor.diabetes.ui.product_list;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private OnProductListItemClickListener listener;
 
     public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
-        this.productList = productList;
+        this.productList = new ArrayList<>(productList);
         this.listener = listener;
     }
 
