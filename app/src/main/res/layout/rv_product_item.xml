@@ -13,6 +13,7 @@
         android:background="@color/indigo400"
         android:gravity="center_vertical"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:textColor="@android:color/white"
         android:textSize="17sp"
         tools:text="Group name"/>
