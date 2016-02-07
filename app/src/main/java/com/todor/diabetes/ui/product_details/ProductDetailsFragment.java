@@ -1,5 +1,6 @@
 package com.todor.diabetes.ui.product_details;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -33,12 +34,19 @@ public class ProductDetailsFragment extends BaseFragment {
     @Bind(R.id.edt_wrapper)                       TextInputLayout edt_product_value_wrapper;
     @Bind(R.id.tv_result_explanation)             TextView        tvResultExplanation;
 
-    private ProductFunctionality dbManager;
-    private Product              product;
+    private ProductFunctionality   dbManager;
+    private Product                product;
+    private OnTableProductListener onTableProductListener;
 
     @Override
     public String getFragmentTitle() {
         return getResources().getString(R.string.title_product_details);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        onTableProductListener = (OnTableProductListener) activity;
     }
 
     @Override
@@ -162,6 +170,6 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.btn_eatNow)
     public void btnEatNowClick() {
-        // TODO 'Move current product to table fragment'
+        onTableProductListener.setProduct(product);
     }
 }

@@ -1,5 +1,6 @@
 package com.todor.diabetes.ui.product_list;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -24,6 +25,7 @@ import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.AddProductActivity;
 import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.ui.product_details.OnTableProductListener;
 import com.todor.diabetes.ui.product_details.ProductDetailsActivity;
 
 import java.util.ArrayList;
@@ -40,7 +42,15 @@ public class ProductListFragment extends BaseFragment implements
     private                  ProductFunctionality dbManager;
     private List<Product>  productList    = null;
     private ProductAdapter productAdapter = null;
-    private FloatingActionButton fab;
+    private FloatingActionButton   fab;
+    private Product                productForTable;
+    private OnTableProductListener onTableProductListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        onTableProductListener = (OnTableProductListener) activity;
+    }
 
     @Nullable
     @Override
@@ -91,7 +101,7 @@ public class ProductListFragment extends BaseFragment implements
             public void onProductClick(Product product) {
                 Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
                 intent.putExtra(Constants.PRODUCT_KEY, product);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.REQUEST_CODE_FOR_TABLE);
             }
         });
 
@@ -112,6 +122,19 @@ public class ProductListFragment extends BaseFragment implements
         searchView.setOnQueryTextListener(this);
     }
 
+    private List<Product> filter(List<Product> models, String query) {
+        query = query.toLowerCase();
+
+        final List<Product> filteredModelList = new ArrayList<>();
+        for (Product model : models) {
+            final String text = model.name.toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
+    }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -125,16 +148,14 @@ public class ProductListFragment extends BaseFragment implements
         return true;
     }
 
-    private List<Product> filter(List<Product> models, String query) {
-        query = query.toLowerCase();
-
-        final List<Product> filteredModelList = new ArrayList<>();
-        for (Product model : models) {
-            final String text = model.name.toLowerCase();
-            if (text.contains(query)) {
-                filteredModelList.add(model);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constants.REQUEST_CODE_FOR_TABLE) {
+                productForTable = data.getParcelableExtra(Constants.PRODUCT_FOR_TABLE);
+                onTableProductListener.setProduct(productForTable);
             }
         }
-        return filteredModelList;
     }
 }

@@ -7,6 +7,8 @@ public class Constants {
     public static final String PRODUCT_KEY                    = "product";
     public static final String GLYCEMICAL_INDEX_KEY           = "glycemical_index";
     public static final float  DEFAULT_GLYCEMICAL_INDEX_VALUE = 12;
-    public static final int PRODUCT_LIST_LOADER = 1;
+    public static final int    PRODUCT_LIST_LOADER            = 1;
+    public static final int    REQUEST_CODE_FOR_TABLE         = 1;
+    public static final String PRODUCT_FOR_TABLE              = "productFromTable";
 
 }

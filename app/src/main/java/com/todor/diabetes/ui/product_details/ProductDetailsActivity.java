@@ -1,5 +1,6 @@
 package com.todor.diabetes.ui.product_details;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +15,9 @@ import com.todor.diabetes.models.Product;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProductDetailsActivity extends AppCompatActivity {
+public class ProductDetailsActivity extends AppCompatActivity implements OnTableProductListener {
+
+    private Product productForTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,5 +52,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 return (true);
         }
         return false;
+    }
+
+    @Override
+    public void setProduct(Product product) {
+        productForTable = product;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(Constants.PRODUCT_FOR_TABLE, productForTable);
+        setResult(RESULT_OK, intent);
+        finish();
+        super.onBackPressed();
     }
 }
