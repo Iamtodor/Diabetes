@@ -1,7 +1,7 @@
 package com.todor.diabetes.ui.product_details;
 
-import com.todor.diabetes.models.Product;
+import com.todor.diabetes.models.TableProduct;
 
 public interface OnTableProductListener {
-    void setProduct(Product product);
+    void setProduct(TableProduct product);
 }

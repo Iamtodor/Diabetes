@@ -16,12 +16,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Product>                  productList;
     private OnProductListItemClickListener listener;
 
-    public ProductAdapter(List<Product> productList, OnProductListItemClickListener listener) {
+    public ProductListAdapter(List<Product> productList, OnProductListItemClickListener listener) {
         this.productList = new ArrayList<>(productList);
         this.listener = listener;
     }

@@ -18,11 +18,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
+import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.AddProductActivity;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.ui.product_details.OnTableProductListener;
@@ -40,10 +42,10 @@ public class ProductListFragment extends BaseFragment implements
 
     @Bind(R.id.recyclerView) RecyclerView         recyclerView;
     private                  ProductFunctionality dbManager;
-    private List<Product>  productList    = null;
-    private ProductAdapter productAdapter = null;
+    private List<Product>      productList    = null;
+    private ProductListAdapter productAdapter = null;
     private FloatingActionButton   fab;
-    private Product                productForTable;
+    private TableProduct           productForTable;
     private OnTableProductListener onTableProductListener;
 
     @Override
@@ -68,7 +70,6 @@ public class ProductListFragment extends BaseFragment implements
         setHasOptionsMenu(true);
         dbManager = new ProductFunctionality(getActivity());
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
 
         getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
@@ -96,16 +97,20 @@ public class ProductListFragment extends BaseFragment implements
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
         productList = data;
-        productAdapter = new ProductAdapter(data, new OnProductListItemClickListener() {
-            @Override
-            public void onProductClick(Product product) {
-                Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
-                intent.putExtra(Constants.PRODUCT_KEY, product);
-                startActivityForResult(intent, Constants.REQUEST_CODE_FOR_TABLE);
-            }
-        });
+        if(productList != null && productList.size() != 0) {
+            productAdapter = new ProductListAdapter(data, new OnProductListItemClickListener() {
+                @Override
+                public void onProductClick(Product product) {
+                    Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
+                    intent.putExtra(Constants.PRODUCT_KEY, product);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_FOR_TABLE);
+                }
+            });
 
-        recyclerView.setAdapter(productAdapter);
+            recyclerView.setAdapter(productAdapter);
+        } else {
+            Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

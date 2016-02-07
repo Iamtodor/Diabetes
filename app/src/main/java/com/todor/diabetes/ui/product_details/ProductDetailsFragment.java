@@ -17,6 +17,7 @@ import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
+import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.utils.Utils;
 
@@ -37,6 +38,8 @@ public class ProductDetailsFragment extends BaseFragment {
     private ProductFunctionality   dbManager;
     private Product                product;
     private OnTableProductListener onTableProductListener;
+    private int gram;
+    private float glycemicIndex;
 
     @Override
     public String getFragmentTitle() {
@@ -73,10 +76,14 @@ public class ProductDetailsFragment extends BaseFragment {
                 if (btnGram.isChecked()) {
                     float result = getGramFromBreadUnits(value);
                     productResultValue.setText(String.format(getString(R.string.value_gram), result));
+                    glycemicIndex = value;
+                    gram = (int) result;
                     tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
                 } else if (btnBreadUnit.isChecked()) {
                     float result = getBreadUnitsFromGram(value);
                     productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
+                    gram = value;
+                    glycemicIndex = result;
                     tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " ХЕ");
                 }
             }
@@ -106,6 +113,8 @@ public class ProductDetailsFragment extends BaseFragment {
         float result = getBreadUnitsFromGram(value);
         productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
+        gram = value;
+        glycemicIndex = result;
         tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " XE");
     }
 
@@ -114,6 +123,8 @@ public class ProductDetailsFragment extends BaseFragment {
         float result = getGramFromBreadUnits(value);
         productResultValue.setText(String.format(getString(R.string.value_gram), result));
         edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
+        glycemicIndex = value;
+        gram = (int) result;
         tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
     }
 
@@ -170,6 +181,6 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.btn_eatNow)
     public void btnEatNowClick() {
-        onTableProductListener.setProduct(product);
+        onTableProductListener.setProduct(new TableProduct(product.name, gram, glycemicIndex));
     }
 }

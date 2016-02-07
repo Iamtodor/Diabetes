@@ -14,17 +14,19 @@ import android.view.MotionEvent;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
-import com.todor.diabetes.models.Product;
+import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.product_details.OnTableProductListener;
 import com.todor.diabetes.ui.product_list.ProductListFragment;
 import com.todor.diabetes.ui.product_table.ProductTableFragment;
 import com.todor.diabetes.ui.profile.ProfileFragment;
 import com.todor.diabetes.utils.Utils;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
 
-    private Product productForTable;
+    private ArrayList<TableProduct> productForTable = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,8 @@ public class MainActivity extends AppCompatActivity
                 ProductTableFragment productTableFragment;
                 if (productForTable != null) {
                     Bundle args = new Bundle();
-                    args.putParcelable(Constants.PRODUCT_FOR_TABLE, productForTable);
+//                    args.putParcelable(Constants.PRODUCT_FOR_TABLE, productForTable);
+                    args.putParcelableArrayList(Constants.PRODUCT_FOR_TABLE, productForTable);
                     productTableFragment = new ProductTableFragment();
                     productTableFragment.setArguments(args);
                 } else {
@@ -110,8 +113,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void setProduct(Product product) {
-        productForTable = product;
+    public void setProduct(TableProduct product) {
+        productForTable.add(product);
     }
 }
 

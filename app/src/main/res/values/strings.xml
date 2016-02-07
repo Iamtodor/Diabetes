@@ -65,5 +65,6 @@
     <string name="preference_insulin_factor_default_value">2</string>
     <string name="preference_insulin_factor_key">insulin_factor_key</string>
     <string name="preference_insulin_factor_title">Коэффициент инсулина</string>
+    <string name="toast_for_empty_products">Вы еще не добавили продукты</string>
 
 </resources>
