@@ -26,6 +26,9 @@
     <string name="gram">грамм</string>
     <string name="bread_unit">ХЕ</string>
 
+    <string name="gram_product_table">%1$d грамм</string>
+    <string name="bread_unit_product_table">%.2f ХЕ</string>
+
     <string name="hint_edt_product_value_for_calculation">Введите значение</string>
     <string name="hint_edt_glycemical_index">Гликемический индекс</string>
 
@@ -66,5 +69,6 @@
     <string name="preference_insulin_factor_key">insulin_factor_key</string>
     <string name="preference_insulin_factor_title">Коэффициент инсулина</string>
     <string name="toast_for_empty_products">Вы еще не добавили продукты</string>
+    <string name="product_added_on_table">Продукт был добавлен на стол</string>
 
 </resources>

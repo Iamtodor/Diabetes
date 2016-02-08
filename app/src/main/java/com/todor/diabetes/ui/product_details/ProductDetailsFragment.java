@@ -38,8 +38,8 @@ public class ProductDetailsFragment extends BaseFragment {
     private ProductFunctionality   dbManager;
     private Product                product;
     private OnTableProductListener onTableProductListener;
-    private int gram;
-    private float glycemicIndex;
+    private int                    gram;
+    private float                  glycemicIndex;
 
     @Override
     public String getFragmentTitle() {
@@ -181,6 +181,7 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.btn_eatNow)
     public void btnEatNowClick() {
+        Toast.makeText(getActivity(), R.string.product_added_on_table, Toast.LENGTH_SHORT).show();
         onTableProductListener.setProduct(new TableProduct(product.name, gram, glycemicIndex));
     }
 }

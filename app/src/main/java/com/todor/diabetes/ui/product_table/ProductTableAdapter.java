@@ -35,8 +35,8 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
     public void onBindViewHolder(ViewHolderProductItem holder, int position) {
         TableProduct product = productArrayList.get(position);
         holder.tvProductName.setText(product.name);
-        holder.tvProductGram.setText(String.valueOf(product.gram) + " грамм");
-        holder.tvProductGI.setText(String.valueOf(product.glycemicIndex) + " ХЕ");
+        holder.tvProductGram.setText(String.format(context.getString(R.string.gram_product_table), product.gram));
+        holder.tvProductGI.setText(String.format(context.getString(R.string.bread_unit_product_table), product.glycemicIndex));
     }
 
     @Override
