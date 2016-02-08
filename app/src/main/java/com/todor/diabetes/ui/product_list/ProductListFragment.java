@@ -25,7 +25,7 @@ import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
-import com.todor.diabetes.ui.AddProductActivity;
+import com.todor.diabetes.ui.product_add.AddProductActivity;
 import com.todor.diabetes.ui.BaseFragment;
 import com.todor.diabetes.ui.product_details.OnTableProductListener;
 import com.todor.diabetes.ui.product_details.ProductDetailsActivity;

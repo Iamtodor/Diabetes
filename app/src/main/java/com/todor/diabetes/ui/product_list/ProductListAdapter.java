@@ -28,7 +28,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_product_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_product_item_list, parent, false);
         return new ViewHolderProductItem(v);
     }
 
@@ -117,7 +117,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_productGroupHeader) TextView     productGroupHeader;
+        @Bind(R.id.tv_product_group)      TextView     productGroupHeader;
         @Bind(R.id.item_layout)           LinearLayout itemLayout;
         @Bind(R.id.product_name)          TextView     productName;
         @Bind(R.id.product_carbohydrates) TextView     productCarbonates;

@@ -1,14 +1,17 @@
-package com.todor.diabetes.ui;
+package com.todor.diabetes.ui.product_add;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.DbHelperSingleton;
@@ -16,19 +19,20 @@ import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    @Bind(R.id.product_name)
-    EditText productNameEditText;
-    @Bind(R.id.product_carbohydrates)
-    EditText productCarbohydratesEditText;
-    @Bind(R.id.tv_productGroupHeader)
-    EditText productGroupEditText;
-    @Bind(R.id.add_button)
-    Button addButton;
+    @Bind(R.id.product_name)          EditText                  productNameEditText;
+    @Bind(R.id.product_carbohydrates) EditText                  productCarbohydratesEditText;
+    @Bind(R.id.tv_product_group)      DelayAutoCompleteTextView autoCompleteTextView;
+    @Bind(R.id.progress_bar)          ProgressBar               progressBar;
+    @Bind(R.id.add_button)            Button                    addButton;
 
     private ProductFunctionality dbManager;
 
@@ -38,7 +42,9 @@ public class AddProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
         ButterKnife.bind(this);
 
-        dbManager = new ProductFunctionality(this);
+        List<String> groupArrayList = getProductGroupList();
+
+        setupAutoCompleteTextView((ArrayList<String>) groupArrayList);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +52,7 @@ public class AddProductActivity extends AppCompatActivity {
                 Utils.hideSoftKeyboard(AddProductActivity.this);
                 String productName = productNameEditText.getText().toString().toLowerCase();
                 String productCarbohydrates = productCarbohydratesEditText.getText().toString();
-                String productGroup = productGroupEditText.getText().toString();
+                String productGroup = autoCompleteTextView.getText().toString();
 
                 if (!productName.isEmpty() && !productCarbohydrates.isEmpty() && !productGroup.isEmpty()) {
                     if (!dbManager.checkIfProductExists(productName)) {
@@ -70,6 +76,26 @@ public class AddProductActivity extends AppCompatActivity {
                 } else {
                     Snackbar.make(v, R.string.fill_all_fields, Snackbar.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    @NonNull
+    private List<String> getProductGroupList() {
+        dbManager = new ProductFunctionality(this);
+        HashSet<String> groupList = (HashSet<String>) dbManager.getGroupProducts();
+        return new ArrayList<>(groupList);
+    }
+
+    private void setupAutoCompleteTextView(ArrayList<String> groupArrayList) {
+        autoCompleteTextView.setAdapter(new GroupAutoCompleteAdapter(this, groupArrayList));
+        autoCompleteTextView.setThreshold(3);
+        autoCompleteTextView.setLoadingIndicator(progressBar);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String productGroup = (String) adapterView.getItemAtPosition(position);
+                autoCompleteTextView.setText(productGroup);
             }
         });
     }

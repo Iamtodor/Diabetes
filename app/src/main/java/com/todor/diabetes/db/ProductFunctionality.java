@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.todor.diabetes.models.Product;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProductFunctionality {
 
@@ -94,5 +96,21 @@ public class ProductFunctionality {
         }
         DbHelperSingleton.closeDb();
         return productList;
+    }
+
+    public Set<String> getGroupProducts() {
+        Set<String> productGroupList = new HashSet<>();
+        SQLiteDatabase db = DbHelperSingleton.getDb(context);
+        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null)) {
+            int groupColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_GROUP);
+
+            while (cursor.moveToNext()) {
+                productGroupList.add(cursor.getString(groupColumnIndex));
+            }
+        }
+
+        DbHelperSingleton.closeDb();
+
+        return productGroupList;
     }
 }

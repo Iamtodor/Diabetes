@@ -45,20 +45,37 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textColorHint="@color/colorPrimaryDark">
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/tv_productGroupHeader"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/product_group"
-            android:textSize="20sp"/>
+            android:layout_margin="10dp"
+            android:textColorHint="@color/colorPrimaryDark">
 
-    </android.support.design.widget.TextInputLayout>
+            <com.todor.diabetes.ui.product_add.DelayAutoCompleteTextView
+                android:id="@+id/tv_product_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/product_group"
+                android:imeOptions="flagNoExtractUi|actionSearch"
+                android:inputType="textCapSentences"
+                android:textSize="20sp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="16dp"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/add_button"
