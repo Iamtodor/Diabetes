@@ -27,18 +27,18 @@ import butterknife.OnClick;
 
 public class ProductDetailsFragment extends BaseFragment {
 
-    @Bind(R.id.edt_product_value_for_calculation) EditText        edtProductValueForCalculation;
-    @Bind(R.id.btn_gram)                          RadioButton     btnGram;
-    @Bind(R.id.btn_bread_unit)                    RadioButton     btnBreadUnit;
-    @Bind(R.id.edt_wrapper)                       TextInputLayout edtProductValueWrapper;
-    @Bind(R.id.tv_product_result_value)           TextView        productResultValue;
-    @Bind(R.id.tv_result_explanation)             TextView        tvResultExplanation;
+    @Bind(R.id.edt_product_value_for_calculation) EditText edtProductValueForCalculation;
+    @Bind(R.id.btn_gram) RadioButton btnGram;
+    @Bind(R.id.btn_bread_unit) RadioButton btnBreadUnit;
+    @Bind(R.id.edt_wrapper) TextInputLayout edtProductValueWrapper;
+    @Bind(R.id.tv_product_result_value) TextView productResultValue;
+    @Bind(R.id.tv_result_explanation) TextView tvResultExplanation;
 
-    private ProductFunctionality   dbManager;
-    private Product                product;
+    private ProductFunctionality dbManager;
+    private Product product;
     private OnTableProductListener onTableProductListener;
-    private int                    gram;
-    private float                  glycemicIndex;
+    private int gram;
+    private float glycemicIndex;
 
     @Override
     public String getFragmentTitle() {
@@ -75,7 +75,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 try {
                     setValuesAndViews(s);
                 } catch (NumberFormatException e) {
-                    tvResultExplanation.setText("Некорректное значение");
+                    tvResultExplanation.setText(R.string.edit_correct_value);
                 }
             }
         });
@@ -95,7 +95,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
             } else {
 //                productResultValue.setText("Некорректное значение");
-                tvResultExplanation.setText("Некорректное значение");
+                tvResultExplanation.setText(R.string.edit_correct_value);
             }
         } else if (btnBreadUnit.isChecked()) {
             if (checkCorrectResult(s.toString())) {
@@ -108,7 +108,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " ХЕ");
             } else {
 //                productResultValue.setText("Некорректное значение");
-                tvResultExplanation.setText("Некорректное значение");
+                tvResultExplanation.setText(R.string.edit_correct_value);
             }
         }
     }
@@ -132,7 +132,7 @@ public class ProductDetailsFragment extends BaseFragment {
 //            productResultValue.setText(String.format(getString(R.string.value_gram), result));
             glycemicIndex = intEnteredValue;
             gram = (int) result;
-            tvResultExplanation.setText(intEnteredValue + " ХЕ это " + String.format("%.2f", result) + " грамм");
+            tvResultExplanation.setText(intEnteredValue + " грамм это " + String.format("%.2f", result) + " ХЕ");
         } else {
 //            productResultValue.setText("Некорректное значение");
             tvResultExplanation.setText("Некорректное значение");
