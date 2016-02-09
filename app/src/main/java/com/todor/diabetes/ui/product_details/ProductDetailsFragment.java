@@ -19,7 +19,6 @@ import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
-import com.todor.diabetes.utils.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,10 +28,10 @@ import butterknife.OnClick;
 public class ProductDetailsFragment extends BaseFragment {
 
     @Bind(R.id.edt_product_value_for_calculation) EditText        edtProductValueForCalculation;
-    @Bind(R.id.tv_product_result_value)           TextView        productResultValue;
     @Bind(R.id.btn_gram)                          RadioButton     btnGram;
     @Bind(R.id.btn_bread_unit)                    RadioButton     btnBreadUnit;
-    @Bind(R.id.edt_wrapper)                       TextInputLayout edt_product_value_wrapper;
+    @Bind(R.id.edt_wrapper)                       TextInputLayout edtProductValueWrapper;
+    @Bind(R.id.tv_product_result_value)           TextView        productResultValue;
     @Bind(R.id.tv_result_explanation)             TextView        tvResultExplanation;
 
     private ProductFunctionality   dbManager;
@@ -57,9 +56,10 @@ public class ProductDetailsFragment extends BaseFragment {
         View v = inflater.inflate(R.layout.fragment_product_details, container, false);
         ButterKnife.bind(this, v);
 
+
         product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
-        edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
-        productResultValue.setText(String.format(getString(R.string.value_gram), 0.0));
+        edtProductValueWrapper.setHint(getString(R.string.hint_product_GL));
+//        productResultValue.setText(String.format(getString(R.string.value_gram), 0.0));
 
         edtProductValueForCalculation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,19 +72,10 @@ public class ProductDetailsFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int value = parseStringToInt(s.toString());
-                if (btnGram.isChecked()) {
-                    float result = getGramFromBreadUnits(value);
-                    productResultValue.setText(String.format(getString(R.string.value_gram), result));
-                    glycemicIndex = value;
-                    gram = (int) result;
-                    tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
-                } else if (btnBreadUnit.isChecked()) {
-                    float result = getBreadUnitsFromGram(value);
-                    productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
-                    gram = value;
-                    glycemicIndex = result;
-                    tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " ХЕ");
+                try {
+                    setValuesAndViews(s);
+                } catch (NumberFormatException e) {
+                    tvResultExplanation.setText("Некорректное значение");
                 }
             }
         });
@@ -92,40 +83,76 @@ public class ProductDetailsFragment extends BaseFragment {
         return v;
     }
 
-    public float getGramFromBreadUnits(int value) {
-        return value * Utils.getGlycemicIndex(getActivity()) / (product.carbohydrates / 100);
+    private void setValuesAndViews(Editable s) {
+        if (btnGram.isChecked()) {
+            if (checkCorrectResult(s.toString())) {
+                float result = ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
+                        s.toString());
+//                productResultValue.setText(String.format(getString(R.string.value_gram), result));
+                int value = ProductCalculation.parseStringToInt(s.toString());
+                glycemicIndex = value;
+                gram = (int) result;
+                tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
+            } else {
+//                productResultValue.setText("Некорректное значение");
+                tvResultExplanation.setText("Некорректное значение");
+            }
+        } else if (btnBreadUnit.isChecked()) {
+            if (checkCorrectResult(s.toString())) {
+                float result = ProductCalculation.calculateBreadUnits(product.carbohydrates, getActivity(),
+                        s.toString());
+//                productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
+                int value = ProductCalculation.parseStringToInt(s.toString());
+                glycemicIndex = value;
+                gram = (int) result;
+                tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " ХЕ");
+            } else {
+//                productResultValue.setText("Некорректное значение");
+                tvResultExplanation.setText("Некорректное значение");
+            }
+        }
     }
 
-    public float getBreadUnitsFromGram(int value) {
-        return value * (product.carbohydrates / 100) / Utils.getGlycemicIndex(getActivity());
-    }
-
-    public int parseStringToInt(String value) {
+    private boolean checkCorrectResult(String enteredValue) {
         try {
-            return Integer.parseInt(value);
+            ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
+                    enteredValue);
+            return true;
         } catch (NumberFormatException e) {
-            return 0;
+            return false;
         }
     }
 
     private void clickChangeBreadUnit() {
-        int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
-        float result = getBreadUnitsFromGram(value);
-        productResultValue.setText(String.format(getString(R.string.value_bread_unit), result));
-        edt_product_value_wrapper.setHint(getString(R.string.hint_product_gram));
-        gram = value;
-        glycemicIndex = result;
-        tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " XE");
+        String enteredValue = edtProductValueForCalculation.getText().toString();
+        int intEnteredValue = ProductCalculation.parseStringToInt(enteredValue);
+        if (checkCorrectResult(enteredValue)) {
+            float result = ProductCalculation.calculateBreadUnits(product.carbohydrates, getActivity(),
+                    enteredValue);
+//            productResultValue.setText(String.format(getString(R.string.value_gram), result));
+            glycemicIndex = intEnteredValue;
+            gram = (int) result;
+            tvResultExplanation.setText(intEnteredValue + " ХЕ это " + String.format("%.2f", result) + " грамм");
+        } else {
+//            productResultValue.setText("Некорректное значение");
+            tvResultExplanation.setText("Некорректное значение");
+        }
     }
 
     public void clickChangeBtnGram() {
-        int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
-        float result = getGramFromBreadUnits(value);
-        productResultValue.setText(String.format(getString(R.string.value_gram), result));
-        edt_product_value_wrapper.setHint(getString(R.string.hint_product_GL));
-        glycemicIndex = value;
-        gram = (int) result;
-        tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
+        String enteredValue = edtProductValueForCalculation.getText().toString();
+        int intEnteredValue = ProductCalculation.parseStringToInt(enteredValue);
+        if (checkCorrectResult(enteredValue)) {
+            float result = ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
+                    enteredValue);
+//            productResultValue.setText(String.format(getString(R.string.value_gram), result));
+            glycemicIndex = intEnteredValue;
+            gram = (int) result;
+            tvResultExplanation.setText(intEnteredValue + " ХЕ это " + String.format("%.2f", result) + " грамм");
+        } else {
+//            productResultValue.setText("Некорректное значение");
+            tvResultExplanation.setText("Некорректное значение");
+        }
     }
 
     @OnClick(R.id.btn_bread_unit)
@@ -150,18 +177,26 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @OnClick(R.id.btn_plus)
     public void btnPlusClick() {
-        edtProductValueForCalculation.setText(String.valueOf(
-                parseStringToInt(edtProductValueForCalculation.getText().toString()) + 1));
+        try {
+            int value = ProductCalculation.parseStringToInt(edtProductValueForCalculation.getText().toString());
+            edtProductValueForCalculation.setText(String.valueOf(value + 1));
+        } catch (NumberFormatException e) {
+            edtProductValueForCalculation.setText(String.valueOf(1));
+        }
     }
 
     @OnClick(R.id.btn_minus)
     public void btnMinusClick() {
-        int value = parseStringToInt(edtProductValueForCalculation.getText().toString());
-        if (value - 1 < 0) {
-            Toast.makeText(getActivity(), getString(R.string.edit_positive_value), Toast.LENGTH_SHORT).show();
-            return;
+        try {
+            int value = ProductCalculation.parseStringToInt(edtProductValueForCalculation.getText().toString());
+            if (value - 1 < 0) {
+                Toast.makeText(getActivity(), getString(R.string.edit_positive_value), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            edtProductValueForCalculation.setText(String.valueOf(value - 1));
+        } catch (NumberFormatException e) {
+            edtProductValueForCalculation.setText(String.valueOf(1));
         }
-        edtProductValueForCalculation.setText(String.valueOf(value - 1));
     }
 
     @OnClick(R.id.btn_favorite)
