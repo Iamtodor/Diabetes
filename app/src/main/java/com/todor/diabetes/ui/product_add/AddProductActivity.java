@@ -65,6 +65,7 @@ public class AddProductActivity extends AppCompatActivity {
                         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                setResult(RESULT_OK);
                                 finish();
                             }
                         });

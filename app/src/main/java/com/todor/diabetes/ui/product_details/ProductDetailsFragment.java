@@ -27,18 +27,18 @@ import butterknife.OnClick;
 
 public class ProductDetailsFragment extends BaseFragment {
 
-    @Bind(R.id.edt_product_value_for_calculation) EditText edtProductValueForCalculation;
-    @Bind(R.id.btn_gram) RadioButton btnGram;
-    @Bind(R.id.btn_bread_unit) RadioButton btnBreadUnit;
-    @Bind(R.id.edt_wrapper) TextInputLayout edtProductValueWrapper;
-    @Bind(R.id.tv_product_result_value) TextView productResultValue;
-    @Bind(R.id.tv_result_explanation) TextView tvResultExplanation;
+    @Bind(R.id.edt_product_value_for_calculation) EditText        edtProductValueForCalculation;
+    @Bind(R.id.btn_gram)                          RadioButton     btnGram;
+    @Bind(R.id.btn_bread_unit)                    RadioButton     btnBreadUnit;
+    @Bind(R.id.edt_wrapper)                       TextInputLayout edtProductValueWrapper;
+    @Bind(R.id.tv_product_result_value)           TextView        productResultValue;
+    @Bind(R.id.tv_result_explanation)             TextView        tvResultExplanation;
 
-    private ProductFunctionality dbManager;
-    private Product product;
+    private ProductFunctionality   dbManager;
+    private Product                product;
     private OnTableProductListener onTableProductListener;
-    private int gram;
-    private float glycemicIndex;
+    private int                    gram;
+    private float                  glycemicIndex;
 
     @Override
     public String getFragmentTitle() {

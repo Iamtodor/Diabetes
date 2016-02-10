@@ -25,8 +25,8 @@ import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
-import com.todor.diabetes.ui.product_add.AddProductActivity;
 import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.ui.product_add.AddProductActivity;
 import com.todor.diabetes.ui.product_details.OnTableProductListener;
 import com.todor.diabetes.ui.product_details.ProductDetailsActivity;
 
@@ -35,16 +35,17 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>>,
         SearchView.OnQueryTextListener {
 
     @Bind(R.id.recyclerView) RecyclerView         recyclerView;
+    @Bind(R.id.fab)          FloatingActionButton fab;
     private                  ProductFunctionality dbManager;
     private List<Product>      productList    = null;
     private ProductListAdapter productAdapter = null;
-    private FloatingActionButton   fab;
     private TableProduct           productForTable;
     private OnTableProductListener onTableProductListener;
 
@@ -58,13 +59,6 @@ public class ProductListFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product_list, container, false);
-        fab = (FloatingActionButton) v.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddProductActivity.class));
-            }
-        });
 
         ButterKnife.bind(this, v);
         setHasOptionsMenu(true);
@@ -84,6 +78,12 @@ public class ProductListFragment extends BaseFragment implements
         return v;
     }
 
+    @OnClick(R.id.fab)
+    public void fab_OnClick() {
+        Intent intent = new Intent(getActivity(), AddProductActivity.class);
+        startActivityForResult(intent, Constants.REQUEST_CODE_FOR_RESTART_LOADER);
+    }
+
     @Override
     public String getFragmentTitle() {
         return getResources().getString(R.string.title_products);
@@ -93,6 +93,7 @@ public class ProductListFragment extends BaseFragment implements
     public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
         return new ProductLoader(getActivity());
     }
+
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
@@ -156,10 +157,14 @@ public class ProductListFragment extends BaseFragment implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == Constants.REQUEST_CODE_FOR_TABLE) {
+        if (requestCode == Constants.REQUEST_CODE_FOR_TABLE) {
+            if (resultCode == Activity.RESULT_OK) {
                 productForTable = data.getParcelableExtra(Constants.PRODUCT_FOR_TABLE);
                 onTableProductListener.setProduct(productForTable);
+            }
+        } else if (requestCode == Constants.REQUEST_CODE_FOR_RESTART_LOADER) {
+            if (resultCode == Activity.RESULT_OK) {
+                getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
             }
         }
     }
