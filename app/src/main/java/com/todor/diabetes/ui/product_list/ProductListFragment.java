@@ -18,6 +18,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
@@ -73,9 +76,29 @@ public class ProductListFragment extends BaseFragment implements
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.setAdapter(productAdapter);
+        recyclerView.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideFab();
+            }
+
+            @Override
+            public void onShow() {
+                showFab();
+            }
+        });
         return v;
+    }
+
+    private void hideFab() {
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) fab.getLayoutParams();
+        int fabBottomMargin = lp.bottomMargin;
+        fab.animate().translationY(fab.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    private void showFab() {
+        fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
     @OnClick(R.id.fab)
