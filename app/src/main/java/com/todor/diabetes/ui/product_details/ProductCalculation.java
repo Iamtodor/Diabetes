@@ -21,7 +21,7 @@ public class ProductCalculation {
     public static float calculateBreadUnits(float carbohydrates, Context context, String enterString) throws NumberFormatException {
         if (isProductHasCarbohydrates(carbohydrates)) {
             int value = parseStringToInt(enterString);
-            return value * (carbohydrates / 100) / Utils.getGlycemicIndex(context);
+            return value * (carbohydrates / 100) / Utils.getCarbohydratesCount(context);
         } else {
             return 0;
         }
@@ -30,7 +30,7 @@ public class ProductCalculation {
     public static float calculateGram(float carbohydrates, Context context, String enterString) throws NumberFormatException {
         if (isProductHasCarbohydrates(carbohydrates)) {
             int value = parseStringToInt(enterString);
-            return value * Utils.getGlycemicIndex(context) / (carbohydrates / 100);
+            return value * Utils.getCarbohydratesCount(context) / (carbohydrates / 100);
         } else {
             return 0;
         }

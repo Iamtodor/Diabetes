@@ -5,18 +5,21 @@
         android:defaultValue="@string/preference_bread_unit_default_value"
         android:inputType="number"
         android:key="@string/preference_bread_unit_key"
+        android:summary="%1$s"
         android:title="@string/preference_bread_unit_title"/>
 
     <EditTextPreference
         android:defaultValue="@string/preference_carbohydrates_default_value"
         android:inputType="number"
         android:key="@string/preference_carbohydrates_key"
+        android:summary="%1$s"
         android:title="@string/preference_carbohydrates_title"/>
 
     <EditTextPreference
         android:defaultValue="@string/preference_insulin_factor_default_value"
         android:inputType="number"
         android:key="@string/preference_insulin_factor_key"
+        android:summary="%1$s"
         android:title="@string/preference_insulin_factor_title"/>
 
 </PreferenceScreen>

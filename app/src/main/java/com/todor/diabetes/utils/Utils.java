@@ -33,9 +33,22 @@ public class Utils {
         editor.apply();
     }
 
-    public static float getGlycemicIndex(Context context) {
+    public static float getBreadUnitsCount(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
-        return preferences.getFloat(context.getResources().getString(R.string.preference_bread_unit_key), 12);
+        String value = preferences.getString(context.getResources().getString(R.string.preference_bread_unit_key), "4");
+        return Float.parseFloat(value);
+    }
+
+    public static float getCarbohydratesCount(Context context) {
+        SharedPreferences preferences = getSharedPreferences(context);
+        String value = preferences.getString(context.getResources().getString(R.string.preference_carbohydrates_key), "12");
+        return Float.parseFloat(value);
+    }
+
+    public static float getInsulinFactor(Context context) {
+        SharedPreferences preferences = getSharedPreferences(context);
+        String value = preferences.getString(context.getResources().getString(R.string.preference_insulin_factor_key), "2");
+        return Float.parseFloat(value);
     }
 
     public static boolean isFirstLaunch(Context context) {
