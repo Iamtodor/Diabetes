@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
@@ -42,14 +43,14 @@ import butterknife.OnClick;
 
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>>,
-        SearchView.OnQueryTextListener, OnItemLongClickListener {
+        SearchView.OnQueryTextListener {
 
-    @Bind(R.id.recyclerView) RecyclerView         recyclerView;
-    @Bind(R.id.fab)          FloatingActionButton fab;
-    private                  ProductFunctionality dbManager;
+    @Bind(R.id.recyclerView)       RecyclerView         recyclerView;
+    @Bind(R.id.fab)                FloatingActionButton fab;
+    @Bind(R.id.coordinator_layout) CoordinatorLayout    coordinatorLayout;
+    private                        ProductFunctionality dbManager;
     private List<Product>      productList    = null;
     private ProductListAdapter productAdapter = null;
-    private TableProduct           productForTable;
     private OnTableProductListener onTableProductListener;
 
     @Override
@@ -67,18 +68,25 @@ public class ProductListFragment extends BaseFragment implements
         setHasOptionsMenu(true);
         dbManager = new ProductFunctionality(getActivity());
 
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        initLoader();
+        setupRecyclerView();
+        return v;
+    }
 
+    private void initLoader() {
         getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
+    }
 
-//        recyclerView.addItemDecoration(new ItemDecorator(getActivity(), R.drawable.divider));
+    private void setupRecyclerView() {
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         recyclerView.setItemAnimator(itemAnimator);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(productAdapter);
 
-        recyclerView.setOnScrollListener(new HidingScrollListener() {
+        recyclerView.addOnScrollListener(new HidingScrollListener() {
             @Override
             public void onHide() {
                 hideFab();
@@ -89,11 +97,10 @@ public class ProductListFragment extends BaseFragment implements
                 showFab();
             }
         });
-        return v;
     }
 
     private void hideFab() {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) fab.getLayoutParams();
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         int fabBottomMargin = lp.bottomMargin;
         fab.animate().translationY(fab.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
     }
@@ -123,19 +130,37 @@ public class ProductListFragment extends BaseFragment implements
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
         productList = data;
         if (productList != null && productList.size() != 0) {
-            productAdapter = new ProductListAdapter(data, new OnProductListItemClickListener() {
-                @Override
-                public void onProductClick(Product product) {
-                    Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
-                    intent.putExtra(Constants.PRODUCT_KEY, product);
-                    startActivityForResult(intent, Constants.REQUEST_CODE_FOR_TABLE);
-                }
-            }, getActivity());
-            productAdapter.setOnLongClickListener(ProductListFragment.this);
+            setupProductAdapter(data);
             recyclerView.setAdapter(productAdapter);
         } else {
             Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setupProductAdapter(ArrayList<Product> data) {
+        productAdapter = new ProductListAdapter(data, new OnProductClickListener() {
+            @Override
+            public void onProductClick(Product product) {
+                Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
+                intent.putExtra(Constants.PRODUCT_KEY, product);
+                startActivityForResult(intent, Constants.REQUEST_CODE_FOR_TABLE);
+            }
+        }, new OnProductLongClickListener() {
+            @Override
+            public void onItemLongClick(final int position, final Product product) {
+                productAdapter.removeItem(position);
+                dbManager.deleteProduct(product.name);
+                Snackbar.make(coordinatorLayout, R.string.deletion_product, Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                productAdapter.addItem(position, product);
+                                dbManager.insertProduct(product);
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     @Override
@@ -183,7 +208,7 @@ public class ProductListFragment extends BaseFragment implements
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE_FOR_TABLE) {
             if (resultCode == Activity.RESULT_OK) {
-                productForTable = data.getParcelableExtra(Constants.PRODUCT_FOR_TABLE);
+                TableProduct productForTable = data.getParcelableExtra(Constants.PRODUCT_FOR_TABLE);
                 onTableProductListener.setProduct(productForTable);
             }
         } else if (requestCode == Constants.REQUEST_CODE_FOR_RESTART_LOADER) {
@@ -191,10 +216,5 @@ public class ProductListFragment extends BaseFragment implements
                 getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
             }
         }
-    }
-
-    @Override
-    public void onItemLongClick(int position) {
-        productAdapter.removeItem(position);
     }
 }

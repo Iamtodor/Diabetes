@@ -1,13 +1,11 @@
 package com.todor.diabetes.ui.product_list;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.Product;
@@ -20,30 +18,23 @@ import butterknife.ButterKnife;
 
 public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Product>                  productList;
-    private OnProductListItemClickListener listener;
-    private Context                        context;
-    private OnItemLongClickListener        onItemLongClickListener;
+    private List<Product>              productList;
+    private OnProductClickListener     onProductClickListener;
+    private OnProductLongClickListener onProductLongClickListener;
 
-    public ProductListAdapter(List<Product> productList, OnProductListItemClickListener listener, Context context) {
+    public ProductListAdapter(List<Product> productList, OnProductClickListener onProductClickListener,
+                              OnProductLongClickListener onProductLongClickListener) {
         this.productList = new ArrayList<>(productList);
-        this.listener = listener;
-        this.context = context;
+        this.onProductClickListener = onProductClickListener;
+        this.onProductLongClickListener = onProductLongClickListener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_product_item_list, parent, false);
-        return new ViewHolderProductItem(v, this);
+        return new ViewHolderProductItem(v);
     }
 
-    public OnItemLongClickListener getOnLongClickListener() {
-        return onItemLongClickListener;
-    }
-
-    public void setOnLongClickListener(OnItemLongClickListener onItemLongClickListener) {
-        this.onItemLongClickListener = onItemLongClickListener;
-    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -60,7 +51,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         viewHolder.productName.setText(product.name);
         viewHolder.productCarbonates.setText(String.valueOf(product.carbohydrates));
 
-        viewHolder.bind(product, listener);
+        viewHolder.bind(product, onProductClickListener, onProductLongClickListener);
     }
 
     private boolean needShowGroupHeader(int position, Product product) {
@@ -130,35 +121,30 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_product_group)      TextView           productGroupHeader;
-        @Bind(R.id.item_layout)           LinearLayout       itemLayout;
-        @Bind(R.id.product_name)          TextView           productName;
-        @Bind(R.id.product_carbohydrates) TextView           productCarbonates;
-        private                           ProductListAdapter parent;
+        @Bind(R.id.tv_product_group)      TextView     productGroupHeader;
+        @Bind(R.id.item_layout)           LinearLayout itemLayout;
+        @Bind(R.id.product_name)          TextView     productName;
+        @Bind(R.id.product_carbohydrates) TextView     productCarbonates;
 
-        public ViewHolderProductItem(View view, ProductListAdapter parent) {
+        public ViewHolderProductItem(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            this.parent = parent;
         }
 
-        private void bind(final Product product, final OnProductListItemClickListener listener) {
+        private void bind(final Product product, final OnProductClickListener onProductClickListener,
+                          final OnProductLongClickListener onProductLongClickListener) {
 
             itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onProductClick(product);
+                    onProductClickListener.onProductClick(product);
                 }
             });
 
             itemLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(context, "OnTouch", Toast.LENGTH_SHORT).show();
-                    OnItemLongClickListener listener = parent.getOnLongClickListener();
-                    if (listener != null) {
-                        listener.onItemLongClick(getAdapterPosition());
-                    }
+                    onProductLongClickListener.onItemLongClick(getAdapterPosition(), product);
                     return true;
                 }
             });

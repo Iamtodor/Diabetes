@@ -70,5 +70,7 @@
     <string name="preference_insulin_factor_title">Коэффициент инсулина</string>
     <string name="toast_for_empty_products">Вы еще не добавили продукты</string>
     <string name="product_added_on_table">Продукт был добавлен на стол</string>
+    <string name="deletion_product">Продукт был удален</string>
+    <string name="undo">Отменить</string>
 
 </resources>
