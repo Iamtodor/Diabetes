@@ -35,7 +35,6 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();

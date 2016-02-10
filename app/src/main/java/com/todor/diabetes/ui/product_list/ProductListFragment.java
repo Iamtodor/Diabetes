@@ -42,7 +42,7 @@ import butterknife.OnClick;
 
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>>,
-        SearchView.OnQueryTextListener {
+        SearchView.OnQueryTextListener, OnItemLongClickListener {
 
     @Bind(R.id.recyclerView) RecyclerView         recyclerView;
     @Bind(R.id.fab)          FloatingActionButton fab;
@@ -77,6 +77,7 @@ public class ProductListFragment extends BaseFragment implements
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(productAdapter);
+
         recyclerView.setOnScrollListener(new HidingScrollListener() {
             @Override
             public void onHide() {
@@ -129,8 +130,8 @@ public class ProductListFragment extends BaseFragment implements
                     intent.putExtra(Constants.PRODUCT_KEY, product);
                     startActivityForResult(intent, Constants.REQUEST_CODE_FOR_TABLE);
                 }
-            });
-
+            }, getActivity());
+            productAdapter.setOnLongClickListener(ProductListFragment.this);
             recyclerView.setAdapter(productAdapter);
         } else {
             Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
@@ -190,5 +191,10 @@ public class ProductListFragment extends BaseFragment implements
                 getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
             }
         }
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        productAdapter.removeItem(position);
     }
 }
