@@ -1,12 +1,14 @@
 package com.todor.diabetes.ui.product_table;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
@@ -21,29 +23,60 @@ import butterknife.ButterKnife;
 
 public class ProductTableFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.recyclerView)  RecyclerView            recyclerView;
+    @Bind(R.id.linear_layout) LinearLayout            linearLayout;
+    private                   ProductTableAdapter     productAdapter;
+    private                   ArrayList<TableProduct> products;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_product_table, container, false);
         ButterKnife.bind(this, v);
 
-        ArrayList<TableProduct> products = getArguments().getParcelableArrayList(Constants.PRODUCT_FOR_TABLE);
-        if (products != null && products.size() != 0) {
-            ProductTableAdapter productAdapter = new ProductTableAdapter(products, getActivity());
-            RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-
-            recyclerView.setItemAnimator(itemAnimator);
-
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            recyclerView.setLayoutManager(layoutManager);
-
-            recyclerView.setAdapter(productAdapter);
+        getProductList();
+        if (checkIsProductAvailable(products)) {
+            setupProductAdapter(products);
+            setupRecyclerView();
         } else {
             Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
         }
 
         return v;
+    }
+
+    private void getProductList() {
+        products = getArguments().getParcelableArrayList(Constants.PRODUCT_FOR_TABLE);
+    }
+
+    private boolean checkIsProductAvailable(ArrayList<TableProduct> products) {
+        return products != null && products.size() != 0;
+    }
+
+    private void setupProductAdapter(ArrayList<TableProduct> products) {
+        productAdapter = new ProductTableAdapter(products, getActivity(), new OnProductLongClickListener() {
+            @Override
+            public void onItemLongClick(final int position, final TableProduct product) {
+                productAdapter.removeItem(position);
+                Snackbar.make(linearLayout, R.string.deletion_product, Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                productAdapter.addItem(position, product);
+                            }
+                        })
+                        .show();
+            }
+        });
+    }
+
+    private void setupRecyclerView() {
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        recyclerView.setItemAnimator(itemAnimator);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(productAdapter);
     }
 
     @Override

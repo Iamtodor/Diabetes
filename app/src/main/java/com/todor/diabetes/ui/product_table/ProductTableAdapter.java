@@ -1,6 +1,7 @@
 package com.todor.diabetes.ui.product_table;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,15 @@ import butterknife.ButterKnife;
 
 public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapter.ViewHolderProductItem> {
 
-    private List<TableProduct> productArrayList;
-    private Context            context;
+    private List<TableProduct>         productArrayList;
+    private Context                    context;
+    private OnProductLongClickListener onProductLongClickListener;
 
-    public ProductTableAdapter(List<TableProduct> productArrayList, Context context) {
+    public ProductTableAdapter(List<TableProduct> productArrayList, Context context,
+                               OnProductLongClickListener onProductLongClickListener) {
         this.productArrayList = productArrayList;
         this.context = context;
+        this.onProductLongClickListener = onProductLongClickListener;
     }
 
     @Override
@@ -34,9 +38,12 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
     @Override
     public void onBindViewHolder(ViewHolderProductItem holder, int position) {
         TableProduct product = productArrayList.get(position);
-        holder.tvProductName.setText(product.name);
-        holder.tvProductGram.setText(String.format(context.getString(R.string.gram_product_table), product.gram));
-        holder.tvProductGI.setText(String.format(context.getString(R.string.bread_unit_product_table), product.glycemicIndex));
+        if (product != null) {
+            holder.tvProductName.setText(product.name);
+            holder.tvProductGram.setText(String.format(context.getString(R.string.gram_product_table), product.gram));
+            holder.tvProductGI.setText(String.format(context.getString(R.string.bread_unit_product_table), product.glycemicIndex));
+            holder.bind(product, onProductLongClickListener);
+        }
     }
 
     @Override
@@ -44,8 +51,20 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
         return productArrayList.size();
     }
 
+    public TableProduct removeItem(int position) {
+        final TableProduct model = productArrayList.remove(position);
+        notifyItemRemoved(position);
+        return model;
+    }
+
+    public void addItem(int position, TableProduct model) {
+        productArrayList.add(position, model);
+        notifyItemInserted(position);
+    }
+
     class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
+        @Bind(R.id.card_view)         CardView cardView;
         @Bind(R.id.tv_name)           TextView tvProductName;
         @Bind(R.id.tv_gram)           TextView tvProductGram;
         @Bind(R.id.tv_glycemic_index) TextView tvProductGI;
@@ -53,6 +72,16 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
         public ViewHolderProductItem(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        public void bind(final TableProduct product, final OnProductLongClickListener onProductLongClickListener) {
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onProductLongClickListener.onItemLongClick(getAdapterPosition(), product);
+                    return true;
+                }
+            });
         }
     }
 

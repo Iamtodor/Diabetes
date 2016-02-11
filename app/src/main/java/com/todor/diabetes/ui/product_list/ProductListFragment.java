@@ -54,6 +54,11 @@ public class ProductListFragment extends BaseFragment implements
     private OnTableProductListener onTableProductListener;
 
     @Override
+    public String getFragmentTitle() {
+        return getResources().getString(R.string.title_products);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         onTableProductListener = (OnTableProductListener) activity;
@@ -71,10 +76,6 @@ public class ProductListFragment extends BaseFragment implements
         initLoader();
         setupRecyclerView();
         return v;
-    }
-
-    private void initLoader() {
-        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
     }
 
     private void setupRecyclerView() {
@@ -115,28 +116,6 @@ public class ProductListFragment extends BaseFragment implements
         startActivityForResult(intent, Constants.REQUEST_CODE_FOR_RESTART_LOADER);
     }
 
-    @Override
-    public String getFragmentTitle() {
-        return getResources().getString(R.string.title_products);
-    }
-
-    @Override
-    public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
-        return new ProductLoader(getActivity());
-    }
-
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        productList = data;
-        if (productList != null && productList.size() != 0) {
-            setupProductAdapter(data);
-            recyclerView.setAdapter(productAdapter);
-        } else {
-            Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void setupProductAdapter(ArrayList<Product> data) {
         productAdapter = new ProductListAdapter(data, new OnProductClickListener() {
             @Override
@@ -161,6 +140,26 @@ public class ProductListFragment extends BaseFragment implements
                         .show();
             }
         });
+    }
+
+    @Override
+    public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
+        return new ProductLoader(getActivity());
+    }
+
+    private void initLoader() {
+        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
+        productList = data;
+        if (productList != null && productList.size() != 0) {
+            setupProductAdapter(data);
+            recyclerView.setAdapter(productAdapter);
+        } else {
+            Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
