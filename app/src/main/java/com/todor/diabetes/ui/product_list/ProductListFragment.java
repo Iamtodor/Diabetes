@@ -212,8 +212,20 @@ public class ProductListFragment extends BaseFragment implements
             }
         } else if (requestCode == Constants.REQUEST_CODE_FOR_RESTART_LOADER) {
             if (resultCode == Activity.RESULT_OK) {
-                getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
+                restartLoader();
             }
+        }
+    }
+
+    private void restartLoader() {
+        getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (dbManager.getProductsCount() != productList.size()) {
+            restartLoader();
         }
     }
 }

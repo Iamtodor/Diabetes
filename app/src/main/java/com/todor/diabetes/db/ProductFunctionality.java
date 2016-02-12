@@ -113,4 +113,14 @@ public class ProductFunctionality {
 
         return productGroupList;
     }
+
+    public int getProductsCount() {
+        SQLiteDatabase db = DbHelperSingleton.getDb(context);
+        int size;
+        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null);) {
+            size = cursor.getCount();
+        }
+        DbHelperSingleton.closeDb();
+        return size;
+    }
 }

@@ -28,11 +28,11 @@ import butterknife.ButterKnife;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    @Bind(R.id.product_name)          EditText                  productNameEditText;
-    @Bind(R.id.product_carbohydrates) EditText                  productCarbohydratesEditText;
-    @Bind(R.id.tv_product_group)      DelayAutoCompleteTextView autoCompleteTextView;
-    @Bind(R.id.progress_bar)          ProgressBar               progressBar;
-    @Bind(R.id.add_button)            Button                    addButton;
+    @Bind(R.id.product_name)          protected EditText                  productNameEditText;
+    @Bind(R.id.product_carbohydrates) protected EditText                  productCarbohydratesEditText;
+    @Bind(R.id.tv_product_group)      protected DelayAutoCompleteTextView autoCompleteTextView;
+    @Bind(R.id.progress_bar)          protected ProgressBar               progressBar;
+    @Bind(R.id.add_button)            protected Button                    addButton;
 
     private ProductFunctionality dbManager;
 

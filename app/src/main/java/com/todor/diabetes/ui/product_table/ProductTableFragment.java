@@ -23,8 +23,8 @@ import butterknife.ButterKnife;
 
 public class ProductTableFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView)  RecyclerView            recyclerView;
-    @Bind(R.id.linear_layout) LinearLayout            linearLayout;
+    @Bind(R.id.recyclerView)  protected RecyclerView            recyclerView;
+    @Bind(R.id.linear_layout) protected LinearLayout            linearLayout;
     private                   ProductTableAdapter     productAdapter;
     private                   ArrayList<TableProduct> products;
 
