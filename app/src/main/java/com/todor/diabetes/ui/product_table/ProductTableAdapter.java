@@ -62,7 +62,7 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
         notifyItemInserted(position);
     }
 
-    class ViewHolderProductItem extends RecyclerView.ViewHolder {
+    static class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
         @Bind(R.id.card_view)         CardView cardView;
         @Bind(R.id.tv_name)           TextView tvProductName;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,7 +50,7 @@ public class EditProductActivity extends AppCompatActivity {
         if (product != null) {
             productNameEditText.setText(product.name);
             productCarbohydratesEditText.setText(String.valueOf(product.carbohydrates));
-            autoCompleteTextView.setText(product.name);
+            autoCompleteTextView.setText(product.group);
         }
 
         setupAutoCompleteTextView((ArrayList<String>) groupArrayList);
@@ -58,16 +59,15 @@ public class EditProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Utils.hideSoftKeyboard(EditProductActivity.this);
-                String productName = productNameEditText.getText().toString().toLowerCase();
+                String productName = productNameEditText.getText().toString();
                 String productCarbohydrates = productCarbohydratesEditText.getText().toString();
                 String productGroup = autoCompleteTextView.getText().toString();
 
                 if (!productName.isEmpty() && !productCarbohydrates.isEmpty() && !productGroup.isEmpty()) {
-                    if (!dbManager.checkIfProductExists(productName)) {
                         float floatProductCarbohydrates = Float.parseFloat(productCarbohydrates);
-                        Product product = new Product(productName, floatProductCarbohydrates,
+                        Product newProduct = new Product(productName, floatProductCarbohydrates,
                                 productGroup, false);
-                        dbManager.insertProduct(product);
+                        dbManager.updateProduct(newProduct);
                         AlertDialog.Builder builder = new AlertDialog.Builder(EditProductActivity.this);
                         builder.setMessage(productName + getString(R.string.added_to_list));
                         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -79,9 +79,6 @@ public class EditProductActivity extends AppCompatActivity {
                         });
                         builder.setCancelable(false);
                         builder.show();
-                    } else {
-                        Snackbar.make(v, R.string.product_exists, Snackbar.LENGTH_SHORT).show();
-                    }
                 } else {
                     Snackbar.make(v, R.string.fill_all_fields, Snackbar.LENGTH_SHORT).show();
                 }

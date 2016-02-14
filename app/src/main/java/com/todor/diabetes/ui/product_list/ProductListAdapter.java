@@ -119,7 +119,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    class ViewHolderProductItem extends RecyclerView.ViewHolder {
+    static class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
         @Bind(R.id.tv_product_group)      TextView     productGroupHeader;
         @Bind(R.id.item_layout)           LinearLayout itemLayout;

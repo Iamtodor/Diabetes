@@ -49,7 +49,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Utils.hideSoftKeyboard(AddProductActivity.this);
-                String productName = productNameEditText.getText().toString().toLowerCase();
+                String productName = productNameEditText.getText().toString();
                 String productCarbohydrates = productCarbohydratesEditText.getText().toString();
                 String productGroup = autoCompleteTextView.getText().toString();
 

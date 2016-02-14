@@ -31,23 +31,6 @@ public class ProductFunctionality {
         DbHelperSingleton.closeDb();
     }
 
-    public Product getProduct(String productName) {
-        SQLiteDatabase db = DbHelperSingleton.getDb(context);
-        Product product = null;
-        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
-                DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
-                null, null, null)) {
-            if (cursor.moveToFirst()) {
-                product = new Product(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_NAME)),
-                        cursor.getFloat(cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES)),
-                        cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)),
-                        Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_IS_FAVORITE))));
-            }
-        }
-        DbHelperSingleton.closeDb();
-        return product;
-    }
-
     public void updateProduct(Product product) {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
         ContentValues contentValues = new ContentValues();
@@ -108,19 +91,34 @@ public class ProductFunctionality {
                 productGroupList.add(cursor.getString(groupColumnIndex));
             }
         }
-
         DbHelperSingleton.closeDb();
-
         return productGroupList;
     }
 
     public int getProductsCount() {
         SQLiteDatabase db = DbHelperSingleton.getDb(context);
         int size;
-        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null);) {
+        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null)) {
             size = cursor.getCount();
         }
         DbHelperSingleton.closeDb();
         return size;
+    }
+
+    public Product getProduct(String productName) {
+        SQLiteDatabase db = DbHelperSingleton.getDb(context);
+        Product product = null;
+        try (Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, new String[]{},
+                DbScheme.PRODUCT_NAME + "=?", new String[]{productName},
+                null, null, null)) {
+            if (cursor.moveToFirst()) {
+                product = new Product(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_NAME)),
+                        cursor.getFloat(cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES)),
+                        cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_GROUP)),
+                        Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DbScheme.PRODUCT_IS_FAVORITE))));
+            }
+        }
+        DbHelperSingleton.closeDb();
+        return product;
     }
 }
