@@ -64,4 +64,21 @@ public class Product implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null | !(o instanceof Product)) {
+            return false;
+        } else {
+            Product product = (Product) o;
+            if(product.name.equals(this.name))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() * group.hashCode();
+    }
 }

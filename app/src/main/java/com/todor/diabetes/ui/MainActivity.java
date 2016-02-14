@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
@@ -22,11 +23,13 @@ import com.todor.diabetes.ui.profile.ProfileFragment;
 import com.todor.diabetes.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
 
-    private ArrayList<TableProduct> productForTable = new ArrayList<>();
+    private HashSet<TableProduct> productForTable = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,6 @@ public class MainActivity extends AppCompatActivity
         if (Utils.isFirstLaunch(this)) {
             Utils.writeDataIntoDataBase(this);
             Utils.setLaunchToFalse(this);
-//            Utils.setGlycemicIndex(this, Constants.DEFAULT_GLYCEMICAL_INDEX_VALUE);
         }
 
         if (savedInstanceState == null) {
@@ -82,10 +84,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.currentEating:
                 ProductTableFragment productTableFragment;
-                if (productForTable != null) {
+                if (!productForTable.isEmpty()) {
                     Bundle args = new Bundle();
-//                    args.putParcelable(Constants.PRODUCT_FOR_TABLE, productForTable);
-                    args.putParcelableArrayList(Constants.PRODUCT_FOR_TABLE, productForTable);
+                    args.putSerializable(Constants.PRODUCT_FOR_TABLE, productForTable);
                     productTableFragment = new ProductTableFragment();
                     productTableFragment.setArguments(args);
                 } else {
@@ -116,6 +117,5 @@ public class MainActivity extends AppCompatActivity
     public void setProduct(TableProduct product) {
         productForTable.add(product);
     }
-
 }
 

@@ -17,16 +17,18 @@ import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ProductTableFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView)  protected RecyclerView            recyclerView;
+    @Bind(R.id.recyclerView) protected  RecyclerView            recyclerView;
     @Bind(R.id.linear_layout) protected LinearLayout            linearLayout;
-    private                   ProductTableAdapter     productAdapter;
-    private                   ArrayList<TableProduct> products;
+    private                             ProductTableAdapter     productAdapter;
+    private                             HashSet<TableProduct>   productHashSet;
+    private                             ArrayList<TableProduct> productArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,8 +36,8 @@ public class ProductTableFragment extends BaseFragment {
         ButterKnife.bind(this, v);
 
         getProductList();
-        if (checkIsProductAvailable(products)) {
-            setupProductAdapter(products);
+        if (checkIsProductAvailable(productHashSet)) {
+            setupProductAdapter(productHashSet);
             setupRecyclerView();
         } else {
             Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
@@ -45,15 +47,20 @@ public class ProductTableFragment extends BaseFragment {
     }
 
     private void getProductList() {
-        products = getArguments().getParcelableArrayList(Constants.PRODUCT_FOR_TABLE);
+        if (getArguments() != null) {
+            if (getArguments().getSerializable(Constants.PRODUCT_FOR_TABLE) != null) {
+                productHashSet = (HashSet<TableProduct>) getArguments().getSerializable(Constants.PRODUCT_FOR_TABLE);
+            }
+        }
     }
 
-    private boolean checkIsProductAvailable(ArrayList<TableProduct> products) {
+    private boolean checkIsProductAvailable(HashSet<TableProduct> products) {
         return products != null && products.size() != 0;
     }
 
-    private void setupProductAdapter(ArrayList<TableProduct> products) {
-        productAdapter = new ProductTableAdapter(products, getActivity(), new OnProductLongClickListener() {
+    private void setupProductAdapter(HashSet<TableProduct> products) {
+        productArrayList = new ArrayList<>(products);
+        productAdapter = new ProductTableAdapter(productArrayList, getActivity(), new OnProductLongClickListener() {
             @Override
             public void onItemLongClick(final int position, final TableProduct product) {
                 productAdapter.removeItem(position);

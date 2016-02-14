@@ -59,4 +59,20 @@ public class TableProduct implements Parcelable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if(o == null | !(o instanceof TableProduct)) {
+            return false;
+        } else {
+            TableProduct product = (TableProduct) o;
+            if(product.name.equals(this.name))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

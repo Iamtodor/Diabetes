@@ -45,11 +45,11 @@ public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>>,
         SearchView.OnQueryTextListener {
 
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    @Bind(R.id.fab) FloatingActionButton fab;
-    @Bind(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
-    private ProductFunctionality dbManager;
-    private List<Product> productList = null;
+    @Bind(R.id.recyclerView) protected       RecyclerView         recyclerView;
+    @Bind(R.id.fab) protected                FloatingActionButton fab;
+    @Bind(R.id.coordinator_layout) protected CoordinatorLayout    coordinatorLayout;
+    private                                  ProductFunctionality dbManager;
+    private List<Product>      productList    = null;
     private ProductListAdapter productAdapter = null;
     private OnTableProductListener onTableProductListener;
 
