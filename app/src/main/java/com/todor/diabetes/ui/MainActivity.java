@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
@@ -22,9 +21,7 @@ import com.todor.diabetes.ui.product_table.ProductTableFragment;
 import com.todor.diabetes.ui.profile.ProfileFragment;
 import com.todor.diabetes.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
@@ -115,6 +112,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void setProduct(TableProduct product) {
+        if (productForTable.contains(product)) {
+            productForTable.remove(product);
+        }
         productForTable.add(product);
     }
 }
