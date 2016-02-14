@@ -13,6 +13,7 @@ import com.todor.diabetes.R;
 import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
+import com.todor.diabetes.ui.EditProductActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,6 +21,7 @@ import butterknife.OnClick;
 public class ProductDetailsActivity extends AppCompatActivity implements OnTableProductListener {
 
     private TableProduct productForTable;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +33,15 @@ public class ProductDetailsActivity extends AppCompatActivity implements OnTable
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Product product = getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
+        product = getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
         getSupportActionBar().setTitle(product.name);
     }
 
     @OnClick(R.id.edit)
     public void editProductImageViewClick() {
-        Toast.makeText(ProductDetailsActivity.this, "Edit current product", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ProductDetailsActivity.this, EditProductActivity.class);
+        intent.putExtra("product", product);
+        startActivity(intent);
     }
 
     @Override

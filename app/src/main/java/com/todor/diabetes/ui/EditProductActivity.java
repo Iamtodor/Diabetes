@@ -1,4 +1,4 @@
-package com.todor.diabetes.ui.product_add;
+package com.todor.diabetes.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,6 +16,8 @@ import android.widget.ProgressBar;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
+import com.todor.diabetes.ui.product_add.DelayAutoCompleteTextView;
+import com.todor.diabetes.ui.product_add.GroupAutoCompleteAdapter;
 import com.todor.diabetes.utils.Utils;
 
 import java.util.ArrayList;
@@ -25,30 +27,37 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AddProductActivity extends AppCompatActivity {
+public class EditProductActivity extends AppCompatActivity {
 
     @Bind(R.id.product_name) protected          EditText                  productNameEditText;
     @Bind(R.id.product_carbohydrates) protected EditText                  productCarbohydratesEditText;
     @Bind(R.id.tv_product_group) protected      DelayAutoCompleteTextView autoCompleteTextView;
     @Bind(R.id.progress_bar) protected          ProgressBar               progressBar;
-    @Bind(R.id.edit_btn) protected              Button                    addButton;
+    @Bind(R.id.edit_btn) protected              Button                    editButton;
 
     private ProductFunctionality dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_product);
+        setContentView(R.layout.activity_edit_product);
         ButterKnife.bind(this);
 
         List<String> groupArrayList = getProductGroupList();
+        Product product = getIntent().getExtras().getParcelable("product");
+
+        if (product != null) {
+            productNameEditText.setText(product.name);
+            productCarbohydratesEditText.setText(String.valueOf(product.carbohydrates));
+            autoCompleteTextView.setText(product.name);
+        }
 
         setupAutoCompleteTextView((ArrayList<String>) groupArrayList);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.hideSoftKeyboard(AddProductActivity.this);
+                Utils.hideSoftKeyboard(EditProductActivity.this);
                 String productName = productNameEditText.getText().toString().toLowerCase();
                 String productCarbohydrates = productCarbohydratesEditText.getText().toString();
                 String productGroup = autoCompleteTextView.getText().toString();
@@ -59,7 +68,7 @@ public class AddProductActivity extends AppCompatActivity {
                         Product product = new Product(productName, floatProductCarbohydrates,
                                 productGroup, false);
                         dbManager.insertProduct(product);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AddProductActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(EditProductActivity.this);
                         builder.setMessage(productName + getString(R.string.added_to_list));
                         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override

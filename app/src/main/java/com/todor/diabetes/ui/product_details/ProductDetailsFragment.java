@@ -94,7 +94,6 @@ public class ProductDetailsFragment extends BaseFragment {
                 gram = (int) result;
                 tvResultExplanation.setText(value + " ХЕ это " + String.format("%.2f", result) + " грамм");
             } else {
-//                productResultValue.setText("Некорректное значение");
                 tvResultExplanation.setText(R.string.edit_correct_value);
             }
         } else if (btnBreadUnit.isChecked()) {
@@ -107,7 +106,6 @@ public class ProductDetailsFragment extends BaseFragment {
                 gram = (int) result;
                 tvResultExplanation.setText(value + " грамм это " + String.format("%.2f", result) + " ХЕ");
             } else {
-//                productResultValue.setText("Некорректное значение");
                 tvResultExplanation.setText(R.string.edit_correct_value);
             }
         }
