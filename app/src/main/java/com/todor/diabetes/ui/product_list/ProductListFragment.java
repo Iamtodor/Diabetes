@@ -45,11 +45,11 @@ public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>>,
         SearchView.OnQueryTextListener {
 
-    @Bind(R.id.recyclerView)       RecyclerView         recyclerView;
-    @Bind(R.id.fab)                FloatingActionButton fab;
-    @Bind(R.id.coordinator_layout) CoordinatorLayout    coordinatorLayout;
-    private                        ProductFunctionality dbManager;
-    private List<Product>      productList    = null;
+    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.fab) FloatingActionButton fab;
+    @Bind(R.id.coordinator_layout) CoordinatorLayout coordinatorLayout;
+    private ProductFunctionality dbManager;
+    private List<Product> productList = null;
     private ProductListAdapter productAdapter = null;
     private OnTableProductListener onTableProductListener;
 
@@ -138,6 +138,7 @@ public class ProductListFragment extends BaseFragment implements
                             }
                         })
                         .show();
+                restartLoader();
             }
         });
     }
@@ -160,6 +161,10 @@ public class ProductListFragment extends BaseFragment implements
         } else {
             Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void restartLoader() {
+        getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
     }
 
     @Override
@@ -214,18 +219,6 @@ public class ProductListFragment extends BaseFragment implements
             if (resultCode == Activity.RESULT_OK) {
                 restartLoader();
             }
-        }
-    }
-
-    private void restartLoader() {
-        getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (dbManager.getProductsCount() != productList.size()) {
-            restartLoader();
         }
     }
 }
