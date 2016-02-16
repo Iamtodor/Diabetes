@@ -211,4 +211,10 @@ public class ProductDetailsFragment extends BaseFragment {
         Toast.makeText(getActivity(), R.string.product_added_on_table, Toast.LENGTH_SHORT).show();
         onTableProductListener.setProduct(new TableProduct(product.name, gram, glycemicIndex));
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

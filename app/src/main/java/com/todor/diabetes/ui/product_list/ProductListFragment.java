@@ -110,10 +110,33 @@ public class ProductListFragment extends BaseFragment implements
         fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
-    @OnClick(R.id.fab)
-    public void fab_OnClick() {
-        Intent intent = new Intent(getActivity(), AddProductActivity.class);
-        startActivityForResult(intent, Constants.REQUEST_CODE_FOR_RESTART_LOADER);
+    @Override
+    public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
+        return new ProductLoader(getActivity());
+    }
+
+    private void initLoader() {
+        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
+        productList = data;
+        if (productList != null && productList.size() != 0) {
+            setupProductAdapter(data);
+            recyclerView.setAdapter(productAdapter);
+        } else {
+            Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void restartLoader() {
+        getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Product>> loader) {
+        recyclerView.setAdapter(null);
     }
 
     private void setupProductAdapter(ArrayList<Product> data) {
@@ -143,33 +166,10 @@ public class ProductListFragment extends BaseFragment implements
         });
     }
 
-    @Override
-    public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
-        return new ProductLoader(getActivity());
-    }
-
-    private void initLoader() {
-        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        productList = data;
-        if (productList != null && productList.size() != 0) {
-            setupProductAdapter(data);
-            recyclerView.setAdapter(productAdapter);
-        } else {
-            Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void restartLoader() {
-        getActivity().getLoaderManager().restartLoader(Constants.PRODUCT_LIST_LOADER, null, this);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ArrayList<Product>> loader) {
-        recyclerView.setAdapter(null);
+    @OnClick(R.id.fab)
+    public void fab_OnClick() {
+        Intent intent = new Intent(getActivity(), AddProductActivity.class);
+        startActivityForResult(intent, Constants.REQUEST_CODE_FOR_RESTART_LOADER);
     }
 
     @Override

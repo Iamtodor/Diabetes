@@ -45,7 +45,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements OnTable
     @Override
     protected void onStop() {
         super.onStop();
-        DbHelperSingleton.closeDb();
+        ButterKnife.unbind(this);
     }
 
     @Override

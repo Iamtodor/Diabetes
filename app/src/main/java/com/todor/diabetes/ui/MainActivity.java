@@ -23,6 +23,8 @@ import com.todor.diabetes.utils.Utils;
 
 import java.util.HashSet;
 
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
 
@@ -116,6 +118,12 @@ public class MainActivity extends AppCompatActivity
             productForTable.remove(product);
         }
         productForTable.add(product);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ButterKnife.unbind(this);
     }
 }
 

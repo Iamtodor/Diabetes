@@ -90,4 +90,9 @@ public class ProductTableFragment extends BaseFragment {
         return getResources().getString(R.string.title_product_table);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

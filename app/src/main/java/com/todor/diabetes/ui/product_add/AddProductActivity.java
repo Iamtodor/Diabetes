@@ -105,4 +105,10 @@ public class AddProductActivity extends AppCompatActivity {
         Utils.hideSoftKeyboard(this);
         return super.onTouchEvent(event);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ButterKnife.unbind(this);
+    }
 }
