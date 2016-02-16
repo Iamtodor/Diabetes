@@ -24,11 +24,10 @@ import butterknife.ButterKnife;
 
 public class ProductTableFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView) protected  RecyclerView            recyclerView;
-    @Bind(R.id.linear_layout) protected LinearLayout            linearLayout;
-    private                             ProductTableAdapter     productAdapter;
-    private                             HashSet<TableProduct>   productHashSet;
-    private                             ArrayList<TableProduct> productArrayList;
+    @Bind(R.id.recyclerView) protected  RecyclerView          recyclerView;
+    @Bind(R.id.linear_layout) protected LinearLayout          linearLayout;
+    private                             ProductTableAdapter   productAdapter;
+    private                             HashSet<TableProduct> productHashSet;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +58,7 @@ public class ProductTableFragment extends BaseFragment {
     }
 
     private void setupProductAdapter(HashSet<TableProduct> products) {
-        productArrayList = new ArrayList<>(products);
+        ArrayList<TableProduct> productArrayList = new ArrayList<>(products);
         productAdapter = new ProductTableAdapter(productArrayList, getActivity(), new OnProductLongClickListener() {
             @Override
             public void onItemLongClick(final int position, final TableProduct product) {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
 
-    private ArrayList<Product> products;
+    private ArrayList<Product>   products;
     private ProductFunctionality productFunctionality;
 
     public ProductLoader(Context context) {

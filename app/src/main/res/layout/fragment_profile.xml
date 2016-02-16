@@ -5,13 +5,13 @@
               android:orientation="vertical">
 
     <Button
+        android:id="@+id/btn_settings"
         style="@style/myButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="60dp"
         android:padding="10dp"
-        android:id="@+id/btn_settings"
         android:text="@string/settings"/>
 
 </LinearLayout>

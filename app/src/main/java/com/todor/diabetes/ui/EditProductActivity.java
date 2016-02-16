@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
@@ -44,8 +46,13 @@ public class EditProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_product);
         ButterKnife.bind(this);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.edit);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         List<String> groupArrayList = getProductGroupList();
-        Product product = getIntent().getExtras().getParcelable("product");
+        Product product = getIntent().getExtras().getParcelable(Constants.PRODUCT_KEY);
 
         if (product != null) {
             productNameEditText.setText(product.name);
@@ -64,21 +71,21 @@ public class EditProductActivity extends AppCompatActivity {
                 String productGroup = autoCompleteTextView.getText().toString();
 
                 if (!productName.isEmpty() && !productCarbohydrates.isEmpty() && !productGroup.isEmpty()) {
-                        float floatProductCarbohydrates = Float.parseFloat(productCarbohydrates);
-                        Product newProduct = new Product(productName, floatProductCarbohydrates,
-                                productGroup, false);
-                        dbManager.updateProduct(newProduct);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(EditProductActivity.this);
-                        builder.setMessage(productName + getString(R.string.added_to_list));
-                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        });
-                        builder.setCancelable(false);
-                        builder.show();
+                    float floatProductCarbohydrates = Float.parseFloat(productCarbohydrates);
+                    Product newProduct = new Product(productName, floatProductCarbohydrates,
+                            productGroup, false);
+                    dbManager.updateProduct(newProduct);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(EditProductActivity.this);
+                    builder.setMessage(productName + getString(R.string.added_to_list));
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.show();
                 } else {
                     Snackbar.make(v, R.string.fill_all_fields, Snackbar.LENGTH_SHORT).show();
                 }
@@ -104,6 +111,16 @@ public class EditProductActivity extends AppCompatActivity {
                 autoCompleteTextView.setText(productGroup);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.onBackPressed();
+                return (true);
+        }
+        return false;
     }
 
     @Override

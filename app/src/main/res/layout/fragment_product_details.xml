@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -49,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:maxLength="4"
-                android:text="0"/>
+                android:text="@string/zero_number"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -71,7 +72,7 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="12dp"
-        android:layout_toStartOf="@+id/segmented_gramm_xe"
+        android:layout_toStartOf="@+id/segmented_gram_xe"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@android:color/black"
@@ -81,8 +82,7 @@
         tools:text="34465467535465462462462,3 XE"/>
 
     <info.hoang8f.android.segmented.SegmentedGroup
-        android:id="@+id/segmented_gramm_xe"
-        xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/segmented_gram_xe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

@@ -45,10 +45,10 @@
     <string name="update_glycemic_index">Обновить</string>
     <string name="search_hint">Введите название продукта</string>
     <string name="app_label">Product name</string>
-    <string name="edit_correct_value">Введите корректное значение</string>
+    <string name="edit_correct_value">Введите значение</string>
     <string name="added_to_favorite">Продукт был добавлен в список</string>
     <string name="deleted_from_favorite">Продукт был удален из списка</string>
-    <string name="added_to_list">" was successfully added into your list!"</string>
+    <string name="added_to_list"> был добавлен в ваш список</string>
     <string name="ok">OK</string>
     <string name="product_exists">This product is already in your list</string>
     <string name="fill_all_fields">Please fill in all of the fields</string>
@@ -74,5 +74,10 @@
     <string name="undo">Отменить</string>
     <string name="edit_product">Редактировать продукт</string>
     <string name="edit_button">Обновить</string>
+    <string name="bread_unit_is">ХЕ это</string>
+    <string name="gram_is">грамм это</string>
+    <string name="value">Значение</string>
+    <string name="zero_number">0</string>
+    <string name="edit">Редактировать</string>
 
 </resources>

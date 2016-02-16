@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
@@ -21,7 +19,7 @@ import butterknife.OnClick;
 public class ProductDetailsActivity extends AppCompatActivity implements OnTableProductListener {
 
     private TableProduct productForTable;
-    private Product product;
+    private Product      product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements OnTable
     @OnClick(R.id.edit)
     public void editProductImageViewClick() {
         Intent intent = new Intent(ProductDetailsActivity.this, EditProductActivity.class);
-        intent.putExtra("product", product);
+        intent.putExtra(Constants.PRODUCT_KEY, product);
         startActivity(intent);
     }
 
