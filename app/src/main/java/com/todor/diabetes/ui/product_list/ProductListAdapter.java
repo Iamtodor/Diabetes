@@ -1,6 +1,7 @@
 package com.todor.diabetes.ui.product_list;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public ProductListAdapter(List<Product> productList, OnProductClickListener onProductClickListener,
                               OnProductLongClickListener onProductLongClickListener) {
         this.productList = new ArrayList<>(productList);
+        Log.d("Todor", "product list size " + this.productList.size());
+        Log.d("Todor", "product list parameter size " + productList.size());
         this.onProductClickListener = onProductClickListener;
         this.onProductLongClickListener = onProductLongClickListener;
     }
@@ -84,7 +87,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void applyAndAnimateAdditions(List<Product> newModels) {
-        for (int i = 0, count = newModels.size(); i < count; i++) {
+        for (int i = 0; i < newModels.size(); i++) {
+            Log.d("ProductListAdapter", i + " iteration " + productList.size());
             final Product model = newModels.get(i);
             if (!productList.contains(model)) {
                 addItem(i, model);

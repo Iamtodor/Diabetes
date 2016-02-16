@@ -107,8 +107,8 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         ButterKnife.unbind(this);
     }
 }

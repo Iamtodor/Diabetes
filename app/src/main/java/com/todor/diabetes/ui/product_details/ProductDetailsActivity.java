@@ -43,8 +43,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements OnTable
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         ButterKnife.unbind(this);
     }
 

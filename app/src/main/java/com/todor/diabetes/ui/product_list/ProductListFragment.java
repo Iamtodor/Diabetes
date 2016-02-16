@@ -2,6 +2,7 @@ package com.todor.diabetes.ui.product_list;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
@@ -45,11 +46,11 @@ public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>>,
         SearchView.OnQueryTextListener {
 
-    @Bind(R.id.recyclerView) protected       RecyclerView         recyclerView;
-    @Bind(R.id.fab) protected                FloatingActionButton fab;
-    @Bind(R.id.coordinator_layout) protected CoordinatorLayout    coordinatorLayout;
-    private                                  ProductFunctionality dbManager;
-    private List<Product>      productList    = null;
+    @Bind(R.id.recyclerView) protected RecyclerView recyclerView;
+    @Bind(R.id.fab) protected FloatingActionButton fab;
+    @Bind(R.id.coordinator_layout) protected CoordinatorLayout coordinatorLayout;
+    private ProductFunctionality dbManager;
+    private List<Product> productList = null;
     private ProductListAdapter productAdapter = null;
     private OnTableProductListener onTableProductListener;
 
@@ -59,9 +60,9 @@ public class ProductListFragment extends BaseFragment implements
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        onTableProductListener = (OnTableProductListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        onTableProductListener = (OnTableProductListener) context;
     }
 
     @Nullable
@@ -84,8 +85,6 @@ public class ProductListFragment extends BaseFragment implements
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(productAdapter);
 
         recyclerView.addOnScrollListener(new HidingScrollListener() {
             @Override
@@ -181,19 +180,6 @@ public class ProductListFragment extends BaseFragment implements
         searchView.setOnQueryTextListener(this);
     }
 
-    private List<Product> filter(List<Product> models, String query) {
-        query = query.toLowerCase();
-
-        final List<Product> filteredModelList = new ArrayList<>();
-        for (Product model : models) {
-            final String text = model.name.toLowerCase();
-            if (text.contains(query)) {
-                filteredModelList.add(model);
-            }
-        }
-        return filteredModelList;
-    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -205,6 +191,19 @@ public class ProductListFragment extends BaseFragment implements
         productAdapter.animateTo(filteredModelList);
         recyclerView.scrollToPosition(0);
         return true;
+    }
+
+    private List<Product> filter(List<Product> models, String query) {
+        query = query.toLowerCase();
+
+        final List<Product> filteredModelList = new ArrayList<>();
+        for (Product model : models) {
+            final String text = model.name.toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
     @Override
@@ -220,5 +219,11 @@ public class ProductListFragment extends BaseFragment implements
                 restartLoader();
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
