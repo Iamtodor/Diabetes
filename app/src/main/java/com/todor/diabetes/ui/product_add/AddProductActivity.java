@@ -80,6 +80,12 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
     @NonNull
     private List<String> getProductGroupList() {
         dbManager = new ProductFunctionality(this);
@@ -104,11 +110,5 @@ public class AddProductActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         Utils.hideSoftKeyboard(this);
         return super.onTouchEvent(event);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 }

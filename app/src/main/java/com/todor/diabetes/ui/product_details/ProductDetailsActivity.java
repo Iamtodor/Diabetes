@@ -35,17 +35,17 @@ public class ProductDetailsActivity extends AppCompatActivity implements OnTable
         getSupportActionBar().setTitle(product.name);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
     @OnClick(R.id.edit)
     public void editProductImageViewClick() {
         Intent intent = new Intent(ProductDetailsActivity.this, EditProductActivity.class);
         intent.putExtra(Constants.PRODUCT_KEY, product);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

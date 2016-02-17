@@ -1,6 +1,6 @@
 package com.todor.diabetes.ui.product_details;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -46,9 +46,9 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        onTableProductListener = (OnTableProductListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        onTableProductListener = (OnTableProductListener) context;
     }
 
     @Override
@@ -79,6 +79,12 @@ public class ProductDetailsFragment extends BaseFragment {
         });
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     private void setValuesAndViews(Editable s) {
@@ -210,11 +216,5 @@ public class ProductDetailsFragment extends BaseFragment {
     public void btnEatNowClick() {
         Toast.makeText(getActivity(), R.string.product_added_on_table, Toast.LENGTH_SHORT).show();
         onTableProductListener.setProduct(new TableProduct(product.name, gram, glycemicIndex));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

@@ -79,6 +79,12 @@ public class ProductListFragment extends BaseFragment implements
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     private void setupRecyclerView() {
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         recyclerView.setItemAnimator(itemAnimator);
@@ -219,11 +225,5 @@ public class ProductListFragment extends BaseFragment implements
                 restartLoader();
             }
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

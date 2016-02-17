@@ -45,6 +45,12 @@ public class ProductTableFragment extends BaseFragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     private void getProductList() {
         if (getArguments() != null) {
             if (getArguments().getSerializable(Constants.PRODUCT_FOR_TABLE) != null) {
@@ -88,11 +94,5 @@ public class ProductTableFragment extends BaseFragment {
     @Override
     public String getFragmentTitle() {
         return getResources().getString(R.string.title_product_table);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }
