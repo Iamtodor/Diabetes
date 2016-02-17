@@ -31,7 +31,6 @@ public class ProductDetailsFragment extends BaseFragment {
     @Bind(R.id.btn_gram)                          RadioButton     btnGram;
     @Bind(R.id.btn_bread_unit)                    RadioButton     btnBreadUnit;
     @Bind(R.id.edt_wrapper)                       TextInputLayout edtProductValueWrapper;
-    @Bind(R.id.tv_product_result_value)           TextView        productResultValue;
     @Bind(R.id.tv_result_explanation)             TextView        tvResultExplanation;
 
     private ProductFunctionality   dbManager;
@@ -113,16 +112,6 @@ public class ProductDetailsFragment extends BaseFragment {
         }
     }
 
-    private boolean checkCorrectResult(String enteredValue) {
-        try {
-            ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
-                    enteredValue);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
     private void clickChangeBreadUnit() {
         String enteredValue = edtProductValueForCalculation.getText().toString();
         int intEnteredValue = ProductCalculation.parseStringToInt(enteredValue);
@@ -150,6 +139,16 @@ public class ProductDetailsFragment extends BaseFragment {
             tvResultExplanation.setText(enteredValue + " " + getString(R.string.bread_unit_is) + " " + String.format("%.2f", result) + " " + getString(R.string.gram));
         } else {
             tvResultExplanation.setText(R.string.value);
+        }
+    }
+
+    private boolean checkCorrectResult(String enteredValue) {
+        try {
+            ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
+                    enteredValue);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
