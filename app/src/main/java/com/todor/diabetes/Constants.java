@@ -11,4 +11,5 @@ public class Constants {
     public static final int    REQUEST_CODE_FOR_TABLE          = 1;
     public static final int    REQUEST_CODE_FOR_RESTART_LOADER = 2;
     public static final String PRODUCT_FOR_TABLE               = "productFromTable";
+
 }

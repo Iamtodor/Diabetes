@@ -1,4 +1,4 @@
-package com.todor.diabetes.ui.product_table;
+package com.todor.diabetes.ui.product_favorite;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -11,23 +11,30 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
+import com.todor.diabetes.db.ProductFunctionality;
+import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.ui.product_table.OnProductLongClickListener;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ProductTableFragment extends BaseFragment {
+public class FavoriteFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView) protected  RecyclerView          recyclerView;
-    @Bind(R.id.linear_layout) protected LinearLayout          linearLayout;
-    private                             ProductTableAdapter   productAdapter;
-    private                             HashSet<TableProduct> productHashSet;
+    @Bind(R.id.recyclerView) protected  RecyclerView           recyclerView;
+    @Bind(R.id.linear_layout) protected LinearLayout           linearLayout;
+    private                             ProductFavoriteAdapter productAdapter;
+    private                             List<Product>          mProductList;
+    private                             ProductFunctionality   dbManager;
+
+    @Override
+    public String getFragmentTitle() {
+        return getResources().getString(R.string.title_favorite_fragment);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,8 +42,8 @@ public class ProductTableFragment extends BaseFragment {
         ButterKnife.bind(this, v);
 
         getProductList();
-        if (isProductAvailable(productHashSet)) {
-            setupProductAdapter(productHashSet);
+        if (isProductAvailable(mProductList)) {
+            setupProductAdapter(mProductList);
             setupRecyclerView();
         } else {
             Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
@@ -52,28 +59,23 @@ public class ProductTableFragment extends BaseFragment {
     }
 
     private void getProductList() {
-        if (getArguments() != null) {
-            if (getArguments().getSerializable(Constants.PRODUCT_FOR_TABLE) != null) {
-                productHashSet = (HashSet<TableProduct>) getArguments().getSerializable(Constants.PRODUCT_FOR_TABLE);
-            }
-        }
+        dbManager = new ProductFunctionality(getActivity());
+        mProductList = dbManager.getFavoriteProducts();
     }
 
-    private boolean isProductAvailable(HashSet<TableProduct> products) {
+    private boolean isProductAvailable(List products) {
         return products != null && products.size() != 0;
     }
 
-    private void setupProductAdapter(HashSet<TableProduct> products) {
-        ArrayList<TableProduct> productArrayList = new ArrayList<>(products);
-        productAdapter = new ProductTableAdapter(productArrayList, getActivity(), new OnProductLongClickListener() {
+    private void setupProductAdapter(List<Product> products) {
+        productAdapter = new ProductFavoriteAdapter(products, getActivity(), new OnProductLongClickListener() {
             @Override
             public void onItemLongClick(final int position, final TableProduct product) {
-                productAdapter.removeItem(position);
                 Snackbar.make(linearLayout, R.string.deletion_product, Snackbar.LENGTH_SHORT)
                         .setAction(R.string.undo, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                productAdapter.addItem(position, product);
+//                                productAdapter.addItem(position, product);
                             }
                         })
                         .show();
@@ -89,10 +91,5 @@ public class ProductTableFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(productAdapter);
-    }
-
-    @Override
-    public String getFragmentTitle() {
-        return getResources().getString(R.string.title_product_table);
     }
 }

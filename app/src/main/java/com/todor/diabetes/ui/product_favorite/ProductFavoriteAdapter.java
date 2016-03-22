@@ -1,4 +1,4 @@
-package com.todor.diabetes.ui.product_table;
+package com.todor.diabetes.ui.product_favorite;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -9,20 +9,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.todor.diabetes.R;
-import com.todor.diabetes.models.TableProduct;
+import com.todor.diabetes.models.Product;
+import com.todor.diabetes.ui.product_table.OnProductLongClickListener;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapter.ViewHolderProductItem> {
+public class ProductFavoriteAdapter extends RecyclerView.Adapter<ProductFavoriteAdapter.ViewHolderProductItem> {
 
-    private List<TableProduct>         productArrayList;
+    private List<Product>         productArrayList;
     private Context                    context;
     private OnProductLongClickListener onProductLongClickListener;
 
-    public ProductTableAdapter(List<TableProduct> productArrayList, Context context,
+    public ProductFavoriteAdapter(List<Product> productArrayList, Context context,
                                OnProductLongClickListener onProductLongClickListener) {
         this.productArrayList = productArrayList;
         this.context = context;
@@ -31,35 +32,24 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
 
     @Override
     public ViewHolderProductItem onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.rv_product_item_table, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.rv_product_item_favorite, parent, false);
         return new ViewHolderProductItem(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolderProductItem holder, int position) {
-        TableProduct product = productArrayList.get(position);
+        Product product = productArrayList.get(position);
         if (product != null) {
             holder.tvProductName.setText(product.name);
-            holder.tvProductGram.setText(String.format(context.getString(R.string.gram_product_table), product.gram));
-            holder.tvProductGI.setText(String.format(context.getString(R.string.bread_unit_product_table), product.glycemicIndex));
-            holder.bind(product, onProductLongClickListener);
+            holder.tvProductGram.setText(String.valueOf(product.carbohydrates));
+            holder.tvProductGI.setText(product.group);
+//            holder.bind(product, onProductLongClickListener);
         }
     }
 
     @Override
     public int getItemCount() {
         return productArrayList.size();
-    }
-
-    public TableProduct removeItem(int position) {
-        final TableProduct model = productArrayList.remove(position);
-        notifyItemRemoved(position);
-        return model;
-    }
-
-    public void addItem(int position, TableProduct model) {
-        productArrayList.add(position, model);
-        notifyItemInserted(position);
     }
 
     static class ViewHolderProductItem extends RecyclerView.ViewHolder {
@@ -74,15 +64,15 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
             ButterKnife.bind(this, view);
         }
 
-        public void bind(final TableProduct product, final OnProductLongClickListener onProductLongClickListener) {
-            cardView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    onProductLongClickListener.onItemLongClick(getAdapterPosition(), product);
-                    return true;
-                }
-            });
-        }
+//        public void bind(final Product product, final OnProductLongClickListener onProductLongClickListener) {
+//            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    onProductLongClickListener.onItemLongClick(getAdapterPosition(), product);
+//                    return true;
+//                }
+//            });
+//        }
     }
 
 }

@@ -26,8 +26,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public ProductListAdapter(List<Product> productList, OnProductClickListener onProductClickListener,
                               OnProductLongClickListener onProductLongClickListener) {
         this.productList = new ArrayList<>(productList);
-        Log.d("Todor", "product list size " + this.productList.size());
-        Log.d("Todor", "product list parameter size " + productList.size());
         this.onProductClickListener = onProductClickListener;
         this.onProductLongClickListener = onProductLongClickListener;
     }

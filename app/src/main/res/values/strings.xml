@@ -79,5 +79,7 @@
     <string name="value">Значение</string>
     <string name="zero_number">0</string>
     <string name="edit">Редактировать</string>
+    <string name="favorite_products">Любимые продукты</string>
+    <string name="title_favorite_fragment">Любимые продукты</string>
 
 </resources>

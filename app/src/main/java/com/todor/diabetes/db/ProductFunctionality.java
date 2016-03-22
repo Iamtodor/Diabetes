@@ -121,4 +121,27 @@ public class ProductFunctionality {
         DbHelperSingleton.closeDb();
         return product;
     }
+
+    public List<Product> getFavoriteProducts() {
+        SQLiteDatabase db = DbHelperSingleton.getDb(context);
+        List<Product> productList = new ArrayList<>();
+        try(Cursor cursor = db.query(DbScheme.PRODUCT_TABLE, null, null, null, null, null, null)) {
+            int nameColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_NAME);
+            int carbohydratesColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_CARBOHYDRATES);
+            int groupColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_GROUP);
+            int favoriteColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_IS_FAVORITE);
+
+            while (cursor.moveToNext()) {
+                if(Boolean.parseBoolean(cursor.getString(favoriteColumnIndex))) {
+                    productList.add(
+                            new Product(cursor.getString(nameColumnIndex),
+                                    cursor.getFloat(carbohydratesColumnIndex),
+                                    cursor.getString(groupColumnIndex),
+                                    Boolean.parseBoolean(cursor.getString(favoriteColumnIndex)))
+                    );
+                }
+            }
+        }
+        return productList;
+    }
 }

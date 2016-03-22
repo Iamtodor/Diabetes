@@ -16,6 +16,7 @@ import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.product_details.OnTableProductListener;
+import com.todor.diabetes.ui.product_favorite.FavoriteFragment;
 import com.todor.diabetes.ui.product_list.ProductListFragment;
 import com.todor.diabetes.ui.product_table.ProductTableFragment;
 import com.todor.diabetes.ui.profile.ProfileFragment;
@@ -28,7 +29,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
 
-    private HashSet<TableProduct> productForTable = new HashSet<>();
+    private final String                TAG             = MainActivity.class.getSimpleName();
+    private       HashSet<TableProduct> productForTable = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +80,12 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         switch (id) {
             case R.id.productList:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, new ProductListFragment())
-                        .commit();
+                transaction.replace(R.id.flContent, new ProductListFragment());
                 break;
             case R.id.currentEating:
                 ProductTableFragment productTableFragment;
@@ -97,15 +97,16 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     productTableFragment = new ProductTableFragment();
                 }
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, productTableFragment)
-                        .commit();
+                transaction.replace(R.id.flContent, productTableFragment);
+                break;
+            case R.id.favoriteProducts:
+                transaction.replace(R.id.flContent, new FavoriteFragment());
                 break;
             case R.id.profile:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, new ProfileFragment())
-                        .commit();
+                transaction.replace(R.id.flContent, new ProfileFragment());
+                break;
         }
+        transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
