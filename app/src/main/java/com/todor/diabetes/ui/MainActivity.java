@@ -7,7 +7,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,22 +23,25 @@ import com.todor.diabetes.utils.Utils;
 
 import java.util.HashSet;
 
-import butterknife.ButterKnife;
+import butterknife.Bind;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
 
-    private final String                TAG             = MainActivity.class.getSimpleName();
-    private       HashSet<TableProduct> productForTable = new HashSet<>();
+    @Bind(R.id.toolbar) protected Toolbar toolbar;
+    @Bind(R.id.drawer_layout) protected DrawerLayout drawer;
+    private HashSet<TableProduct> productForTable = new HashSet<>();
+
+    @Override
+    public int getContentViewId() {
+        return R.layout.activity_main;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -54,27 +56,16 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.flContent, new ProductListFragment());
-            transaction.commit();
-            navigationView.setCheckedItem(R.id.productList);
+            initProductListFragment(navigationView);
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    private void initProductListFragment(NavigationView navigationView) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.flContent, new ProductListFragment());
+        transaction.commit();
+        navigationView.setCheckedItem(R.id.productList);
+        getSupportActionBar().setTitle(R.string.title_products);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -86,6 +77,7 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.productList:
                 transaction.replace(R.id.flContent, new ProductListFragment());
+                getSupportActionBar().setTitle(R.string.title_products);
                 break;
             case R.id.currentEating:
                 ProductTableFragment productTableFragment;
@@ -98,12 +90,15 @@ public class MainActivity extends AppCompatActivity
                     productTableFragment = new ProductTableFragment();
                 }
                 transaction.replace(R.id.flContent, productTableFragment);
+                getSupportActionBar().setTitle(R.string.title_products);
                 break;
             case R.id.favoriteProducts:
                 transaction.replace(R.id.flContent, new FavoriteFragment());
+                getSupportActionBar().setTitle(R.string.title_favorite_fragment);
                 break;
             case R.id.profile:
                 transaction.replace(R.id.flContent, new ProfileFragment());
+                getSupportActionBar().setTitle(R.string.title_profile);
                 break;
         }
         transaction.commit();
@@ -111,6 +106,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

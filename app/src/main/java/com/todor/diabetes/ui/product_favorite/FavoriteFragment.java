@@ -5,11 +5,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
@@ -21,7 +18,6 @@ import com.todor.diabetes.ui.product_table.OnProductLongClickListener;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class FavoriteFragment extends BaseFragment {
 
@@ -32,30 +28,20 @@ public class FavoriteFragment extends BaseFragment {
     private                             ProductFunctionality   dbManager;
 
     @Override
-    public String getFragmentTitle() {
-        return getResources().getString(R.string.title_favorite_fragment);
+    public int getContentViewId() {
+        return R.layout.fragment_product_table;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_product_table, container, false);
-        ButterKnife.bind(this, v);
-
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getProductList();
         if (isProductAvailable(mProductList)) {
             setupProductAdapter(mProductList);
             setupRecyclerView();
         } else {
-            Toast.makeText(getActivity(), R.string.toast_for_empty_products, Toast.LENGTH_SHORT).show();
+            toast(R.string.toast_for_empty_products);
         }
-
-        return v;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     private void getProductList() {

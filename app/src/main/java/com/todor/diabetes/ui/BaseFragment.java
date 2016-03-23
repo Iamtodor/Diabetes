@@ -18,23 +18,13 @@ public abstract class BaseFragment extends Fragment {
 
     protected final String TAG = this.getClass().getSimpleName();
 
-    public abstract String getFragmentTitle();
-
     public abstract int getContentViewId();
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (((MainActivity) getActivity()).getSupportActionBar() != null) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle(getFragmentTitle());
-        }
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getContentViewId(), container, false);
-        ButterKnife.bind(getActivity(), view);
+        ButterKnife.bind(this, view);
         return view;
     }
 

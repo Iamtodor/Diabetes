@@ -55,8 +55,8 @@ public class ProductListFragment extends BaseFragment implements
     private OnTableProductListener onTableProductListener;
 
     @Override
-    public String getFragmentTitle() {
-        return getResources().getString(R.string.title_products);
+    public int getContentViewId() {
+        return R.layout.fragment_product_list;
     }
 
     @Override
@@ -65,24 +65,18 @@ public class ProductListFragment extends BaseFragment implements
         onTableProductListener = (OnTableProductListener) context;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_product_list, container, false);
-
-        ButterKnife.bind(this, v);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
         dbManager = new ProductFunctionality(getActivity());
 
         initLoader();
         setupRecyclerView();
-        return v;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    private void initLoader() {
+        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
     }
 
     private void setupRecyclerView() {
@@ -118,10 +112,6 @@ public class ProductListFragment extends BaseFragment implements
     @Override
     public Loader<ArrayList<Product>> onCreateLoader(int id, Bundle args) {
         return new ProductLoader(getActivity());
-    }
-
-    private void initLoader() {
-        getActivity().getLoaderManager().initLoader(Constants.PRODUCT_LIST_LOADER, null, this);
     }
 
     @Override
@@ -172,7 +162,7 @@ public class ProductListFragment extends BaseFragment implements
     }
 
     @OnClick(R.id.fab)
-    public void fab_OnClick() {
+    public void fab() {
         Intent intent = new Intent(getActivity(), AddProductActivity.class);
         startActivityForResult(intent, Constants.REQUEST_CODE_FOR_RESTART_LOADER);
     }

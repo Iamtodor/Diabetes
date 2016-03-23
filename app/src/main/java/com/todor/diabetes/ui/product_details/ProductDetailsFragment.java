@@ -5,13 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
@@ -21,7 +18,6 @@ import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
@@ -40,8 +36,8 @@ public class ProductDetailsFragment extends BaseFragment {
     private float                  glycemicIndex;
 
     @Override
-    public String getFragmentTitle() {
-        return getResources().getString(R.string.title_product_details);
+    public int getContentViewId() {
+        return R.layout.fragment_product_details;
     }
 
     @Override
@@ -51,10 +47,8 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_product_details, container, false);
-        ButterKnife.bind(this, v);
-
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         product = getActivity().getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
         edtProductValueWrapper.setHint(getString(R.string.hint_product_GL));
 
@@ -76,14 +70,6 @@ public class ProductDetailsFragment extends BaseFragment {
                 }
             }
         });
-
-        return v;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     private void setValuesAndViews(Editable s) {
@@ -187,7 +173,7 @@ public class ProductDetailsFragment extends BaseFragment {
         try {
             int value = ProductCalculation.parseStringToInt(edtProductValueForCalculation.getText().toString());
             if (value - 1 < 0) {
-                Toast.makeText(getActivity(), getString(R.string.edit_positive_value), Toast.LENGTH_SHORT).show();
+                toast(R.string.edit_positive_value);
                 return;
             }
             edtProductValueForCalculation.setText(String.valueOf(value - 1));
@@ -203,17 +189,17 @@ public class ProductDetailsFragment extends BaseFragment {
         }
         if (!product.isFavorite) {
             product.isFavorite = true;
-            Toast.makeText(getActivity(), R.string.added_to_favorite, Toast.LENGTH_SHORT).show();
+            toast(R.string.added_to_favorite);
         } else {
             product.isFavorite = false;
-            Toast.makeText(getActivity(), R.string.deleted_from_favorite, Toast.LENGTH_SHORT).show();
+            toast(R.string.deleted_from_favorite);
         }
         dbManager.updateProduct(product);
     }
 
     @OnClick(R.id.btn_eatNow)
     public void btnEatNowClick() {
-        Toast.makeText(getActivity(), R.string.product_added_on_table, Toast.LENGTH_SHORT).show();
+        toast(R.string.product_added_on_table);
         onTableProductListener.setProduct(new TableProduct(product.name, gram, glycemicIndex));
     }
 }
