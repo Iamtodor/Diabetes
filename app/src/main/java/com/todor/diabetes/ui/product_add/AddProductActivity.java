@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
+import com.todor.diabetes.ui.BaseActivity;
 import com.todor.diabetes.utils.Utils;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AddProductActivity extends AppCompatActivity {
+public class AddProductActivity extends BaseActivity {
 
     @Bind(R.id.product_name) protected          EditText                  productNameEditText;
     @Bind(R.id.product_carbohydrates) protected EditText                  productCarbohydratesEditText;
@@ -36,10 +37,13 @@ public class AddProductActivity extends AppCompatActivity {
     private ProductFunctionality dbManager;
 
     @Override
+    public int getContentViewId() {
+        return R.layout.activity_add_product;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_product);
-        ButterKnife.bind(this);
 
         List<String> groupArrayList = getProductGroupList();
 
@@ -80,12 +84,6 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
-
     @NonNull
     private List<String> getProductGroupList() {
         dbManager = new ProductFunctionality(this);
@@ -106,9 +104,4 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Utils.hideSoftKeyboard(this);
-        return super.onTouchEvent(event);
-    }
 }

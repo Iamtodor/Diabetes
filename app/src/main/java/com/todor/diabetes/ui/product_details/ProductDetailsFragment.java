@@ -80,7 +80,8 @@ public class ProductDetailsFragment extends BaseFragment {
                 int value = ProductCalculation.parseStringToInt(s.toString());
                 glycemicIndex = value;
                 gram = (int) result;
-                tvResultExplanation.setText(value + " " + getString(R.string.bread_unit_is) + " " + String.format("%.2f", result) + " " + getString(R.string.gram));
+
+                tvResultExplanation.setText(getString(R.string.bread_unit_to_gram, value, String.format("%.2f", result)));
             } else {
                 tvResultExplanation.setText(R.string.edit_correct_value);
             }
@@ -91,7 +92,8 @@ public class ProductDetailsFragment extends BaseFragment {
                 int value = ProductCalculation.parseStringToInt(s.toString());
                 glycemicIndex = value;
                 gram = (int) result;
-                tvResultExplanation.setText(value + " " + getString(R.string.gram_is) + " " + String.format("%.2f", result) + " " + getString(R.string.bread_unit));
+                tvResultExplanation.setText(getString(R.string.gram_to_bread_unit, value,
+                        String.format("%.2f", result)));
             } else {
                 tvResultExplanation.setText(R.string.edit_correct_value);
             }
@@ -107,7 +109,8 @@ public class ProductDetailsFragment extends BaseFragment {
                     enteredValue);
             glycemicIndex = intEnteredValue;
             gram = (int) result;
-            tvResultExplanation.setText(intEnteredValue + " " + getString(R.string.gram_is) + " " + String.format("%.2f", result) + " " + getString(R.string.bread_unit));
+            tvResultExplanation.setText(getString(R.string.gram_to_bread_unit, enteredValue,
+                    String.format("%.2f", result)));
         } else {
             tvResultExplanation.setText(R.string.value);
         }
@@ -122,7 +125,8 @@ public class ProductDetailsFragment extends BaseFragment {
                     enteredValue);
             glycemicIndex = intEnteredValue;
             gram = (int) result;
-            tvResultExplanation.setText(enteredValue + " " + getString(R.string.bread_unit_is) + " " + String.format("%.2f", result) + " " + getString(R.string.gram));
+            tvResultExplanation.setText(getString(R.string.bread_unit_to_gram, enteredValue,
+                    String.format("%.2f", result)));
         } else {
             tvResultExplanation.setText(R.string.value);
         }

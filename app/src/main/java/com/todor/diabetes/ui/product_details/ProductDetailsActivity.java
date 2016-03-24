@@ -2,19 +2,16 @@ package com.todor.diabetes.ui.product_details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
-import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseActivity;
 import com.todor.diabetes.ui.EditProductActivity;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProductDetailsActivity extends BaseActivity implements OnTableProductListener {
@@ -63,8 +60,8 @@ public class ProductDetailsActivity extends BaseActivity implements OnTableProdu
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        if(productForTable != null) {
+        if (productForTable != null) {
+            Intent intent = new Intent();
             intent.putExtra(Constants.PRODUCT_FOR_TABLE, productForTable);
             setResult(RESULT_OK, intent);
         }

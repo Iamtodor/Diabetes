@@ -26,6 +26,9 @@
     <string name="gram">грамм</string>
     <string name="bread_unit">ХЕ</string>
 
+    <string name="bread_unit_to_gram">%1$s ХЕ это %2$s грам</string>
+    <string name="gram_to_bread_unit">%1$s грам это %2$s ХЕ</string>
+
     <string name="gram_product_table">%1$d грамм</string>
     <string name="bread_unit_product_table">%.2f ХЕ</string>
 
