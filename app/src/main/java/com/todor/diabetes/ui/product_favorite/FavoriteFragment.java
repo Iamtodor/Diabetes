@@ -11,9 +11,7 @@ import android.widget.LinearLayout;
 import com.todor.diabetes.R;
 import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
-import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
-import com.todor.diabetes.ui.product_table.OnProductLongClickListener;
 
 import java.util.List;
 
@@ -56,12 +54,17 @@ public class FavoriteFragment extends BaseFragment {
     private void setupProductAdapter(List<Product> products) {
         productAdapter = new ProductFavoriteAdapter(products, getActivity(), new OnProductLongClickListener() {
             @Override
-            public void onItemLongClick(final int position, final TableProduct product) {
+            public void onItemLongClick(final int position, final Product product) {
+                productAdapter.removeItem(position);
+                product.isFavorite = false;
+                dbManager.updateProduct(product);
                 Snackbar.make(linearLayout, R.string.deletion_product, Snackbar.LENGTH_SHORT)
                         .setAction(R.string.undo, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-//                                productAdapter.addItem(position, product);
+                                productAdapter.addItem(position, product);
+                                product.isFavorite = true;
+                                dbManager.updateProduct(product);
                             }
                         })
                         .show();

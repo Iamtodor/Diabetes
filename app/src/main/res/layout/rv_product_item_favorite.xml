@@ -35,9 +35,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name"
                 android:layout_marginTop="10dp"
+                android:ellipsize="middle"
                 android:textColor="@android:color/black"
                 android:textSize="23sp"
-                tools:text="Product group"/>
+                android:singleLine="true"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/tv_carbohydrates"
+                tools:text="Product group Product group Product group"/>
 
             <TextView
                 android:id="@+id/tv_carbohydrates"

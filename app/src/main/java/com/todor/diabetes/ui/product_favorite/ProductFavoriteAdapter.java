@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.todor.diabetes.R;
 import com.todor.diabetes.models.Product;
-import com.todor.diabetes.ui.product_table.OnProductLongClickListener;
 
 import java.util.List;
 
@@ -19,13 +18,13 @@ import butterknife.ButterKnife;
 
 public class ProductFavoriteAdapter extends RecyclerView.Adapter<ProductFavoriteAdapter.ViewHolderProductItem> {
 
-    private List<Product>         productArrayList;
+    private List<Product>              productList;
     private Context                    context;
     private OnProductLongClickListener onProductLongClickListener;
 
-    public ProductFavoriteAdapter(List<Product> productArrayList, Context context,
-                               OnProductLongClickListener onProductLongClickListener) {
-        this.productArrayList = productArrayList;
+    public ProductFavoriteAdapter(List<Product> productList, Context context,
+                                  OnProductLongClickListener onProductLongClickListener) {
+        this.productList = productList;
         this.context = context;
         this.onProductLongClickListener = onProductLongClickListener;
     }
@@ -38,18 +37,29 @@ public class ProductFavoriteAdapter extends RecyclerView.Adapter<ProductFavorite
 
     @Override
     public void onBindViewHolder(ViewHolderProductItem holder, int position) {
-        Product product = productArrayList.get(position);
+        Product product = productList.get(position);
         if (product != null) {
             holder.tvProductName.setText(product.name);
             holder.tvProductGram.setText(String.valueOf(product.carbohydrates));
             holder.tvProductGI.setText(product.group);
-//            holder.bind(product, onProductLongClickListener);
+            holder.bind(product, onProductLongClickListener);
         }
+    }
+
+    public void addItem(int position, Product model) {
+        productList.add(position, model);
+        notifyItemInserted(position);
+    }
+
+    public Product removeItem(int position) {
+        final Product model = productList.remove(position);
+        notifyItemRemoved(position);
+        return model;
     }
 
     @Override
     public int getItemCount() {
-        return productArrayList.size();
+        return productList.size();
     }
 
     static class ViewHolderProductItem extends RecyclerView.ViewHolder {
@@ -64,15 +74,15 @@ public class ProductFavoriteAdapter extends RecyclerView.Adapter<ProductFavorite
             ButterKnife.bind(this, view);
         }
 
-//        public void bind(final Product product, final OnProductLongClickListener onProductLongClickListener) {
-//            cardView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    onProductLongClickListener.onItemLongClick(getAdapterPosition(), product);
-//                    return true;
-//                }
-//            });
-//        }
+        public void bind(final Product product, final OnProductLongClickListener onProductLongClickListener) {
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onProductLongClickListener.onItemLongClick(getAdapterPosition(), product);
+                    return true;
+                }
+            });
+        }
     }
 
 }

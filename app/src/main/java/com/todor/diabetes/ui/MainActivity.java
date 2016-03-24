@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 
 import com.todor.diabetes.Constants;
 import com.todor.diabetes.R;
@@ -28,7 +27,7 @@ import butterknife.Bind;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
 
-    @Bind(R.id.toolbar) protected Toolbar toolbar;
+    @Bind(R.id.toolbar) protected       Toolbar      toolbar;
     @Bind(R.id.drawer_layout) protected DrawerLayout drawer;
     private HashSet<TableProduct> productForTable = new HashSet<>();
 
@@ -116,12 +115,6 @@ public class MainActivity extends BaseActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Utils.hideSoftKeyboard(this);
-        return super.onTouchEvent(event);
     }
 
     @Override

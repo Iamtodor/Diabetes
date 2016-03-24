@@ -132,7 +132,7 @@ public class ProductFunctionality {
             int favoriteColumnIndex = cursor.getColumnIndex(DbScheme.PRODUCT_IS_FAVORITE);
 
             while (cursor.moveToNext()) {
-                if(Boolean.parseBoolean(cursor.getString(favoriteColumnIndex))) {
+                if(cursor.getInt(favoriteColumnIndex) > 0) {
                     productList.add(
                             new Product(cursor.getString(nameColumnIndex),
                                     cursor.getFloat(carbohydratesColumnIndex),
@@ -142,6 +142,7 @@ public class ProductFunctionality {
                 }
             }
         }
+        DbHelperSingleton.closeDb();
         return productList;
     }
 }

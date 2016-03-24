@@ -30,7 +30,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class EditProductActivity extends AppCompatActivity {
+public class EditProductActivity extends BaseActivity {
 
     @Bind(R.id.product_name) protected          EditText                  productNameEditText;
     @Bind(R.id.product_carbohydrates) protected EditText                  productCarbohydratesEditText;
@@ -41,10 +41,13 @@ public class EditProductActivity extends AppCompatActivity {
     private ProductFunctionality dbManager;
 
     @Override
+    public int getContentViewId() {
+        return R.layout.activity_edit_product;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_product);
-        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -93,12 +96,6 @@ public class EditProductActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
-
     @NonNull
     private List<String> getProductGroupList() {
         dbManager = new ProductFunctionality(this);
@@ -129,9 +126,4 @@ public class EditProductActivity extends AppCompatActivity {
         return false;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Utils.hideSoftKeyboard(this);
-        return super.onTouchEvent(event);
-    }
 }
