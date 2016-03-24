@@ -11,21 +11,25 @@ import com.todor.diabetes.R;
 import com.todor.diabetes.db.DbHelperSingleton;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
+import com.todor.diabetes.ui.BaseActivity;
 import com.todor.diabetes.ui.EditProductActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProductDetailsActivity extends AppCompatActivity implements OnTableProductListener {
+public class ProductDetailsActivity extends BaseActivity implements OnTableProductListener {
 
     private TableProduct productForTable;
     private Product      product;
 
     @Override
+    public int getContentViewId() {
+        return R.layout.activity_product_details;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_details);
-        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,12 +37,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements OnTable
 
         product = getIntent().getParcelableExtra(Constants.PRODUCT_KEY);
         getSupportActionBar().setTitle(product.name);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @OnClick(R.id.edit)
@@ -66,8 +64,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements OnTable
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra(Constants.PRODUCT_FOR_TABLE, productForTable);
-        setResult(RESULT_OK, intent);
+        if(productForTable != null) {
+            intent.putExtra(Constants.PRODUCT_FOR_TABLE, productForTable);
+            setResult(RESULT_OK, intent);
+        }
         finish();
         super.onBackPressed();
     }
