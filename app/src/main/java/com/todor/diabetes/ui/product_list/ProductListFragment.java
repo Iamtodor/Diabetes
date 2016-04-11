@@ -184,16 +184,11 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public boolean onQueryTextChange(String query) {
-        List<Product> foundedProducts = getFoundedProducts(query);
-
-        Log.d(TAG, "query: " + query + ", foundedProducts: " + foundedProducts.size());
-
         if (query.length()>= START_SEARCH_LENGTH){
-            productAdapter.updateProducts(foundedProducts);
+            productAdapter.updateProducts(getFoundedProducts(query));
         }else{
             productAdapter.updateProducts(products);
         }
-
         return true;
     }
 
