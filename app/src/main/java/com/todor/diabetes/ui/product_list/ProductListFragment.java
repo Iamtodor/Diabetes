@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,12 +14,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
@@ -39,18 +37,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProductListFragment extends BaseFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<Product>>,
         SearchView.OnQueryTextListener {
 
+    private static final int START_SEARCH_LENGTH = 3;
+
     @Bind(R.id.recyclerView) protected RecyclerView recyclerView;
     @Bind(R.id.fab) protected FloatingActionButton fab;
     @Bind(R.id.coordinator_layout) protected CoordinatorLayout coordinatorLayout;
     private ProductFunctionality dbManager;
-    private List<Product> productList = null;
+    private List<Product> products = null;
     private ProductListAdapter productAdapter = null;
     private OnTableProductListener onTableProductListener;
 
@@ -116,8 +115,10 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        productList = data;
-        if (productList != null && productList.size() != 0) {
+        products.clear();
+        products.addAll(data);
+
+        if (products != null && products.size() != 0) {
             setupProductAdapter(data);
             recyclerView.setAdapter(productAdapter);
         } else {
@@ -183,23 +184,29 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public boolean onQueryTextChange(String query) {
-        final List<Product> filteredModelList = filter(productList, query);
-        productAdapter.animateTo(filteredModelList);
-        recyclerView.scrollToPosition(0);
+        List<Product> foundedProducts = getFoundedProducts(query);
+
+        Log.d(TAG, "query: " + query + ", foundedProducts: " + foundedProducts.size());
+
+        if (query.length()>= START_SEARCH_LENGTH){
+            productAdapter.updateProducts(foundedProducts);
+        }else{
+            productAdapter.updateProducts(products);
+        }
+
         return true;
     }
 
-    private List<Product> filter(List<Product> models, String query) {
-        query = query.toLowerCase();
+    private List<Product> getFoundedProducts(String query) {
+        final List<Product> result = new ArrayList<>();
 
-        final List<Product> filteredModelList = new ArrayList<>();
-        for (Product model : models) {
-            final String text = model.name.toLowerCase();
-            if (text.contains(query)) {
-                filteredModelList.add(model);
+        for (Product product : products) {
+            if (product.name.toLowerCase().contains(query.toLowerCase())) {
+                result.add(product);
             }
         }
-        return filteredModelList;
+
+        return result;
     }
 
     @Override

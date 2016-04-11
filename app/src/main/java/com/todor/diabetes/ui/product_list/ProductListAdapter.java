@@ -19,13 +19,12 @@ import butterknife.ButterKnife;
 
 public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Product>              productList;
+    private List<Product> products;
     private OnProductClickListener     onProductClickListener;
     private OnProductLongClickListener onProductLongClickListener;
 
-    public ProductListAdapter(List<Product> productList, OnProductClickListener onProductClickListener,
-                              OnProductLongClickListener onProductLongClickListener) {
-        this.productList = new ArrayList<>(productList);
+    public ProductListAdapter(List<Product> products, OnProductClickListener onProductClickListener, OnProductLongClickListener onProductLongClickListener) {
+        this.products = new ArrayList<>(products);
         this.onProductClickListener = onProductClickListener;
         this.onProductLongClickListener = onProductLongClickListener;
     }
@@ -40,7 +39,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolderProductItem viewHolder = (ViewHolderProductItem) holder;
-        Product product = productList.get(position);
+        Product product = products.get(position);
 
         if (needShowGroupHeader(position, product)) {
             viewHolder.productGroupHeader.setText(product.group);
@@ -60,13 +59,19 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return true;
         }
 
-        Product previousProduct = productList.get(position - 1);
+        Product previousProduct = products.get(position - 1);
         return !product.group.equals(previousProduct.group);
     }
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return products.size();
+    }
+
+    public void updateProducts(List<Product> filteredModelList) {
+        products.clear();
+        products.addAll(filteredModelList);
+        notifyDataSetChanged();
     }
 
     public void animateTo(List<Product> models) {
@@ -76,8 +81,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void applyAndAnimateRemovals(List<Product> newModels) {
-        for (int i = productList.size() - 1; i >= 0; i--) {
-            final Product model = productList.get(i);
+        for (int i = products.size() - 1; i >= 0; i--) {
+            final Product model = products.get(i);
             if (!newModels.contains(model)) {
                 removeItem(i);
             }
@@ -86,9 +91,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void applyAndAnimateAdditions(List<Product> newModels) {
         for (int i = 0; i < newModels.size(); i++) {
-            Log.d("ProductListAdapter", i + " iteration " + productList.size());
+            Log.d("ProductListAdapter", i + " iteration " + products.size());
             final Product model = newModels.get(i);
-            if (!productList.contains(model)) {
+            if (!products.contains(model)) {
                 addItem(i, model);
             }
         }
@@ -97,7 +102,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private void applyAndAnimateMovedItems(List<Product> newModels) {
         for (int toPosition = newModels.size() - 1; toPosition >= 0; toPosition--) {
             final Product model = newModels.get(toPosition);
-            final int fromPosition = productList.indexOf(model);
+            final int fromPosition = products.indexOf(model);
             if (fromPosition >= 0 && fromPosition != toPosition) {
                 moveItem(fromPosition, toPosition);
             }
@@ -105,19 +110,19 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public Product removeItem(int position) {
-        final Product model = productList.remove(position);
+        final Product model = products.remove(position);
         notifyItemRemoved(position);
         return model;
     }
 
     public void addItem(int position, Product model) {
-        productList.add(position, model);
+        products.add(position, model);
         notifyItemInserted(position);
     }
 
     public void moveItem(int fromPosition, int toPosition) {
-        final Product model = productList.remove(fromPosition);
-        productList.add(toPosition, model);
+        final Product model = products.remove(fromPosition);
+        products.add(toPosition, model);
         notifyItemMoved(fromPosition, toPosition);
     }
 
