@@ -115,8 +115,7 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        products.clear();
-        products.addAll(data);
+        products=data;
 
         if (products != null && products.size() != 0) {
             setupProductAdapter(data);
