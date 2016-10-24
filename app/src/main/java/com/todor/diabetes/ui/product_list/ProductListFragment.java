@@ -14,13 +14,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.todor.diabetes.Constants;
@@ -85,27 +82,18 @@ public class ProductListFragment extends BaseFragment implements
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addOnScrollListener(new HidingScrollListener() {
-            @Override
-            public void onHide() {
-                hideFab();
-            }
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void onShow() {
-                showFab();
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(dy > 0 && fab.isShown()) {
+                    fab.hide();
+                } else if (dy < 0 && !fab.isShown()){
+                    fab.show();
+                }
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
-    }
-
-    private void hideFab() {
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-        int fabBottomMargin = lp.bottomMargin;
-        fab.animate().translationY(fab.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
-    }
-
-    private void showFab() {
-        fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
     @Override
@@ -115,7 +103,7 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Product>> loader, ArrayList<Product> data) {
-        products=data;
+        products = data;
 
         if (products != null && products.size() != 0) {
             setupProductAdapter(data);
@@ -183,9 +171,9 @@ public class ProductListFragment extends BaseFragment implements
 
     @Override
     public boolean onQueryTextChange(String query) {
-        if (query.length()>= START_SEARCH_LENGTH){
+        if (query.length() >= START_SEARCH_LENGTH) {
             productAdapter.updateProducts(getFoundedProducts(query));
-        }else{
+        } else {
             productAdapter.updateProducts(products);
         }
         return true;

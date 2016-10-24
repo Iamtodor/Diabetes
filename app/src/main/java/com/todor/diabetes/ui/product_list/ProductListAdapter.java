@@ -1,7 +1,6 @@
 package com.todor.diabetes.ui.product_list;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import butterknife.ButterKnife;
 public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Product> products;
-    private OnProductClickListener     onProductClickListener;
+    private OnProductClickListener onProductClickListener;
     private OnProductLongClickListener onProductLongClickListener;
 
     public ProductListAdapter(List<Product> products, OnProductClickListener onProductClickListener, OnProductLongClickListener onProductLongClickListener) {
@@ -91,7 +90,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void applyAndAnimateAdditions(List<Product> newModels) {
         for (int i = 0; i < newModels.size(); i++) {
-            Log.d("ProductListAdapter", i + " iteration " + products.size());
             final Product model = newModels.get(i);
             if (!products.contains(model)) {
                 addItem(i, model);
@@ -120,7 +118,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyItemInserted(position);
     }
 
-    public void moveItem(int fromPosition, int toPosition) {
+    private void moveItem(int fromPosition, int toPosition) {
         final Product model = products.remove(fromPosition);
         products.add(toPosition, model);
         notifyItemMoved(fromPosition, toPosition);
@@ -128,10 +126,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     static class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_product_group)      TextView     productGroupHeader;
-        @Bind(R.id.item_layout)           LinearLayout itemLayout;
-        @Bind(R.id.product_name)          TextView     productName;
-        @Bind(R.id.product_carbohydrates) TextView     productCarbonates;
+        @Bind(R.id.tv_product_group) TextView productGroupHeader;
+        @Bind(R.id.item_layout) LinearLayout itemLayout;
+        @Bind(R.id.product_name) TextView productName;
+        @Bind(R.id.product_carbohydrates) TextView productCarbonates;
 
         public ViewHolderProductItem(View view) {
             super(view);

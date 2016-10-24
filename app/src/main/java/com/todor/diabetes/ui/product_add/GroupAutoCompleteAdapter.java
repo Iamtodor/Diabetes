@@ -1,7 +1,6 @@
 package com.todor.diabetes.ui.product_add;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -43,7 +42,7 @@ public class GroupAutoCompleteAdapter extends BaseAdapter implements Filterable 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.drop_down_group_line, parent, false);
+            convertView = View.inflate(context, R.layout.drop_down_group_line, parent);
         }
 
         String productGroup = filteredResult.get(position);
