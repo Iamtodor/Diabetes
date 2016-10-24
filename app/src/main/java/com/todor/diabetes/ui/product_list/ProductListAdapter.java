@@ -34,7 +34,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return new ViewHolderProductItem(v);
     }
 
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolderProductItem viewHolder = (ViewHolderProductItem) holder;
