@@ -1,0 +1,18 @@
+<tabs>
+    <tab
+        icon="@drawable/product"
+        id="@+id/products"
+        title="@string/products"/>
+    <tab
+        icon="@drawable/food_icon"
+        id="@+id/table"
+        title="@string/table"/>
+    <tab
+        icon="@drawable/favorite"
+        id="@+id/favorite"
+        title="@string/favorite_products"/>
+    <tab
+        icon="@drawable/profile"
+        id="@+id/profile"
+        title="@string/title_profile"/>
+</tabs>
