@@ -22,8 +22,8 @@ public class ProductTableAdapter extends RecyclerView.Adapter<ProductTableAdapte
     private Context context;
     private OnProductLongClickListener onProductLongClickListener;
 
-    public ProductTableAdapter(List<TableProduct> productArrayList, Context context,
-                               OnProductLongClickListener onProductLongClickListener) {
+    ProductTableAdapter(List<TableProduct> productArrayList, Context context,
+                        OnProductLongClickListener onProductLongClickListener) {
         this.productArrayList = productArrayList;
         this.context = context;
         this.onProductLongClickListener = onProductLongClickListener;

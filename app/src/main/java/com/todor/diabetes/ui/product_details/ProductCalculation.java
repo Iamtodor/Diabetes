@@ -1,16 +1,12 @@
 package com.todor.diabetes.ui.product_details;
 
-import android.content.Context;
+class ProductCalculation {
 
-import com.todor.diabetes.utils.Utils;
-
-public class ProductCalculation {
-
-    public static boolean isProductHasCarbohydrates(float carbohydrates) {
+    private static boolean isProductHasCarbohydrates(float carbohydrates) {
         return carbohydrates > 0;
     }
 
-    public static int parseStringToInt(String value) throws NumberFormatException {
+    static int parseStringToInt(String value) throws NumberFormatException {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
@@ -18,19 +14,21 @@ public class ProductCalculation {
         }
     }
 
-    public static float calculateBreadUnits(float carbohydrates, Context context, String enterString) throws NumberFormatException {
-        if (isProductHasCarbohydrates(carbohydrates)) {
+    static float calculateBreadUnits(float carbohydratesInProduct,
+                                     float carbohydratesCount, String enterString) throws NumberFormatException {
+        if (isProductHasCarbohydrates(carbohydratesInProduct)) {
             int value = parseStringToInt(enterString);
-            return value * (carbohydrates / 100) / Utils.getCarbohydratesCount(context);
+            return value * (carbohydratesInProduct / 100) / carbohydratesCount;
         } else {
             return 0;
         }
     }
 
-    public static float calculateGram(float carbohydrates, Context context, String enterString) throws NumberFormatException {
-        if (isProductHasCarbohydrates(carbohydrates)) {
+    static float calculateGram(float carbohydratesInProduct,
+                               float carbohydratesCount, String enterString) throws NumberFormatException {
+        if (isProductHasCarbohydrates(carbohydratesInProduct)) {
             int value = parseStringToInt(enterString);
-            return value * Utils.getCarbohydratesCount(context) / (carbohydrates / 100);
+            return value * carbohydratesCount / (carbohydratesInProduct / 100);
         } else {
             return 0;
         }

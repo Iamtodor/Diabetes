@@ -20,7 +20,7 @@ import com.todor.diabetes.ui.product_favorite.FavoriteFragment;
 import com.todor.diabetes.ui.product_list.ProductListFragment;
 import com.todor.diabetes.ui.product_table.ProductTableFragment;
 import com.todor.diabetes.ui.profile.ProfileFragment;
-import com.todor.diabetes.utils.Utils;
+import com.todor.diabetes.utils.PreferencesImpl;
 
 import java.util.HashSet;
 
@@ -51,9 +51,9 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (Utils.isFirstLaunch(this)) {
-            Utils.writeDataIntoDataBase(this);
-            Utils.setLaunchToFalse(this);
+        if (PreferencesImpl.get().isFirstLaunch()) {
+            PreferencesImpl.get().writeDataIntoDataBase();
+            PreferencesImpl.get().setLaunchToFalse();
         }
 
         if (savedInstanceState == null) {
@@ -69,7 +69,6 @@ public class MainActivity extends BaseActivity
         getSupportActionBar().setTitle(R.string.title_products);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

@@ -19,7 +19,6 @@ import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.ui.product_add.DelayAutoCompleteTextView;
 import com.todor.diabetes.ui.product_add.GroupAutoCompleteAdapter;
-import com.todor.diabetes.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -65,7 +64,7 @@ public class EditProductActivity extends BaseActivity {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.hideSoftKeyboard(EditProductActivity.this);
+                hideKeyboard();
                 String productName = productNameEditText.getText().toString();
                 String productCarbohydrates = productCarbohydratesEditText.getText().toString();
                 String productGroup = autoCompleteTextView.getText().toString();

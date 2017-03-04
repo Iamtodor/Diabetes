@@ -16,6 +16,9 @@ import com.todor.diabetes.db.ProductFunctionality;
 import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
+import com.todor.diabetes.utils.PreferencesImpl;
+
+import com.todor.diabetes.utils.*;
 
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
@@ -32,6 +35,7 @@ public class ProductDetailsFragment extends BaseFragment {
     private ProductFunctionality dbManager;
     private Product product;
     private OnTableProductListener onTableProductListener;
+
     private int gram;
     private float glycemicIndex;
 
@@ -73,9 +77,10 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     private void setValuesAndViews(Editable s) {
+        float carbohydratesCount = PreferencesImpl.get().getCarbohydratesCount();
         if (btnGram.isChecked()) {
             if (checkCorrectResult(s.toString())) {
-                float result = ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
+                float result = ProductCalculation.calculateGram(product.carbohydrates, carbohydratesCount,
                         s.toString());
                 int value = ProductCalculation.parseStringToInt(s.toString());
                 glycemicIndex = value;
@@ -87,7 +92,7 @@ public class ProductDetailsFragment extends BaseFragment {
             }
         } else if (btnBreadUnit.isChecked()) {
             if (checkCorrectResult(s.toString())) {
-                float result = ProductCalculation.calculateBreadUnits(product.carbohydrates, getActivity(),
+                float result = ProductCalculation.calculateBreadUnits(product.carbohydrates, carbohydratesCount,
                         s.toString());
                 int value = ProductCalculation.parseStringToInt(s.toString());
                 glycemicIndex = value;
@@ -101,11 +106,12 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     private void clickChangeBreadUnit() {
+        float carbohydratesCount = PreferencesImpl.get().getCarbohydratesCount();
         String enteredValue = edtProductValueForCalculation.getText().toString();
         int intEnteredValue = ProductCalculation.parseStringToInt(enteredValue);
         edtProductValueWrapper.setHint(getString(R.string.hint_product_gram));
         if (checkCorrectResult(enteredValue)) {
-            float result = ProductCalculation.calculateBreadUnits(product.carbohydrates, getActivity(),
+            float result = ProductCalculation.calculateBreadUnits(product.carbohydrates, carbohydratesCount,
                     enteredValue);
             glycemicIndex = intEnteredValue;
             gram = (int) result;
@@ -117,11 +123,12 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     public void clickChangeBtnGram() {
+        float carbohydratesCount = PreferencesImpl.get().getCarbohydratesCount();
         String enteredValue = edtProductValueForCalculation.getText().toString();
         int intEnteredValue = ProductCalculation.parseStringToInt(enteredValue);
         edtProductValueWrapper.setHint(getString(R.string.hint_product_GL));
         if (checkCorrectResult(enteredValue)) {
-            float result = ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
+            float result = ProductCalculation.calculateGram(product.carbohydrates, carbohydratesCount,
                     enteredValue);
             glycemicIndex = intEnteredValue;
             gram = (int) result;
@@ -134,7 +141,8 @@ public class ProductDetailsFragment extends BaseFragment {
 
     private boolean checkCorrectResult(String enteredValue) {
         try {
-            ProductCalculation.calculateGram(product.carbohydrates, getActivity(),
+            float carbohydratesCount = PreferencesImpl.get().getCarbohydratesCount();
+            ProductCalculation.calculateGram(product.carbohydrates, carbohydratesCount,
                     enteredValue);
             return true;
         } catch (NumberFormatException e) {
