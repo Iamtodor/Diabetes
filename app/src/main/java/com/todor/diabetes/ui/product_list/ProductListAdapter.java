@@ -13,7 +13,7 @@ import com.todor.diabetes.models.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -126,10 +126,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     static class ViewHolderProductItem extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_product_group) TextView productGroupHeader;
-        @Bind(R.id.item_layout) LinearLayout itemLayout;
-        @Bind(R.id.product_name) TextView productName;
-        @Bind(R.id.product_carbohydrates) TextView productCarbonates;
+        @BindView(R.id.tv_product_group) TextView productGroupHeader;
+        @BindView(R.id.item_layout) LinearLayout itemLayout;
+        @BindView(R.id.product_name) TextView productName;
+        @BindView(R.id.product_carbohydrates) TextView productCarbonates;
 
         public ViewHolderProductItem(View view) {
             super(view);

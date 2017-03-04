@@ -5,10 +5,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -27,16 +25,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
 public class EditProductActivity extends BaseActivity {
 
-    @Bind(R.id.product_name) protected          EditText                  productNameEditText;
-    @Bind(R.id.product_carbohydrates) protected EditText                  productCarbohydratesEditText;
-    @Bind(R.id.tv_product_group) protected      DelayAutoCompleteTextView autoCompleteTextView;
-    @Bind(R.id.progress_bar) protected          ProgressBar               progressBar;
-    @Bind(R.id.edit_btn) protected              Button                    editButton;
+    @BindView(R.id.product_name) protected EditText productNameEditText;
+    @BindView(R.id.product_carbohydrates) protected EditText productCarbohydratesEditText;
+    @BindView(R.id.tv_product_group) protected DelayAutoCompleteTextView autoCompleteTextView;
+    @BindView(R.id.progress_bar) protected ProgressBar progressBar;
+    @BindView(R.id.edit_btn) protected Button editButton;
 
     private ProductFunctionality dbManager;
 

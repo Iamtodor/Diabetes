@@ -16,14 +16,14 @@ import com.todor.diabetes.ui.BaseFragment;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class ProductTableFragment extends BaseFragment {
 
-    @Bind(R.id.recyclerView) protected  RecyclerView          recyclerView;
-    @Bind(R.id.linear_layout) protected LinearLayout          linearLayout;
-    private                             ProductTableAdapter   productAdapter;
-    private                             HashSet<TableProduct> productHashSet;
+    @BindView(R.id.recyclerView) protected RecyclerView recyclerView;
+    @BindView(R.id.linear_layout) protected LinearLayout linearLayout;
+    private ProductTableAdapter productAdapter;
+    private HashSet<TableProduct> productHashSet;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

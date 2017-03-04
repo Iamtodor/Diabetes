@@ -22,9 +22,9 @@ public class Product implements Parcelable {
         }
     };
 
-    public String  name;
-    public float   carbohydrates;
-    public String  group;
+    public String name;
+    public float carbohydrates;
+    public String group;
     public boolean isFavorite;
 
     public Product(String productName, float productCarbohydrates, String productGroup, boolean isFavorite) {
@@ -67,11 +67,11 @@ public class Product implements Parcelable {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null | !(o instanceof Product)) {
+        if (o == null | !(o instanceof Product)) {
             return false;
         } else {
             Product product = (Product) o;
-            if(product.name.equals(this.name))
+            if (product.name.equals(this.name))
                 return true;
         }
         return false;

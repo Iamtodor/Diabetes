@@ -33,7 +33,7 @@ import com.todor.diabetes.ui.product_details.ProductDetailsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ProductListFragment extends BaseFragment implements
@@ -42,9 +42,9 @@ public class ProductListFragment extends BaseFragment implements
 
     private static final int START_SEARCH_LENGTH = 3;
 
-    @Bind(R.id.recyclerView) protected RecyclerView recyclerView;
-    @Bind(R.id.fab) protected FloatingActionButton fab;
-    @Bind(R.id.coordinator_layout) protected CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.recyclerView) protected RecyclerView recyclerView;
+    @BindView(R.id.fab) protected FloatingActionButton fab;
+    @BindView(R.id.coordinator_layout) protected CoordinatorLayout coordinatorLayout;
     private ProductFunctionality dbManager;
     private List<Product> products = null;
     private ProductListAdapter productAdapter = null;
@@ -86,9 +86,9 @@ public class ProductListFragment extends BaseFragment implements
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && fab.isShown()) {
+                if (dy > 0 && fab.isShown()) {
                     fab.hide();
-                } else if (dy < 0 && !fab.isShown()){
+                } else if (dy < 0 && !fab.isShown()) {
                     fab.show();
                 }
                 super.onScrolled(recyclerView, dx, dy);

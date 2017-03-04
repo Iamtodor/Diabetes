@@ -28,12 +28,6 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
-    }
-
     protected void hideKeyboard() {
         hideKeyboard(getActivity().getCurrentFocus());
     }
