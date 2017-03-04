@@ -1,10 +1,10 @@
 <tabs>
     <tab
-        icon="@drawable/product"
+        icon="@drawable/list_product"
         id="@+id/products"
         title="@string/products"/>
     <tab
-        icon="@drawable/food_icon"
+        icon="@drawable/table"
         id="@+id/table"
         title="@string/table"/>
     <tab

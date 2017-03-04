@@ -23,7 +23,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="end"
                 android:layout_margin="10dp"
-                android:src="@drawable/edit_icon"/>
+                app:srcCompat="@drawable/edit"/>
 
         </android.support.v7.widget.Toolbar>
 
