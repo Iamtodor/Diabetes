@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.todor.diabetes.Constants;
@@ -15,9 +14,8 @@ import com.todor.diabetes.models.Product;
 
 public class Utils {
 
-    public static SharedPreferences getSharedPreferences(Context context) {
-//        return context.getSharedPreferences(Constants.MY_PREFERENCES, Context.MODE_PRIVATE);
-        return PreferenceManager.getDefaultSharedPreferences(context);
+    private static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences(Constants.MY_PREFERENCES, Context.MODE_PRIVATE);
     }
 
     public static void setLaunchToFalse(Context context) {

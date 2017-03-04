@@ -10,9 +10,9 @@ import android.widget.ProgressBar;
 
 public class DelayAutoCompleteTextView extends AutoCompleteTextView {
 
-    private static final int     MESSAGE_TEXT_CHANGED       = 100;
-    private static final int     DEFAULT_AUTOCOMPLETE_DELAY = 750;
-    private final        Handler mHandler                   = new Handler() {
+    private static final int MESSAGE_TEXT_CHANGED = 100;
+    private static final int DEFAULT_AUTOCOMPLETE_DELAY = 750;
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             DelayAutoCompleteTextView.super.performFiltering((CharSequence) msg.obj, msg.arg1);

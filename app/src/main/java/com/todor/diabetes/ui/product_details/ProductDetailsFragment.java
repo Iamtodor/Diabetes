@@ -17,23 +17,23 @@ import com.todor.diabetes.models.Product;
 import com.todor.diabetes.models.TableProduct;
 import com.todor.diabetes.ui.BaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class ProductDetailsFragment extends BaseFragment {
 
-    @Bind(R.id.edt_product_value_for_calculation) EditText        edtProductValueForCalculation;
-    @Bind(R.id.btn_gram)                          RadioButton     btnGram;
-    @Bind(R.id.btn_bread_unit)                    RadioButton     btnBreadUnit;
-    @Bind(R.id.edt_wrapper)                       TextInputLayout edtProductValueWrapper;
-    @Bind(R.id.tv_result_explanation)             TextView        tvResultExplanation;
+    @BindView(R.id.edt_product_value_for_calculation) EditText edtProductValueForCalculation;
+    @BindView(R.id.btn_gram) RadioButton btnGram;
+    @BindView(R.id.btn_bread_unit) RadioButton btnBreadUnit;
+    @BindView(R.id.edt_wrapper) TextInputLayout edtProductValueWrapper;
+    @BindView(R.id.tv_result_explanation) TextView tvResultExplanation;
 
-    private ProductFunctionality   dbManager;
-    private Product                product;
+    private ProductFunctionality dbManager;
+    private Product product;
     private OnTableProductListener onTableProductListener;
-    private int                    gram;
-    private float                  glycemicIndex;
+    private int gram;
+    private float glycemicIndex;
 
     @Override
     public int getContentViewId() {

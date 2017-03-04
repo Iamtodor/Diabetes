@@ -3,9 +3,11 @@ package com.todor.diabetes.ui;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -22,13 +24,13 @@ import com.todor.diabetes.utils.Utils;
 
 import java.util.HashSet;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnTableProductListener {
 
-    @Bind(R.id.toolbar) protected       Toolbar      toolbar;
-    @Bind(R.id.drawer_layout) protected DrawerLayout drawer;
+    @BindView(R.id.toolbar) protected Toolbar toolbar;
+    @BindView(R.id.drawer_layout) protected DrawerLayout drawer;
     private HashSet<TableProduct> productForTable = new HashSet<>();
 
     @Override
@@ -43,7 +45,7 @@ public class MainActivity extends BaseActivity
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -69,14 +71,16 @@ public class MainActivity extends BaseActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        ActionBar supportActionBar = getSupportActionBar();
+
         switch (id) {
             case R.id.productList:
                 transaction.replace(R.id.flContent, new ProductListFragment());
-                getSupportActionBar().setTitle(R.string.title_products);
+                supportActionBar.setTitle(R.string.title_products);
                 break;
             case R.id.currentEating:
                 ProductTableFragment productTableFragment;
@@ -89,15 +93,15 @@ public class MainActivity extends BaseActivity
                     productTableFragment = new ProductTableFragment();
                 }
                 transaction.replace(R.id.flContent, productTableFragment);
-                getSupportActionBar().setTitle(R.string.title_products);
+                supportActionBar.setTitle(R.string.title_products);
                 break;
             case R.id.favoriteProducts:
                 transaction.replace(R.id.flContent, new FavoriteFragment());
-                getSupportActionBar().setTitle(R.string.title_favorite_fragment);
+                supportActionBar.setTitle(R.string.title_favorite_fragment);
                 break;
             case R.id.profile:
                 transaction.replace(R.id.flContent, new ProfileFragment());
-                getSupportActionBar().setTitle(R.string.title_profile);
+                supportActionBar.setTitle(R.string.title_profile);
                 break;
         }
         transaction.commit();

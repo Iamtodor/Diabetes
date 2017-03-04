@@ -8,12 +8,12 @@ import com.todor.diabetes.models.Product;
 
 import java.util.ArrayList;
 
-public class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
+class ProductLoader extends AsyncTaskLoader<ArrayList<Product>> {
 
     private ArrayList<Product>   products;
     private ProductFunctionality productFunctionality;
 
-    public ProductLoader(Context context) {
+    ProductLoader(Context context) {
         super(context);
         productFunctionality = new ProductFunctionality(context);
     }

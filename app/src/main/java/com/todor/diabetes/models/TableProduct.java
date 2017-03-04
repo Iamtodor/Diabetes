@@ -6,8 +6,8 @@ import android.os.Parcelable;
 public class TableProduct implements Parcelable {
 
     public String name;
-    public int    gram;
-    public float  glycemicIndex;
+    public int gram;
+    public float glycemicIndex;
 
     public static final Creator<TableProduct> CREATOR = new Creator<TableProduct>() {
         @Override
@@ -61,11 +61,11 @@ public class TableProduct implements Parcelable {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null | !(o instanceof TableProduct)) {
+        if (o == null | !(o instanceof TableProduct)) {
             return false;
         } else {
             TableProduct product = (TableProduct) o;
-            if(product.name.equals(this.name))
+            if (product.name.equals(this.name))
                 return true;
         }
         return false;

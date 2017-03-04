@@ -25,12 +25,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        ButterKnife.unbind(this);
-        super.onDestroy();
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         hideKeyboard();
         return super.onTouchEvent(event);
